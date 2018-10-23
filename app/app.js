@@ -17,7 +17,7 @@ import createHistory from 'history/createBrowserHistory';
 import 'sanitize.css/sanitize.css';
 
 // Import root app
-import HomePage from 'containers/pages/HomePage';
+import Test from 'containers/pages/Test';
 
 // Load the favicon and the .htaccess file
 /* eslint-disable import/no-unresolved, import/extensions */
@@ -34,9 +34,7 @@ import { translationMessages } from './i18n';
 import './global-styles';
 
 // Create redux store with history
-const initialState = {
-  testProperty: 'exists',
-};
+const initialState = {};
 const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
@@ -45,7 +43,7 @@ const render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <HomePage />
+        <Test />
       </ConnectedRouter>
     </Provider>,
     MOUNT_NODE,
