@@ -19,7 +19,7 @@ const Background = styled.div`
 
 const Title = props => (
   <Background>
-    <H2>{props.text}</H2>;
+    <H2>{props.text}</H2>
   </Background>
 );
 

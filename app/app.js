@@ -16,8 +16,9 @@ import { ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import 'sanitize.css/sanitize.css';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // Import root app
-import Test from 'containers/pages/Test';
+import Root from 'containers/Root';
 
 // Load the favicon and the .htaccess file
 /* eslint-disable import/no-unresolved, import/extensions */
@@ -41,11 +42,15 @@ const MOUNT_NODE = document.getElementById('app');
 
 const render = () => {
   ReactDOM.render(
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Test />
-      </ConnectedRouter>
-    </Provider>,
+    <MuiThemeProvider>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <div>
+            <Root />
+          </div>
+        </ConnectedRouter>
+      </Provider>
+    </MuiThemeProvider>,
     MOUNT_NODE,
   );
 };
