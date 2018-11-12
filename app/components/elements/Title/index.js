@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { JAPANESE_INDIGO, AERO_BLUE } from 'constants/colors';
 import styled from 'styled-components';
 
 const H2 = styled.h2`
   font: 600 1.5em/1 'Raleway', sans-serif;
-  color: rgba(0, 0, 0, 0.5);
+  color: ${JAPANESE_INDIGO};
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.4em;
@@ -14,7 +15,7 @@ const H2 = styled.h2`
 
 const Background = styled.div`
   padding-top: 20px;
-  background: #9cb8b3;
+  background: ${AERO_BLUE};
 `;
 
 const Title = props => (
