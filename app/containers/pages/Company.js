@@ -18,15 +18,14 @@ class Company extends React.Component {
 
   render() {
     console.log('spy', this.props.studentsPerYear);
-    return (
-      <CompanyComponent />
-    );
+    return <CompanyComponent />;
   }
 }
 
-const mapStateToProps = state => createStructuredSelector({
-  studentsPerYear: studentsPerYearSelector(state)(),
-});
+const mapStateToProps = state =>
+  createStructuredSelector({
+    studentsPerYear: studentsPerYearSelector(state)(),
+  });
 
 const mapDispatchToProps = dispatch => ({
   getStudentsPerYear: () => dispatch(getStudentsPerYear()),

@@ -5,16 +5,14 @@ import SimpleAreaChart from 'components/elements/AreaChart';
 import { AERO_BLUE, JAPANESE_INDIGO } from 'constants/colors';
 import Title from 'components/elements/Title';
 
-const CompanyComponent = props => {
-  return (
-    <Graphs>
+const CompanyComponent = props => (
+  <Graphs>
     <StudentsPerYear>
       <Title text="Aplicanti in ultimii ani" />
       <SimpleAreaChart />
     </StudentsPerYear>
-    </Graphs>
-  );
-}
+  </Graphs>
+);
 
 export const Graphs = styled.div`
   display: flex;

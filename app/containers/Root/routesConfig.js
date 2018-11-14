@@ -14,5 +14,5 @@ export const routes = [
   {
     path: '/company',
     component: Company,
-  }
+  },
 ];
