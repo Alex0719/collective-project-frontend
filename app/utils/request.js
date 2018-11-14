@@ -1,5 +1,14 @@
 import 'whatwg-fetch';
 
+function isJSON(data) {
+   var ret = true;
+   try {
+      JSON.parse(data);
+   }catch(e) {
+      ret = false;
+   }
+   return ret;
+}
 /**
  * Parses the JSON returned by a network request
  *
@@ -8,10 +17,13 @@ import 'whatwg-fetch';
  * @return {object}          The parsed JSON from the request
  */
 function parseJSON(response) {
+  console.log('response',response.headers['set-cookie']);
   if (response.status === 204 || response.status === 205) {
     return null;
   }
-  return response.json();
+  if(isJSON(response))
+    return response.json();
+  return response.text();
 }
 
 /**

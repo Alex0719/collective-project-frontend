@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 import { Button } from './styles';
 
-const MenuButton = ({ text, changeRoute }) => (
-  <Button onClick={() => changeRoute('/test')}>{text}</Button>
+const MenuButton = ({ text, onClick }) => (
+  <Button onClick={() => onClick()}>{text}</Button>
 );
 
 MenuButton.propTypes = {
   text: PropTypes.string,
-  changeRoute: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default MenuButton;

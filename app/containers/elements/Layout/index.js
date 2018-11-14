@@ -3,15 +3,22 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
 
 import LayoutComponent from 'components/elements/Layout';
+import { selectLoggedUser } from 'selectors/profileMenuSelector';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Layout extends React.Component {
-  render() {
-    const { changeRoute } = this.props;
+  shouldComponentUpdate(nextProps) {
+    console.log(nextProps);
+    return this.props.loggedUser!==nextProps.loggedUser;
+  }
 
-    return <LayoutComponent changeRoute={route => changeRoute(route)} />;
+  render() {
+    const { changeRoute, loggedUser } = this.props;
+
+    return <LayoutComponent loggedUser={loggedUser} changeRoute={route => changeRoute(route)} />;
   }
 }
 
@@ -19,12 +26,16 @@ Layout.propTypes = {
   changeRoute: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = state => createStructuredSelector({
+  loggedUser: selectLoggedUser(state)(),
+});
+
 const mapDispatchToProps = dispatch => ({
   changeRoute: route => dispatch(push(route)),
 });
 
 const withConnect = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 );
 
