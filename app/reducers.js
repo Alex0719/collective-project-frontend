@@ -7,6 +7,8 @@ import { fromJS } from 'immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
 import loginReducer from 'reducers/loginReducer';
+import companyReducer from 'reducers/companyReducer';
+
 /*
  * routeReducer
  *
@@ -43,6 +45,7 @@ export default function createReducer(injectedReducers) {
     // route: routeReducer,
     // test: testReducer,
     loggedUser: loginReducer,
+    company: companyReducer,
     ...injectedReducers,
   });
 }
