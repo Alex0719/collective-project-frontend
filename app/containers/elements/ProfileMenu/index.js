@@ -2,16 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
-import {
-  IconButton,
-  IconMenu,
-  MenuItem,
-  Avatar,
-  Divider,
-} from 'material-ui';
+import { IconButton, IconMenu, Avatar, Divider } from 'material-ui';
 
 import injectSaga from 'utils/injectSaga';
 import loginUserSaga from 'sagas/loginSagas';
+import profileIcon from 'images/profileIcon.png';
+import TextField from 'components/elements/TextField';
+import Button from 'components/elements/Button';
+import { loginUser, getLoggedUser } from 'actions/loginActions';
 import { AvatarStyle } from 'components/elements/Layout/styles';
 import {
   IconButtonStyle,
@@ -21,10 +19,6 @@ import {
   DividerStyle,
   ButtonWrapper,
 } from './styles';
-import profileIcon from 'images/profileIcon.png';
-import TextField from 'components/elements/TextField';
-import Button from 'components/elements/Button';
-import { loginUser, getLoggedUser } from 'actions/loginActions';
 
 export class ProfileMenu extends React.Component {
   constructor(props) {
@@ -37,33 +31,16 @@ export class ProfileMenu extends React.Component {
     };
   }
 
-  // componentDidUpdate(prevProps) {
-  //   const { getLoggedUser } = this.props;
-  //
-  //   if (prevProps.loggedUser !== this.props.loggedUser) {
-  //     getLoggedUser();
-  //   }
-  // }
-  //
-  // shouldComponentUpdate(nextProps) {
-  //   console.log(nextProps);
-  //   return !this.props.loggedUser !== nextProps.loggedUser;
-  // }
+  buildIcon() {
+    const { loggedUser } = this.props;
+    const avatar =
+      loggedUser && loggedUser.picture ? (
+        <Avatar style={AvatarStyle} src={loggedUser.picture} />
+      ) : (
+        <Avatar style={AvatarStyle} src={profileIcon} />
+      );
 
-  buildIcon(user) {
-    const avatar = (user && user.picture) ? (
-      <Avatar
-        style={AvatarStyle}
-        src={user.picture}
-      />
-    ) : (
-      <Avatar
-        style={AvatarStyle}
-        src={profileIcon}
-      />
-    );
-
-    return <IconButton style={IconButtonStyle}>{avatar}</IconButton>
+    return <IconButton style={IconButtonStyle}>{avatar}</IconButton>;
   }
 
   onOpen() {
@@ -93,46 +70,64 @@ export class ProfileMenu extends React.Component {
 
     this.setState({ open: false });
     login(credentials);
-
   }
 
-  renderContent() {
+  renderLogout() {
     const { loggedUser } = this.props;
 
-    return loggedUser ? (
-      <Button text={'Logout'} onClick={() => console.log('click')} />
-      ) : (
+    return (
+      <div>
+        <TitleWrapper>{loggedUser.email}</TitleWrapper>
+        <Divider style={DividerStyle} />
+        <ButtonWrapper>
+          <Button text="Profil" onClick={() => console.log('click')} />
+        </ButtonWrapper>
+        <ButtonWrapper>
+          <Button text="Logout" onClick={() => console.log('click')} />
+        </ButtonWrapper>
+      </div>
+    );
+  }
+
+  renderLogin() {
+    return (
       <IconMenuInnerWrapper>
         <TitleWrapper>Login</TitleWrapper>
-        <Divider style={DividerStyle}/>
+        <Divider style={DividerStyle} />
         <TextField
-          id={'outlined-name'}
-          label={'Email'}
+          id="outlined-name"
+          label="Email"
           value={this.state.email}
           style={TextFieldStyle}
           onChange={event => this.onChange('email', event)}
         />
         <TextField
-          id={'outlined-password'}
-          label={'Password'}
-          type={'password'}
+          id="outlined-password"
+          label="Password"
+          type="password"
           value={this.state.password}
           style={TextFieldStyle}
           onChange={event => this.onChange('password', event)}
         />
         <ButtonWrapper>
-          <Button text={'Login'} onClick={() => this.handleLogin()} />
+          <Button text="Login" onClick={() => this.handleLogin()} />
         </ButtonWrapper>
       </IconMenuInnerWrapper>
     );
   }
 
-  render() {
+  renderContent() {
     const { loggedUser } = this.props;
 
+    return loggedUser.email && loggedUser.role
+      ? this.renderLogout()
+      : this.renderLogin();
+  }
+
+  render() {
     return (
       <IconMenu
-        iconButtonElement={this.buildIcon(loggedUser)}
+        iconButtonElement={this.buildIcon()}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         targetOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={this.state.open}
@@ -144,6 +139,11 @@ export class ProfileMenu extends React.Component {
     );
   }
 }
+
+ProfileMenu.propTypes = {
+  loggedUser: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = dispatch => ({
   login: values => dispatch(loginUser(values)),

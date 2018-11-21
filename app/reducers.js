@@ -6,7 +6,6 @@ import { combineReducers } from 'redux-immutable';
 import { fromJS } from 'immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
-import testReducer from 'reducers/testReducer';
 import loginReducer from 'reducers/loginReducer';
 /*
  * routeReducer
@@ -43,7 +42,7 @@ export default function createReducer(injectedReducers) {
   return combineReducers({
     // route: routeReducer,
     // test: testReducer,
-    login: loginReducer,
+    loggedUser: loginReducer,
     ...injectedReducers,
   });
 }

@@ -11,24 +11,30 @@ import { selectLoggedUser } from 'selectors/profileMenuSelector';
 /* eslint-disable react/prefer-stateless-function */
 export class Layout extends React.Component {
   shouldComponentUpdate(nextProps) {
-    console.log(nextProps);
-    return this.props.loggedUser!==nextProps.loggedUser;
+    return this.props.loggedUser !== nextProps.loggedUser;
   }
 
   render() {
     const { changeRoute, loggedUser } = this.props;
 
-    return <LayoutComponent loggedUser={loggedUser} changeRoute={route => changeRoute(route)} />;
+    return (
+      <LayoutComponent
+        loggedUser={loggedUser}
+        changeRoute={route => changeRoute(route)}
+      />
+    );
   }
 }
 
 Layout.propTypes = {
   changeRoute: PropTypes.func.isRequired,
+  loggedUser: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => createStructuredSelector({
-  loggedUser: selectLoggedUser(state)(),
-});
+const mapStateToProps = state =>
+  createStructuredSelector({
+    loggedUser: selectLoggedUser(state)(),
+  });
 
 const mapDispatchToProps = dispatch => ({
   changeRoute: route => dispatch(push(route)),

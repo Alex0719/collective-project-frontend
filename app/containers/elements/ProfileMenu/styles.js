@@ -8,6 +8,7 @@ export const IconButtonStyle = {
 
 export const TextFieldStyle = {
   padding: '15px',
+  marginRight: '10px',
 };
 
 export const IconMenuInnerWrapper = styled.div`
@@ -16,6 +17,7 @@ export const IconMenuInnerWrapper = styled.div`
 
 export const TitleWrapper = styled.div`
   text-align: center;
+  color: JAPANESE_INDIGO;
 `;
 
 export const DividerStyle = {
@@ -23,7 +25,7 @@ export const DividerStyle = {
 };
 
 export const ButtonWrapper = styled.div`
-  padding-left: 100px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 `;

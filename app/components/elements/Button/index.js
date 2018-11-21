@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { JAPANESE_INDIGO, AERO_BLUE } from 'constants/colors';
 
 export const ButtonDiv = styled.div`
-  width: 80px;
+  width: 100px;
   border-radius: 5px;
   background-color: ${JAPANESE_INDIGO};
   color: ${AERO_BLUE};
