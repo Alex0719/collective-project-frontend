@@ -73,18 +73,18 @@ export class ProfileMenu extends React.Component {
   }
 
   renderLogout() {
-    const { loggedUser } = this.props;
-
     return (
       <div>
-        <TitleWrapper>{loggedUser.email}</TitleWrapper>
-        <Divider style={DividerStyle} />
-        <ButtonWrapper>
-          <Button text="Profil" onClick={() => console.log('click')} />
-        </ButtonWrapper>
-        <ButtonWrapper>
-          <Button text="Logout" onClick={() => console.log('click')} />
-        </ButtonWrapper>
+        <Button
+          type="DividerButton"
+          text="Profil"
+          onClick={() => console.log('click')}
+        />
+        <Button
+          type="DividerButton"
+          text="Logout"
+          onClick={() => console.log('click')}
+        />
       </div>
     );
   }
@@ -119,9 +119,7 @@ export class ProfileMenu extends React.Component {
   renderContent() {
     const { loggedUser } = this.props;
 
-    return loggedUser.email && loggedUser.role
-      ? this.renderLogout()
-      : this.renderLogin();
+    return loggedUser.role ? this.renderLogout() : this.renderLogin();
   }
 
   render() {

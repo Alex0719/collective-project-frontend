@@ -4,12 +4,22 @@ import { push } from 'react-router-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
+import Cookies from 'js-cookie';
 
 import LayoutComponent from 'components/elements/Layout';
 import { selectLoggedUser } from 'selectors/profileMenuSelector';
+import { requestRole } from 'actions/roleActions';
+import injectSaga from 'utils/injectSaga';
+import getRoleSaga from 'sagas/roleSagas';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Layout extends React.Component {
+  componentWillMount() {
+    if (Cookies.get('Identity')) {
+      this.props.fetchRole();
+    }
+  }
+
   shouldComponentUpdate(nextProps) {
     return this.props.loggedUser !== nextProps.loggedUser;
   }
@@ -29,6 +39,7 @@ export class Layout extends React.Component {
 Layout.propTypes = {
   changeRoute: PropTypes.func.isRequired,
   loggedUser: PropTypes.object.isRequired,
+  fetchRole: PropTypes.func,
 };
 
 const mapStateToProps = state =>
@@ -38,6 +49,12 @@ const mapStateToProps = state =>
 
 const mapDispatchToProps = dispatch => ({
   changeRoute: route => dispatch(push(route)),
+  fetchRole: () => dispatch(requestRole()),
+});
+
+const withSaga = injectSaga({
+  key: 'roleSaga',
+  saga: getRoleSaga,
 });
 
 const withConnect = connect(
@@ -45,4 +62,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(Layout);
+export default compose(
+  withSaga,
+  withConnect,
+)(Layout);
