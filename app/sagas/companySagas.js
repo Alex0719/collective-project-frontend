@@ -2,7 +2,7 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 
 import {
   getStudentsPerYearSuccess,
-  getStudentsPerYearFailure
+  getStudentsPerYearFailure,
 } from 'actions/companyActions';
 import { GET_STUDENTS_PER_YEAR_REQUEST } from 'constants/company';
 import request from 'utils/request';

@@ -2,7 +2,7 @@ import { fromJS } from 'immutable';
 
 import {
   GET_STUDENTS_PER_YEAR_SUCCESS,
-  GET_STUDENTS_PER_YEAR_FAILURE
+  GET_STUDENTS_PER_YEAR_FAILURE,
 } from 'constants/company';
 
 export const initialState = fromJS({
