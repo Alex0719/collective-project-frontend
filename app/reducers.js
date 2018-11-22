@@ -8,6 +8,7 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 
 import testReducer from 'reducers/testReducer';
 import companyReducer from 'reducers/companyReducer';
+import dashboardReducer from './reducers/dashdoardReducer';
 
 /*
  * routeReducer
@@ -45,6 +46,7 @@ export default function createReducer(injectedReducers) {
     route: routeReducer,
     test: testReducer,
     company: companyReducer,
+    dashboard: dashboardReducer,
     ...injectedReducers,
   });
 }

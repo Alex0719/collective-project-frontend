@@ -1,6 +1,7 @@
 import HomePage from 'containers/pages/HomePage';
 import Test from 'containers/pages/Test';
 import Company from 'containers/pages/Company';
+import Dashboard from '../../containers/pages/Dashboard';
 
 export const routes = [
   {
@@ -9,10 +10,10 @@ export const routes = [
   },
   {
     path: '/test',
-    component: Test,
+    component: Dashboard,
   },
   {
     path: '/company',
     component: Company,
-  }
+  },
 ];
