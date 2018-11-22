@@ -11,7 +11,7 @@ class StarRating extends React.Component {
         starDimension="40px"
         numberOfStars={5}
         starRatedColor="orange"
-        name='rating'
+        name="rating"
       />
     );
   }

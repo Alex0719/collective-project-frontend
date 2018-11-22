@@ -18,15 +18,21 @@ const CompanyComponent = props => (
       <RowsWithRatings>
         <RowRating>
           <NameRating>Companie</NameRating>
-          <Stars><StarRating rating={4.5} /></Stars>
+          <Stars>
+            <StarRating rating={4.5} />
+          </Stars>
         </RowRating>
         <RowRating>
           <NameRating>Mentori</NameRating>
-          <Stars><StarRating rating={3.2} /></Stars>
+          <Stars>
+            <StarRating rating={3.2} />
+          </Stars>
         </RowRating>
         <RowRating>
           <NameRating>Internship</NameRating>
-          <Stars><StarRating rating={4.8} /></Stars>
+          <Stars>
+            <StarRating rating={4.8} />
+          </Stars>
         </RowRating>
       </RowsWithRatings>
     </Rating>
