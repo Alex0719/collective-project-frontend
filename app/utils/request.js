@@ -1,5 +1,19 @@
 import 'whatwg-fetch';
 
+function IsJsonString(json)
+{
+    try
+    {
+        json.json();
+    }
+    catch (e)
+    {
+        return false;
+    }
+
+    return true;
+}
+
 /**
  * Parses the JSON returned by a network request
  *
@@ -8,6 +22,7 @@ import 'whatwg-fetch';
  * @return {object}          The parsed JSON from the request
  */
 function parseJSON(response) {
+  console.log(response);
   if (response.status === 204 || response.status === 205) {
     return null;
   }
@@ -40,7 +55,12 @@ function checkStatus(response) {
  *
  * @return {object}           The response data
  */
-export default function request(url, options) {
+export default function request(url, options, withoutResponse) {
+  if (withoutResponse) {
+    return fetch(url, options)
+      .then(checkStatus);
+  }
+
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON);
