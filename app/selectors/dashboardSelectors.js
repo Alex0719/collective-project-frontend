@@ -1,24 +1,10 @@
 import { createSelector } from 'reselect';
 
-const selectStudentCount = state => state.getIn(['dashboard', 'studentCount']);
+const selectDashboardStatistics = state => state.getIn(['dashboard', 'statistics']);
 
-const studentCountSelector = () => createSelector(() => selectStudentCount);
-
-const selectCompanyCount = state => state.getIn(['dashboard', 'companyCount']);
-
-const companyCountSelector = () => createSelector(() => selectCompanyCount);
-
-const selectInternshipCount = state =>
-  state.getIn(['dashboard', 'internshipCount']);
-
-const internshipCountSelector = () =>
-  createSelector(() => selectInternshipCount);
+const dashboardStatisticsSelector = () => createSelector(() => selectDashboardStatistics);
 
 export {
-  selectStudentCount,
-  studentCountSelector,
-  selectCompanyCount,
-  companyCountSelector,
-  selectInternshipCount,
-  internshipCountSelector,
+  selectDashboardStatistics,
+  dashboardStatisticsSelector
 };

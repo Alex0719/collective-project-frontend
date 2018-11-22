@@ -6,19 +6,13 @@ import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import {
-  getStudentCountSaga,
-  getCompanyCountSaga,
-  getInternshipCountSaga,
+  getDashboardStatisticsSaga
 } from '../../sagas/dashboardSagas';
 import {
-  studentCountSelector,
-  companyCountSelector,
-  internshipCountSelector,
+  dashboardStatisticsSelector
 } from '../../selectors/dashboardSelectors';
 import {
-  getStudentCount,
-  getCompanyCount,
-  getInternshipCount,
+  getDashboardStatistics
 } from '../../actions/dashboardActions';
 
 class Dashboard extends React.Component {
@@ -26,18 +20,18 @@ class Dashboard extends React.Component {
     super(props);
   }
   componentWillMount() {
-    this.props.getStudentCount();
-    this.props.getCompanyCount();
+    this.props.getStatistics();
   }
 
   render() {
+    const {statistics} = this.props;
     return (
       <div>
         <DashboardComponent
           counts={{
-            studentCount: this.props.studentCount,
-            companyCount: this.props.companyCount,
-            internshipCount: 10,
+            studentCount: statistics.numberOfStudents,
+            companyCount: statistics.numberOfCompanies,
+            internshipCount: statistics.numberOfInternships,
           }}
         />
       </div>
@@ -47,49 +41,29 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state =>
   createStructuredSelector({
-    studentCount: studentCountSelector(state)(),
-    companyCount: companyCountSelector(state)(),
-    internshipCount: internshipCountSelector(state)(),
+    statistics: dashboardStatisticsSelector(state)(),
   });
 
 const mapDispatchToProps = dispatch => ({
-  getStudentCount: () => dispatch(getStudentCount()),
-  getCompanyCount: () => dispatch(getCompanyCount()),
-  getInternshipCount: () => dispatch(getInternshipCount()),
+  getStatistics: () => dispatch(getDashboardStatistics()),
 });
 
 Dashboard.propTypes = {
-  getStudentCount: PropTypes.func,
-  studentCount: PropTypes.number,
-  getCompanyCount: PropTypes.func,
-  companyCount: PropTypes.number,
-  getInternshipCount: PropTypes.func,
-  internshipCount: PropTypes.number,
+  getStatistics: PropTypes.func,
+  statistics: PropTypes.any,
 };
+
+const withStatisticsSaga = injectSaga({
+  key: 'getDashboardStatisticsSaga',
+  saga: getDashboardStatisticsSaga,
+});
 
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
 
-const withStudentSaga = injectSaga({
-  key: 'getStudentCountSaga',
-  saga: getStudentCountSaga,
-});
-
-const withCompanySaga = injectSaga({
-  key: 'getCompanyCountSaga',
-  saga: getCompanyCountSaga,
-});
-
-const withInternshipSaga = injectSaga({
-  key: 'getInternshipCountSaga',
-  saga: getInternshipCountSaga,
-});
-
 export default compose(
-  withStudentSaga,
-  withCompanySaga,
-  withInternshipSaga,
-  withConnect,
+  withStatisticsSaga,
+  withConnect
 )(Dashboard);
