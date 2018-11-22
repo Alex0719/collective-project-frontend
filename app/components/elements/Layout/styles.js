@@ -22,3 +22,7 @@ export const AvatarStyle = {
   backgroundColor: AERO_BLUE,
   color: JAPANESE_INDIGO,
 };
+
+export const IconButtonStyle = {
+  padding: '0px',
+};
