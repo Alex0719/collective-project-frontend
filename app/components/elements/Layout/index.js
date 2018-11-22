@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { OuterWrapper, AvatarWrapper } from './styles';
 import ProfileMenu from 'containers/elements/ProfileMenu';
 import MenuButton from '../MenuButton';
-
 import { OuterWrapper, AvatarWrapper, AvatarStyle } from './styles';
 import Logo from '../../../images/logos/internlink-white-transparent.png';
 

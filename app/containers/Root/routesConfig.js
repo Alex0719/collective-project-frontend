@@ -6,11 +6,11 @@ import Dashboard from '../../containers/pages/Dashboard';
 export const routes = [
   {
     path: '/',
-    component: HomePage,
+    component: Dashboard,
   },
   {
     path: '/test',
-    component: Dashboard,
+    component: HomePage,
   },
   {
     path: '/company',
