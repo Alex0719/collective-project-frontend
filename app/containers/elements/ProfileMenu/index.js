@@ -2,14 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
-import { IconButton, IconMenu, Avatar, Divider } from 'material-ui';
+import { IconButton, IconMenu, Avatar, Divider, Checkbox } from 'material-ui';
 
 import injectSaga from 'utils/injectSaga';
 import loginUserSaga from 'sagas/loginSagas';
+import logoutUserSaga from 'sagas/logoutSagas';
 import profileIcon from 'images/profileIcon.png';
 import TextField from 'components/elements/TextField';
 import Button from 'components/elements/Button';
 import { loginUser, getLoggedUser } from 'actions/loginActions';
+import { logoutUser } from 'actions/logoutActions';
 import { AvatarStyle } from 'components/elements/Layout/styles';
 import {
   IconButtonStyle,
@@ -18,6 +20,8 @@ import {
   TitleWrapper,
   DividerStyle,
   ButtonWrapper,
+  CheckboxStyle,
+  Link,
 } from './styles';
 
 export class ProfileMenu extends React.Component {
@@ -28,6 +32,7 @@ export class ProfileMenu extends React.Component {
       open: false,
       email: '',
       password: '',
+      rememberMe: false,
     };
   }
 
@@ -59,13 +64,19 @@ export class ProfileMenu extends React.Component {
     });
   }
 
+  onCheck(event){
+    this.setState({
+      rememberMe: event.target.checked,
+    });
+  }
+
   handleLogin() {
-    const { email, password } = this.state;
+    const { email, password, rememberMe } = this.state;
     const { login } = this.props;
     const credentials = {
       email,
       password,
-      rememberMe: true,
+      rememberMe,
     };
 
     this.setState({ open: false });
@@ -74,7 +85,7 @@ export class ProfileMenu extends React.Component {
 
   renderLogout() {
     return (
-      <div>
+      <IconMenuInnerWrapper>
         <Button
           type="DividerButton"
           text="Profil"
@@ -83,9 +94,9 @@ export class ProfileMenu extends React.Component {
         <Button
           type="DividerButton"
           text="Logout"
-          onClick={() => console.log('click')}
+          onClick={() => this.props.logout()}
         />
-      </div>
+      </IconMenuInnerWrapper>
     );
   }
 
@@ -109,9 +120,16 @@ export class ProfileMenu extends React.Component {
           style={TextFieldStyle}
           onChange={event => this.onChange('password', event)}
         />
+        <Checkbox
+          label="Ține-mă minte"
+          style={CheckboxStyle}
+          value={this.state.rememberMe}
+          onCheck={event => this.onCheck(event)}
+        />
         <ButtonWrapper>
           <Button text="Login" onClick={() => this.handleLogin()} />
         </ButtonWrapper>
+        <Link>Creează cont student</Link>
       </IconMenuInnerWrapper>
     );
   }
@@ -141,11 +159,13 @@ export class ProfileMenu extends React.Component {
 ProfileMenu.propTypes = {
   loggedUser: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
   login: values => dispatch(loginUser(values)),
   getLoggedUser: () => dispatch(getLoggedUser()),
+  logout: () => dispatch(logoutUser()),
 });
 
 const withConnect = connect(
@@ -158,7 +178,13 @@ const withSaga = injectSaga({
   saga: loginUserSaga,
 });
 
+const withLogoutSaga = injectSaga({
+  key: 'logoutSaga',
+  saga: logoutUserSaga,
+});
+
 export default compose(
   withSaga,
+  withLogoutSaga,
   withConnect,
 )(ProfileMenu);

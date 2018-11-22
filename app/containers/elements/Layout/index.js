@@ -21,7 +21,8 @@ export class Layout extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.props.loggedUser !== nextProps.loggedUser;
+    return this.props.loggedUser.role !== nextProps.loggedUser.role ||
+      this.props.loggedUser.email !== nextProps.loggedUser.email;
   }
 
   render() {
