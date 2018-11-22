@@ -6,7 +6,7 @@ import { combineReducers } from 'redux-immutable';
 import { fromJS } from 'immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
-import testReducer from 'reducers/testReducer';
+import loginReducer from 'reducers/loginReducer';
 import companyReducer from 'reducers/companyReducer';
 
 /*
@@ -42,8 +42,9 @@ export function routeReducer(state = routeInitialState, action) {
  */
 export default function createReducer(injectedReducers) {
   return combineReducers({
-    route: routeReducer,
-    test: testReducer,
+    // route: routeReducer,
+    // test: testReducer,
+    loggedUser: loginReducer,
     company: companyReducer,
     ...injectedReducers,
   });
