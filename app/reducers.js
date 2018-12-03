@@ -9,7 +9,7 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import loginReducer from 'reducers/loginReducer';
 import companyReducer from 'reducers/companyReducer';
 import dashboardReducer from './reducers/dashdoardReducer';
-
+import postsReducer from './reducers/postsReducers';
 /*
  * routeReducer
  *
@@ -48,6 +48,7 @@ export default function createReducer(injectedReducers) {
     loggedUser: loginReducer,
     company: companyReducer,
     dashboard: dashboardReducer,
+    postsReducer:postsReducer,
     ...injectedReducers,
   });
 }

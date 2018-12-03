@@ -4,6 +4,7 @@ import InternshipImg1 from './internship1.png';
 import InternshipImg2 from './internship2.jpg';
 
 import { DateSpan, PostContainer, ImgPost, ReadMoreSpan,LargeImgPost} from './styles';
+import { log } from 'util';
 
 const text='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
 const limit=200
@@ -36,12 +37,14 @@ const onReadMore=()=>{
     }
 }
 
-const Post = () => {
+const Post = ({ post}) => {
+    const {title, text, image, date, last}=post;
+    console.log("in component ",post);
 return(
 <PostContainer>
     <br/> 
-    <DateSpan>30 ianuarie 2018</DateSpan>
-    <h4>Acesta e titlul postarii</h4><br/>
+    <DateSpan>{date}</DateSpan>
+    <h4>{title}</h4><br/>
     <hr/>
     {renderText(text)}  
     {renderReadMoreButton(text)}   
