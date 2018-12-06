@@ -6,8 +6,9 @@ import { createStructuredSelector } from 'reselect';
 import injectSaga from 'utils/injectSaga';
 import getPostsForInternshipSaga from 'sagas/postsSagas';
 import {selectPostsForInternship} from '../../../selectors/postsSelector'
-
 import { getPostsForInternship } from 'actions/getPostsActions';
+import addPostForInternshipSaga from 'sagas/postsSagas';
+import {addPostForInternshipRequest} from 'actions/addPostActions';
 import Post from '../../../components/elements/Post'
 import AddPost from '../../../components/elements/AddPost'
 export class InternshipPosts extends React.Component {
@@ -20,9 +21,10 @@ export class InternshipPosts extends React.Component {
     this.props.getPosts();
   }
 
-  saveFunction(post)
+  saveFunction=(post)=>
   {
     console.log("I will save this post ", post);
+    this.props.savePost(post);
   }
   render() {
     const {posts} = this.props;
@@ -45,17 +47,24 @@ const mapStateToProps = state =>
 
 
 const mapDispatchToProps = dispatch => ({
-  getPosts: () => dispatch(getPostsForInternship())
+  getPosts: () => dispatch(getPostsForInternship()),
+  savePost: (post) =>dispatch(addPostForInternshipRequest(post))
 });
 
   InternshipPosts.propTypes = {
     getPosts: PropTypes.func,
     posts: PropTypes.array,
+    savePost:PropTypes.func
   };
   
   const withSaga = injectSaga({
     key: 'getPostsForInternshipSaga',
     saga: getPostsForInternshipSaga,
+  });
+
+  const withSagaSavePost = injectSaga({
+    key: 'addPostForInternshipSaga',
+    saga: addPostForInternshipSaga,
   });
 
 const withConnect = connect(
@@ -65,5 +74,6 @@ const withConnect = connect(
 
 export default compose(
   withSaga,
+  withSagaSavePost,
   withConnect,
 )(InternshipPosts);
