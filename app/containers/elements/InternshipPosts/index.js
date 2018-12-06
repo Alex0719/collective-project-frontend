@@ -9,6 +9,7 @@ import {selectPostsForInternship} from '../../../selectors/postsSelector'
 
 import { getPostsForInternship } from 'actions/getPostsActions';
 import Post from '../../../components/elements/Post'
+import AddPost from '../../../components/elements/AddPost'
 export class InternshipPosts extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +20,10 @@ export class InternshipPosts extends React.Component {
     this.props.getPosts();
   }
 
+  saveFunction(post)
+  {
+    console.log("I will save this post ", post);
+  }
   render() {
     const {posts} = this.props;
     if(!posts) {
@@ -26,6 +31,7 @@ export class InternshipPosts extends React.Component {
     }
     return (
         <div>
+          <AddPost saveFunction={this.saveFunction}/>
           {posts.map((post, key)=><Post key={key} post={post}/>)}
         </div>
     );

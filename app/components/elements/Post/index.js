@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InternshipImg1 from './internship1.png';
-import InternshipImg2 from './internship2.jpg';
 
 import { DateSpan, PostContainer, ImgPost, ReadMoreSpan,LargeImgPost} from './styles';
 import { log } from 'util';
@@ -11,7 +9,7 @@ const limit=200
 
 const renderText=(content, image, id)=>{
     if(content.length<=limit) return(<p><ImgPost id={"img"+id} src={"data:image/png;base64," + image} alt="no image found" />{content}</p>);
-    return(<p><ImgPost id={"img"+id} src={"data:image/png;base64," + image} alt="no image found" />{content.substring(0,limit)}<span id="dots">...</span><ReadMoreSpan id="more">{content.substring(limit+1, content.length)}</ReadMoreSpan></p>); 
+    return(<p><ImgPost id={"img"+id} src={"data:image/png;base64," + image} alt="no image found" />{content.substring(0,limit)}<span id={"dots"+id}>...</span><ReadMoreSpan id={"more"+id}>{content.substring(limit+1, content.length)}</ReadMoreSpan></p>); 
 }
 
 const renderReadMoreButton=(content,id)=>{
@@ -21,8 +19,8 @@ const renderReadMoreButton=(content,id)=>{
 
 const onReadMore=(id)=>{
     console.log("in on read",id);
-    var dots = document.getElementById("dots");
-    var moreText = document.getElementById("more");
+    var dots = document.getElementById("dots"+id);
+    var moreText = document.getElementById("more"+id);
     var btnText = document.getElementById("btnRead"+id);
     var img = document.getElementById("img"+id);
     if (dots.style.display === "none") {
