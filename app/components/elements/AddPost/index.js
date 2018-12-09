@@ -47,7 +47,6 @@ export class AddPost extends React.Component {
 
     onSavePost=()=>
     {
-        var saveFunction=this.props.saveFunction;
         console.log("click");
         const date=new Date().toLocaleString();
         const post=
@@ -58,7 +57,7 @@ export class AddPost extends React.Component {
             image:this.state.image,
             date:date
         }
-        saveFunction(post);
+        this.props.saveFunction(post);
     }
 
     handleCheck=(check)=>

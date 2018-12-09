@@ -38,7 +38,7 @@ const onReadMore=(id)=>{
 
 const Post = ({ post}) => {
     const {id,title, text, image, date, last}=post;
-    console.log("in component ",id);
+    console.log("in component ",id,post);
 return(
 <PostContainer>
     <br/> 

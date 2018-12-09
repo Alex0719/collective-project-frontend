@@ -7,10 +7,11 @@ import injectSaga from 'utils/injectSaga';
 import getPostsForInternshipSaga from 'sagas/postsSagas';
 import {selectPostsForInternship} from '../../../selectors/postsSelector'
 import { getPostsForInternship } from 'actions/getPostsActions';
-import addPostForInternshipSaga from 'sagas/postsSagas';
+import {addPostForInternshipSaga} from 'sagas/postsSagas';
 import {addPostForInternshipRequest} from 'actions/addPostActions';
 import Post from '../../../components/elements/Post'
 import AddPost from '../../../components/elements/AddPost'
+import { loadavg } from 'os';
 export class InternshipPosts extends React.Component {
   constructor(props) {
     super(props);
@@ -31,9 +32,10 @@ export class InternshipPosts extends React.Component {
     if(!posts) {
       return null;
     }
+    console.log('posts',posts);
     return (
         <div>
-          <AddPost saveFunction={this.saveFunction}/>
+          <AddPost saveFunction={post=>this.saveFunction(post)}/>
           {posts.map((post, key)=><Post key={key} post={post}/>)}
         </div>
     );
@@ -54,7 +56,7 @@ const mapDispatchToProps = dispatch => ({
   InternshipPosts.propTypes = {
     getPosts: PropTypes.func,
     posts: PropTypes.array,
-    savePost:PropTypes.func
+    savePost:PropTypes.func,
   };
   
   const withSaga = injectSaga({

@@ -8,6 +8,7 @@ import { addPostForInternshipSuccess, addPostForInternshipFailure } from 'action
 import { ADD_POST_FOR_INTERNSHIP_REQUEST } from 'constants/post';
 
 import request from 'utils/request';
+import { loadavg } from 'os';
 
 export function* getPostsForInternship({ values }) {
   const requestURL = 'https://localhost:44340/internships/1/posts';
@@ -45,7 +46,7 @@ export default function* getPostsForInternshipSaga() {
 
 export function* addPostForInternship({ values }) {
   const requestURL = 'https://localhost:44340/internships/1/posts';
-
+  console.log('saga', values);
   let options = {
     headers: {
       'Access-Control-Allow-Origin': '*',
