@@ -20,7 +20,7 @@ export const PostContainer = styled.div`
     box-shadow: -19px 15px 40px -12px rgba(0,0,0,0.39);
     box-sizing:border-box;
     color:rgb(0,0,0);
-    display:block;
+    display:inline-block;
     font-size:15px;
     line-height:23px;
     margin-bottom:16px;
