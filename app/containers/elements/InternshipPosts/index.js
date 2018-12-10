@@ -32,10 +32,18 @@ export class InternshipPosts extends React.Component {
     if(!posts) {
       return null;
     }
-    console.log('posts',posts);
+    else if(posts.length>=2)
+    {
+      posts.sort(function(a,b){
+      if (new Date(a.date) > new Date(b.date)) return -1;
+      if (new Date(a.date) < new Date(b.date)) return 1;
+      return 0}); 
+    }
+    console.log('posts ',posts);
+
     return (
         <div>
-          <AddPost saveFunction={post=>this.saveFunction(post)}/>
+          {posts!=null && posts.length>0 && posts[0].last?null: <AddPost saveFunction={post=>this.saveFunction(post)}/>}
           {posts.map((post, key)=><Post key={key} post={post}/>)}
         </div>
     );
