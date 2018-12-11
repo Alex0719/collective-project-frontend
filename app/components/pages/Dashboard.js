@@ -9,13 +9,14 @@ import {
 } from 'constants/colors';
 import ChartWithText from '../elements/ChartWithText/ChartWithText';
 
+import { CompanyLogo } from "../../images/companies";
+
 const CirclesContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
   padding: 40px 0;
-  flex-wrap: wrap;
   background: ${AERO_BLUE};
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 `;
 
 const Row = styled.div`
@@ -23,7 +24,10 @@ const Row = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  border-bottom: 1px solid ${PEWTER_BLUE};
+  border-bottom: 1px solid ${AERO_BLUE};
+  @media (max-width: 840px) {
+    border-bottom: none;
+  }
 `;
 
 const QuestionContainer = styled.div`
@@ -53,6 +57,7 @@ const Question = styled.div`
     display: flex;
     justify-content: center;
   }
+
   min-width: 260px;
   @media (max-width: 840px) {
     width: 100%;
@@ -60,6 +65,25 @@ const Question = styled.div`
 `;
 
 const Partners = styled.div`
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
+const Partner = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  
+`;
+
+const Img = styled.img`
+  width: 200px;
+  height: 200px;
+`;
+
+const PartnersH1 = styled.h1`
   text-align: center;
 `;
 
@@ -103,7 +127,7 @@ export default class DashboardComponent extends React.Component {
 
             <Question>
               <h2>Cui se adreseaza?</h2>
-              <div>Oricui</div>
+              <div>Raspuns mai lung care s-ar putea sa nu incapa aici dar sa speram</div>
             </Question>
           </Row>
 
@@ -124,8 +148,37 @@ export default class DashboardComponent extends React.Component {
             </Question>
           </Row>
         </QuestionContainer>
+        <PartnersH1>Firme partenere</PartnersH1>
         <Partners>
-          <h1>Firme partenere</h1>
+          <Partner>
+            <Img src={CompanyLogo} />
+            companie 1
+          </Partner>
+
+          <Partner>
+            <Img src={CompanyLogo} />
+            companie 1
+          </Partner>
+
+          <Partner>
+            <Img src={CompanyLogo} />
+            companie 1
+          </Partner>
+
+          <Partner>
+            <Img src={CompanyLogo} />
+            companie 1
+          </Partner>
+
+          <Partner>
+            <Img src={CompanyLogo} />
+            companie 1
+          </Partner>
+
+          <Partner>
+            <Img src={CompanyLogo} />
+            companie 1
+          </Partner>
         </Partners>
       </div>
     );
