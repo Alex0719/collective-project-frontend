@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Label } from 'semantic-ui-react' 
 import {
   AERO_BLUE,
   JAPANESE_INDIGO,
@@ -10,40 +11,179 @@ import {
 
 import TextField from '../elements/TextField';
 import TextArea from '../elements/TextArea';
+import SplitPane from 'react-split-pane';
+import './internshipDetails.css';
+import StarRating from 'components/elements/StarRating';
+import Button from 'components/elements/Button';
+import UsefulLinks from '../elements/UsefulLinks';
+import Testimonials from '../elements/Testimonials';
+
 
 export default class InternshipDetailsComponent extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state={
+      places:0,
+      topics:"",
+      description:"",
+      internshipDetails:this.props.internshipDetails,
+    }
+  }
+
+  
+
+  onPlacesChanged(txt)
+  {
+    var newInternshipDetails = this.state.internshipDetails;
+    newInternshipDetails.internship.places = txt.target.value;
+    this.setState({internshipDetails:newInternshipDetails});
+  }
+
+  onTopicsChanged(txt)
+  {
+    var newInternshipDetails = this.state.internshipDetails;
+    newInternshipDetails.internship.topics = txt.target.value;
+    this.setState({internshipDetails:newInternshipDetails});
+  }
+
+  onDescriptionChanged(txt)
+  {
+    console.log("aici");
+    console.log(txt);
+    var newInternshipDetails = this.state.internshipDetails;
+    newInternshipDetails.internship.description = txt.target.value;
+    this.setState({internshipDetails:newInternshipDetails});
   }
 
   render() {
+    const buttonStyle={
+      "position": "absolute",
+      "right": "0",
+      "margin-right": "10px",
+      "margin-top": "10px",
+    }
+
+    const TextFieldStyle = {
+      padding: '15px',
+      marginRight: '10px',
+      marginLeft: '10px',
+      fontWeight: 'normal',
+      width: '100%'
+    };
+
+    const TextFieldSmallStyle={
+      padding: '15px',
+      marginRight: '10px',
+      marginLeft: '10px',
+      fontWeight: 'normal',
+      width: '33%'
+    };
+
+    const TextAreaStyle = {
+      marginRight: '10px',
+      marginLeft: '10px',
+      width: '100%'
+    };
+
+    const LabelStyle = {
+      fontWeight: 'bold',
+      width: '100%'
+    };
+
+    const LabelSmallStyle = {
+      fontWeight: 'bold',
+      width: '48%'
+    };
+
+    console.log("comp:");
+    console.log(this.state.internshipDetails)
     return (
-      <div>
+      <SplitPane split="vertical" minSize={window.innerWidth * 34 / 100} defaultSize={"66%"} maxSize={window.innerWidth * 66 / 100}>
         <LeftPart>
           <Row>
-            <TextField value={this.props.internshipDetails.internship.topics} />
-            <TextField value={this.props.internshipDetails.internship.start} />
-            <TextField value={this.props.internshipDetails.internship.places} />
+              <TextField value={this.state.internshipDetails.internship.name} />
+            </Row>
+          <Row>
+          <Label style={LabelSmallStyle} horizontal>Data de incepere:
+              <TextField style={TextFieldSmallStyle} value={this.state.internshipDetails.internship.start} />           
+            </Label>
+            <Label style={LabelSmallStyle} color='red' horizontal>Locuri disponibile:
+              <TextField style={TextFieldSmallStyle} value={this.state.internshipDetails.internship.places} onChange={event => this.onPlacesChanged(event)} />
+            </Label>
           </Row>
           <Row>
-            <TextArea value={this.props.internshipDetails.internship.topics} />
+            <Label style={LabelStyle} color='red' horizontal>Topicuri:
+              <TextField style={TextFieldStyle} value={this.state.internshipDetails.internship.topics} onChange={event => this.onTopicsChanged(event)} />
+            </Label>
           </Row>
           <Row>
-            <TextField value={this.props.internshipDetails.internship.topics} />
+            <TextField style={TextAreaStyle} value={this.state.internshipDetails.internship.description} onChange={event => this.onDescriptionChanged(event)} multiLine={true} />
           </Row>
+          <RowButton>
+            {/* TODO: put data when calling onSaveChanges() */}
+            <Button text={"Save changes"} onClick={()=>this.props.onSaveChanges(this.state.internshipDetails.internship)}/>
+          </RowButton>
         </LeftPart>
-      </div>
+
+        <RightPart>
+          <RowsWithRatings>
+            <RowRating>
+              <NameRating>Internship</NameRating>
+              <StarRating rating={this.props.internshipDetails.ratingInternship} />
+            </RowRating>
+            <RowRating>
+              <NameRating>Mentors</NameRating>
+              <StarRating rating={this.props.internshipDetails.ratingMentors} />
+            </RowRating>
+            <RowRating>
+              <NameRating>Company</NameRating>
+              <StarRating rating={this.props.internshipDetails.ratingCompany} />
+            </RowRating>
+          </RowsWithRatings>
+          <TestimonialRow >
+            <Testimonials testimonials={this.props.testimonials} />
+          </TestimonialRow>
+        </RightPart>
+      </SplitPane>
     );
   }
 }
 
+const NameRating = styled.div`
+  font-size: 20px;
+  color: ${JAPANESE_INDIGO};
+  flex: 1 0 30%;
+`;
+
+const RowsWithRatings = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
+`;
+
+const RowRating = styled.div`
+  flex: 1 0 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+
 const LeftPart = styled.div`
-  width: 60%;
+  width: 100%;
   display: block;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
+`;
+
+const RightPart = styled.div`
+  width: 100%;
+  display: block;
+  padding: 20px;
+  margin-top:10px;
 `;
 
 const Row = styled.div`
@@ -52,4 +192,30 @@ const Row = styled.div`
   flex-wrap: wrap;
   width: 100%;
   border-bottom: 1px solid ${PEWTER_BLUE};
+`;
+
+const TestimonialRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 75px;
+  border-bottom: 1px solid ${PEWTER_BLUE};
+  background-color: ${AERO_BLUE};
+`;
+
+const RowButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content:right;
+  margin-top: 25px;
+`;
+
+
+const TitleWrapper = styled.div`
+  text-align: center;
+  font-size: 20px;
+  color: ${JAPANESE_INDIGO};
 `;

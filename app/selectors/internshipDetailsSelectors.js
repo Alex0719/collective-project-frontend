@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const selectInternshipDetails = state => state.get(['internshipDetails']);
+const selectInternshipDetails = state =>state.get('internshipDetails').toJS() || null;
 
 const internshipDetailsSelector = () =>
   createSelector(() => selectInternshipDetails);

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { LabelStyle, UnderlineStyle } from './styles';
 
-const TextFieldComponent = ({ id, label, onChange, type, value, style }) => {
+const TextFieldComponent = ({ id, label, onChange, type, value, style, multiLine = false }) => {
   return (
     <TextField
       id={id}
@@ -16,6 +16,7 @@ const TextFieldComponent = ({ id, label, onChange, type, value, style }) => {
       value={value}
       margin={'normal'}
       style={style}
+      multiLine={multiLine}
     />
   );
 }
@@ -23,7 +24,7 @@ const TextFieldComponent = ({ id, label, onChange, type, value, style }) => {
 TextFieldComponent.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   type: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,
