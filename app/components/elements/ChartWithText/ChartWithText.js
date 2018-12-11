@@ -14,7 +14,6 @@ const ChartContainer = styled.div`
   max-width: 300px;
 `;
 
-
 const ChartText = styled.div`
   position: relative;
   display: flex;
@@ -30,9 +29,8 @@ const ChartText = styled.div`
 
 const ChartWithText = props => (
   <ChartContainer>
-   
     <ChartText>{props.children}</ChartText>
-   
+
     <PieChart
       data={[{ value: 1, key: 1, color: JAPANESE_INDIGO }]}
       reveal={100}

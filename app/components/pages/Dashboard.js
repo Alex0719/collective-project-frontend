@@ -9,7 +9,7 @@ import {
 } from 'constants/colors';
 import ChartWithText from '../elements/ChartWithText/ChartWithText';
 
-import { CompanyLogo } from "../../images/companies";
+import { CompanyLogo } from '../../images/companies';
 
 const CirclesContainer = styled.div`
   padding: 40px 0;
@@ -75,7 +75,6 @@ const Partner = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  
 `;
 
 const Img = styled.img`
@@ -127,7 +126,9 @@ export default class DashboardComponent extends React.Component {
 
             <Question>
               <h2>Cui se adreseaza?</h2>
-              <div>Raspuns mai lung care s-ar putea sa nu incapa aici dar sa speram</div>
+              <div>
+                Raspuns mai lung care s-ar putea sa nu incapa aici dar sa speram
+              </div>
             </Question>
           </Row>
 

@@ -1,3 +1,3 @@
-import CompanyLogo from "./company placeholder.png";
+import CompanyLogo from './company placeholder.png';
 
 export { CompanyLogo };
