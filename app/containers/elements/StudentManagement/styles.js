@@ -27,9 +27,7 @@ export const DividerStyle = {
 };
 
 export const ButtonWrapper = styled.div`
-  margin: auto;
-  width: 40%;
-  padding: 10px;
+  display:inline-flex
 `;
 
 export const Link = styled.a`
