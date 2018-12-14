@@ -11,7 +11,7 @@ const renderButtons = loggedUser => {
     case 'Company':
       return (
         <div>
-          <MenuButton text="Internships" changeRoute={() => {}} />
+          <MenuButton text="Internships" onClick={() => {}} />
         </div>
       );
     default:

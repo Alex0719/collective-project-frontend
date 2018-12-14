@@ -28,7 +28,7 @@ TextFieldComponent.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-  ]).isRequired,
+  ]),
   style: PropTypes.object,
 };
 
