@@ -10,8 +10,10 @@ import './stil.css';
 import {TableContainer,ButtonWrapper} from './styles'
 import Button from '../../../components/elements/Button'
 import {studentManagementSelector} from '../../../selectors/studentManagementSelector'
-import { getApplications, getCv } from 'actions/studentManagement';
-import {getApplicationsSaga, getCvSaga} from '../../../sagas/studentManagementSagas'
+import { getApplications, getCv, selectStudent, approveStudent,rejectStudent,getAvailability } from 'actions/studentManagement';
+import {getApplicationsSaga, getCvSaga,
+     selectStudentSaga, approveStudentSaga, 
+     rejectStudentSaga, getAvailabilitySaga} from '../../../sagas/studentManagementSagas'
 
 export class StudentManagement extends React.Component
 {
@@ -29,11 +31,12 @@ export class StudentManagement extends React.Component
     }
     componentWillMount() {
         this.props.getApplications();
+        this.props.getAvailability();
     }
 
     renderButton(cell,row)
     {
-        if (row.Status=="Aplicat")
+        if (row.Status.toLowerCase()=="aplicat")
         {
             return (
                 <ButtonWrapper>
@@ -41,7 +44,7 @@ export class StudentManagement extends React.Component
                 </ButtonWrapper>);
         
         }
-        else if(row.Status=="Examinare")
+        else if(row.Status.toLowerCase()=="examinare")
         {
             return(
                 <ButtonWrapper>
@@ -55,21 +58,17 @@ export class StudentManagement extends React.Component
 
     onSelectStudent(row)
     {
-       console.log("selectat", row);
-       
-        //trimite mail ca a fost selectat la internshipul cu id-ul din path pt studentul cu id din row
-        //schimba statusul pe back si frontend in  contactat
+       this.props.selectStudent(row,this.props.getApplications);
     }
 
     onAcceptStudent(row)
     {
-        console.log("aprobat", row);
-        //trimite mail si scade nr of places          
+        this.props.approveStudent(row,this.props.getApplications);        
     }
 
     onRejectStudent(row)
     {
-        console.log("respins", row);
+       this.props.rejectStudent(row,this.props.getApplications);
     }
 
     renderLink(cell,row)
@@ -84,36 +83,21 @@ export class StudentManagement extends React.Component
 
     showCv(cv)
     {
-        console.log(" Cv show ",cv.Cv)
-        // this.setState({cv:cv.Cv});
-        // this.setState({seePdf:true});
         const file = new Blob(
             [cv.Cv], 
             {type: 'application/pdf'});
         const fileURL = URL.createObjectURL(file);
-        //Open the URL on new Window
         window.open(fileURL);
-    }
-    onDocumentLoadSuccess()
-    {
-        console.log("success");
-        // this.setState({cv:null});
-        // this.setState({seePdf:false});
-        
     }
 
     render() {
         var applications = Object.values(this.props.applications.applications);
+        console.log(this.props);
+        var availability= this.props.applications.availability;
         if(applications==null || applications==undefined || applications.length==0)return(null);
         return (
             <TableContainer>
-            Locuri: {this.state.nrPlaces}
-            {/* {this.state.seePdf?
-            <Document
-            file={this.state.cv}
-            onLoadSuccess={this.onDocumentLoadSuccess}/>
-            :null} */}
-
+             Locuri ocupate: {availability.OccupiedPlaces} din {availability.TotalPlaces}
             <Helmet>
             <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
             </Helmet>
@@ -123,11 +107,11 @@ export class StudentManagement extends React.Component
                             search={ true }
                             className="stock-table"
                             >
-            <TableHeaderColumn width={100} dataField='Id' isKey={true}>Id</TableHeaderColumn>
-            <TableHeaderColumn width={100} dataField='Fullname'>Student</TableHeaderColumn>
-            <TableHeaderColumn width={100} dataField="button" dataAlign={'center'} editable={false} dataFormat={this.renderLink.bind(this)}>CV</TableHeaderColumn>
-            <TableHeaderColumn width={100} dataField='Status'>Status</TableHeaderColumn>
-            <TableHeaderColumn width={100} dataField="button" dataAlign={'center'} editable={false} dataFormat={this.renderButton.bind(this)}>Actiune</TableHeaderColumn>
+            <TableHeaderColumn width={'100'} dataField='Id' isKey={true}>Id</TableHeaderColumn>
+            <TableHeaderColumn width={'100'} dataField='Fullname'>Student</TableHeaderColumn>
+            <TableHeaderColumn width={'100'} dataField="button" dataAlign={'center'} editable={false} dataFormat={this.renderLink.bind(this)}>CV</TableHeaderColumn>
+            <TableHeaderColumn width={'100'} dataField='Status'>Status</TableHeaderColumn>
+            <TableHeaderColumn width={'100'} dataField="button" dataAlign={'center'} editable={false} dataFormat={this.renderButton.bind(this)}>Actiune</TableHeaderColumn>
             </BootstrapTable>
             </TableContainer>
         
@@ -137,19 +121,26 @@ export class StudentManagement extends React.Component
 }
 
 const mapStateToProps = state =>{
-    console.log("asta",state)
   return createStructuredSelector({
     applications: studentManagementSelector(state)()
   });
 }
 const mapDispatchToProps = dispatch => ({
   getApplications: () => dispatch(getApplications()),
-  getCv:(values, fun)=>dispatch(getCv(values, fun))
+  getCv:(values, fun)=>dispatch(getCv(values, fun)),
+  selectStudent:(values,fun)=>dispatch(selectStudent(values,fun)),
+  approveStudent:(values,fun)=>dispatch(approveStudent(values,fun)),
+  rejectStudent:(values,fun)=>dispatch(rejectStudent(values,fun)),
+  getAvailability:(values)=>dispatch(getAvailability(values))
 });
 
 StudentManagement.propTypes = {
   getApplications: PropTypes.func,
   getCv: PropTypes.func,
+  selectStudent:PropTypes.func,
+  approveStudent:PropTypes.func,
+  rejectStudent:PropTypes.func,
+  getAvailability:PropTypes.func,
   applications: PropTypes.object
 };
 
@@ -157,13 +148,28 @@ const withApplicationSaga = injectSaga({
   key: 'getApplicationsSaga',
   saga: getApplicationsSaga,
 });
-
 const withCvSaga = injectSaga({
     key: 'getCvSaga',
     saga: getCvSaga,
   });
+const withSelectStudentSaga = injectSaga({
+    key: 'selectStudentSaga',
+    saga: selectStudentSaga,
+});
+const withApproveStudentSaga = injectSaga({
+    key: 'approveStudentSaga',
+    saga: approveStudentSaga,
+    });
+const withRejectStudentSaga = injectSaga({
+    key: 'rejectStudentSaga',
+    saga: rejectStudentSaga,
+    });
 
-  
+const withAvailabilitySaga = injectSaga({
+    key: 'getAvailabilitySaga',
+    saga: getAvailabilitySaga,
+    });
+
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
@@ -172,5 +178,9 @@ const withConnect = connect(
 export default compose(
   withApplicationSaga,
   withCvSaga,
+  withSelectStudentSaga,
+  withApproveStudentSaga,
+  withRejectStudentSaga,
+  withAvailabilitySaga,
   withConnect
 )(StudentManagement);
