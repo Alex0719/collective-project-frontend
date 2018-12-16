@@ -10,6 +10,7 @@ import loginReducer from 'reducers/loginReducer';
 import companyReducer from 'reducers/companyReducer';
 import dashboardReducer from './reducers/dashdoardReducer';
 import studentManagementReducer from './reducers/studentManagementReducer';
+import postsReducer from './reducers/postsReducers';
 /*
  * routeReducer
  *
@@ -49,6 +50,7 @@ export default function createReducer(injectedReducers) {
     company: companyReducer,
     dashboard: dashboardReducer,
     studentManagement: studentManagementReducer,
+    postsReducer:postsReducer,
     ...injectedReducers,
   });
 }
