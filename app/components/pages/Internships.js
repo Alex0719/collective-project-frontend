@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 import Title from 'components/elements/Title';
+import CollapsibleTrigger from 'components/elements/CollapsibleTrigger';
 import styled from 'styled-components';
-import styles from './Internships.css';
 
 import { QUEEN_BLUE, AERO_BLUE, JAPANESE_INDIGO } from 'constants/colors';
 
@@ -24,12 +24,10 @@ const InternshipsComponent = props => {
   };
 
 
-
   const renderInternships = () => {
-    console.log('din props', props.internships);
     const { internships } = props;
     return internships.map(internship => (
-      <Collapsible trigger={`${internship.description} | ${internship.start} --- ${internship.end}`} triggerStyle={Trigger} >
+      <Collapsible key={internship.id} trigger={CollapsibleTrigger(internship)} triggerStyle={Trigger} >
         <InternshipContent>
           <p><strong>Topic-uri: </strong>{internship.topics}</p>
           <p><strong>Locuri disponibile: </strong>{internship.places}</p>

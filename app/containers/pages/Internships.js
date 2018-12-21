@@ -10,12 +10,15 @@ import injectSaga from 'utils/injectSaga';
 import InternshipsComponent from 'components/pages/Internships';
 
 export class Internships extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   componentWillMount() {
     this.props.getInternships();
   }
 
   render() {
-    console.log('from selector', this.props.internships);
     const mockInternships = [
       {
         id: 1,
@@ -38,7 +41,7 @@ export class Internships extends React.Component {
   ];
 
     return (
-      <InternshipsComponent internships={mockInternships} />
+      <InternshipsComponent internships={this.props.internships} />
     );
   }
 }

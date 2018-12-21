@@ -30,8 +30,18 @@ export function* getStudentsPerYearSaga() {
 export function* doGetInternships() {
   const requestURL = 'https://localhost:44340/internships';
 
+  let options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': true,
+    },
+    credentials: 'include',
+    method: 'GET',
+  };
+
   try {
-    const data = yield call(request, requestURL);
+    const data = yield call(request, requestURL, options);
     yield put(getInternshipsSuccess(data));
   } catch (err) {
     yield put(getStudentsPerYearFailure(err.response));
