@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ProfileMenu from 'containers/elements/ProfileMenu';
 import MenuButton from '../MenuButton';
 import { OuterWrapper, AvatarWrapper, AvatarStyle, ImgButtonStyle } from './styles';
-import Logo from '../../../images/logos/internlink-white-transparent.jpeg';
+import Logo from '../../../images/logos/internlink-white-transparent.png';
 
 export class Layout extends React.Component {
   constructor(props) {
