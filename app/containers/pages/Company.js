@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 
 import { getStudentsPerYear } from 'actions/companyActions';
-import getStudentsPerYearSaga from 'sagas/companySagas';
+import { getStudentsPerYearSaga } from 'sagas/companySagas';
 import { studentsPerYearSelector } from 'selectors/companySelectors';
 import injectSaga from 'utils/injectSaga';
 import CompanyComponent from 'components/pages/Company';
