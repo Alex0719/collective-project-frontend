@@ -6,7 +6,7 @@ import {
     ADD_POST_FOR_INTERNSHIP_SUCCESS,
     ADD_POST_FOR_INTERNSHIP_FAILURE,
   } from 'constants/post';
-  
+
 export const initialState = fromJS({
   posts: []
 });

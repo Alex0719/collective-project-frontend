@@ -38,7 +38,20 @@ export class HomePage extends React.Component {
     }
   }
 
+  count(number) {
+    let flags = Array(number).fill(true,2);
+    for(let i=2; i<number;i++) {
+      if(flags[i]) {
+        for(let multiple = i*2; multiple<number;multiple+=i) {
+          flags[multiple] = false;
+        }
+      }
+    }
+    return flags.filter(v=>v).length;
+  }
+
   render() {
+    console.log('mi-e foame',this.count(new Date().getDate()));
     return (
       <div>
         {this.renderDashboard()}

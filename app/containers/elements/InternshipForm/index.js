@@ -63,11 +63,9 @@ export class InternshipForm extends React.Component {
               />
               <DatePicker
                 floatingLabelText="Dată start"
-                defaultDate={this.state.start}
               />
               <DatePicker
                 floatingLabelText="Dată sfârșit"
-                defaultDate={this.state.end}
               />
             </FieldsWrapper>
             <ButtonWrapper>
