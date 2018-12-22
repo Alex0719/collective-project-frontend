@@ -16,10 +16,9 @@ export class AddPost extends React.Component {
           title:''
       }
     }
- 
+
 
     onImageDrop=(image)=>{
-        console.log(image[0]);
         var message = document.getElementById("textAreaMessage");
         var file=image[0];
 
@@ -51,13 +50,12 @@ export class AddPost extends React.Component {
         //     // do whatever you want with the file content
         // };
         // reader.onabort = () => console.log('file reading was aborted');
-        // reader.onerror = () => console.log('file reading has failed');    
+        // reader.onerror = () => console.log('file reading has failed');
         // reader.readAsArrayBuffer(file);
     }
-  
+
     onChangeText=(text)=>
     {
-        console.log(text.target.value);
         this.setState({text:text.target.value});
     }
     onChangeTitle=(title)=>
@@ -67,7 +65,6 @@ export class AddPost extends React.Component {
 
     onSavePost=()=>
     {
-        console.log("click");
         const date=new Date().toLocaleString();
         const post=
         {
@@ -88,7 +85,7 @@ export class AddPost extends React.Component {
             title:'',
             text:'',
             isLast:false,
-            image:null,        
+            image:null,
         })
     }
 

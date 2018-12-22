@@ -4,7 +4,7 @@ const selectStudentsPerYear = state =>
   state.getIn(['company', 'studentsPerYear']);
 
 const selectInternships = state =>
-  state.getIn(['company', 'internships']);
+  state.getIn(['company', 'internships']).toJS();
 
 const studentsPerYearSelector = () =>
   createSelector(() => selectStudentsPerYear);

@@ -28,13 +28,10 @@ export function* getPostsForInternship({ values }) {
     let posts;
     if (Cookies.get('Identity')) {
       posts = yield call(request, requestURL, options);
-      console.log(posts);
     } else {
-      console.log("not authorized");
     }
     yield put(getPostsForInternshipSuccess(posts));
   } catch (err) {
-    console.log("err in get posts saga "+err)
     yield put(getPostsForInternshipFailure(err.response));
   }
 }
@@ -46,7 +43,6 @@ export default function* getPostsForInternshipSaga() {
 
 export function* addPostForInternship({ values }) {
   const requestURL = 'https://localhost:44340/internships/1/posts';
-  console.log('saga', values);
   let options = {
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -62,15 +58,10 @@ export function* addPostForInternship({ values }) {
   try {
     let addedPost;
     if (Cookies.get('Identity')) {
-      console.log("in add saga");
       addedPost = yield call(request, requestURL, options);
-      console.log(addedPost);
-    } else {
-      console.log("not authorized");
     }
     yield put(addPostForInternshipSuccess(addedPost));
   } catch (err) {
-    console.log("err in add post saga "+err)
     yield put(addPostForInternshipFailure(err.response));
   }
 }

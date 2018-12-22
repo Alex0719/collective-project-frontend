@@ -6,7 +6,7 @@ import CollapsibleTrigger from 'components/elements/CollapsibleTrigger';
 import styled from 'styled-components';
 
 import { QUEEN_BLUE, AERO_BLUE, JAPANESE_INDIGO } from 'constants/colors';
-
+import InternshipForm from 'containers/elements/InternshipForm';
 
 const InternshipsComponent = props => {
 
@@ -28,7 +28,7 @@ const InternshipsComponent = props => {
     const { internships } = props;
     return internships.map(internship => (
       <Collapsible key={internship.id} trigger={CollapsibleTrigger(internship)} triggerStyle={Trigger} >
-        <InternshipContent>
+        <InternshipContent key={internship.id}>
           <p><strong>Topic-uri: </strong>{internship.topics}</p>
           <p><strong>Locuri disponibile: </strong>{internship.places}</p>
           <p><strong>Durata: </strong>{internship.weeks} saptamani</p>
@@ -40,6 +40,7 @@ const InternshipsComponent = props => {
   return (
     <div>
       <Title text={'Programele noastre de internship'} />
+      <InternshipForm />
       <InternshipsContainer>
         {renderInternships()}
       </InternshipsContainer>
@@ -50,7 +51,6 @@ const InternshipsComponent = props => {
 const InternshipsContainer = styled.div`
   padding-left: 5%;
   padding-right: 5%;
-  background: ${AERO_BLUE};
 `;
 
 const InternshipContent = styled.div`

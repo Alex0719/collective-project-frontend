@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 
 import { LabelStyle, UnderlineStyle } from './styles';
 
-const TextFieldComponent = ({ id, label, onChange, type, value, style }) => {
+const TextFieldComponent = ({ id, label, onChange, type, value, style, floatingLabelFixed = false }) => {
   return (
     <TextField
       id={id}
       floatingLabelText={label}
       floatingLabelFocusStyle={LabelStyle}
       underlineFocusStyle={UnderlineStyle}
+      floatingLabelFixed={floatingLabelFixed}
       type={type}
       onChange={onChange}
       value={value}

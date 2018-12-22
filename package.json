@@ -159,7 +159,7 @@
     "ip": "1.1.5",
     "js-cookie": "^2.2.0",
     "lodash": "4.17.10",
-    "material-ui": "^0.20.2",
+    "material-ui": "^0.20.0",
     "minimist": "1.2.0",
     "moment": "^2.23.0",
     "prop-types": "15.6.1",

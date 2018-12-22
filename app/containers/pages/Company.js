@@ -17,7 +17,6 @@ class Company extends React.Component {
   }
 
   render() {
-    console.log('spy', this.props.studentsPerYear);
     return <CompanyComponent />;
   }
 }

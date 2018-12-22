@@ -18,13 +18,11 @@ export class InternshipPosts extends React.Component {
   }
 
   componentWillMount() {
-    console.log("in container willmount");
     this.props.getPosts();
   }
 
   saveFunction=(post)=>
   {
-    console.log("I will save this post ", post);
     this.props.savePost(post);
   }
   render() {
@@ -37,9 +35,8 @@ export class InternshipPosts extends React.Component {
       posts.sort(function(a,b){
       if (new Date(a.date) > new Date(b.date)) return -1;
       if (new Date(a.date) < new Date(b.date)) return 1;
-      return 0}); 
+      return 0});
     }
-    console.log('posts ',posts);
 
     return (
         <div>
@@ -66,7 +63,7 @@ const mapDispatchToProps = dispatch => ({
     posts: PropTypes.array,
     savePost:PropTypes.func,
   };
-  
+
   const withSaga = injectSaga({
     key: 'getPostsForInternshipSaga',
     saga: getPostsForInternshipSaga,

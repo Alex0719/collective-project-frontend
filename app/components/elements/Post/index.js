@@ -24,7 +24,6 @@ const renderReadMoreButton=(content,id)=>{
 }
 
 const onReadMore=(id)=>{
-    console.log("in on read",id);
     var dots = document.getElementById("dots"+id);
     var moreText = document.getElementById("more"+id);
     var btnText = document.getElementById("btnRead"+id);
@@ -65,17 +64,17 @@ const onReadMore=(id)=>{
 }
 
 const Post = ({ post}) => {
-    const {id,title, text, image, date, last}=post;
-    console.log("in component ",id,post);
-return(
-<PostContainer>
-    <br/>
-    <DateSpan>{date}</DateSpan>
-    <h4>{title}</h4><br/>
-    <hr/>
-    {renderText(text, image, id)}
-    {renderReadMoreButton(text,id)}
- </PostContainer>
-)};
+  const {id,title, text, image, date, last}=post;
+  return(
+    <PostContainer>
+        <br/>
+        <DateSpan>{date}</DateSpan>
+        <h4>{title}</h4><br/>
+        <hr/>
+        {renderText(text, image, id)}
+        {renderReadMoreButton(text,id)}
+     </PostContainer>
+   );
+};
 
 export default Post;
