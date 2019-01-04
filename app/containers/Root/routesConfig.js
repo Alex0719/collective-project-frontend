@@ -4,6 +4,7 @@ import Company from 'containers/pages/Company';
 import Dashboard from '../../containers/pages/Dashboard';
 import InternshipDetails from '../pages/InternshipDetails';
 
+import StudentManagement from '../../containers/elements/StudentManagement';
 import InternshipPosts from '../../containers/elements/InternshipPosts';
 export const routes = [
   {
@@ -21,5 +22,13 @@ export const routes = [
   {
     path: '/internshipDetails',
     component: InternshipDetails,
+  },
+  {
+    path: '/management',
+    component: StudentManagement,
+  },
+  {
+    path: '/posts',
+    component: InternshipPosts,
   },
 ];

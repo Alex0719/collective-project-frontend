@@ -11,6 +11,7 @@ import companyReducer from 'reducers/companyReducer';
 import dashboardReducer from './reducers/dashdoardReducer';
 import internshipDetailsReducer from './reducers/internshipDetailsReducer';
 
+import studentManagementReducer from './reducers/studentManagementReducer';
 import postsReducer from './reducers/postsReducers';
 /*
  * routeReducer
@@ -51,6 +52,7 @@ export default function createReducer(injectedReducers) {
     company: companyReducer,
     dashboard: dashboardReducer,
     internshipDetails: internshipDetailsReducer,
+    studentManagement: studentManagementReducer,
     postsReducer,
     ...injectedReducers,
   });
