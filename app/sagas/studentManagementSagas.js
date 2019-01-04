@@ -28,8 +28,18 @@ import { GET_AVAILABILITY_REQUEST } from '../constants/studentManagement';
 export function* getApplications() {
   const requestURL = 'https://localhost:44340/internships/1/management';
 
+  const options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': true,
+    },
+    credentials: 'include',
+    method: 'GET',
+  };
+
   try {
-    const data = yield call(request, requestURL);
+    const data = yield call(request, requestURL, options);
     console.log('in saga ', data);
     yield put(getApplicationsSuccess(data));
   } catch (err) {
@@ -44,11 +54,35 @@ export function* getApplicationsSaga() {
 
 export function* getCV(params) {
   const requestURL = `https://localhost:44340/students/${params.values}/cv`;
-  console.log(requestURL);
+
+  const options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+      'Accept':'application/octet-stream'
+    },
+    responseType: 'blob',
+    credentials: 'include',
+    method: 'GET',
+  };
+
+  console.log(params.fun);
   try {
-    const data = yield call(request, requestURL);
-    console.log('in saga ', data);
-    params.fun();
+    const data = yield call(request, requestURL, options,false,true);
+    data.arrayBuffer().then(rs => {console.log("blob:",rs);
+    console.log("in saga", );
+    const file = new Blob([rs], { type: 'application/pdf' });
+    var windowHandler = window.open("");
+    
+    const fileURL = windowHandler.URL.createObjectURL(file);
+
+    var link =windowHandler.document.createElement('a');
+  link.href = fileURL;
+  link.download=params.fun.Fullname+".pdf";
+  link.click();
+  windowHandler.close();
+})
+   
     yield put(getCvSuccess(data));
   } catch (err) {
     console.log('in saga error ', err);
@@ -142,9 +176,20 @@ export function* rejectStudentSaga() {
 
 export function* getAvailability(params) {
   const requestURL = 'https://localhost:44340/internships/availability/1';
+
+  const options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': true,
+    },
+    credentials: 'include',
+    method: 'GET',
+  };
+
   console.log(requestURL);
   try {
-    const data = yield call(request, requestURL);
+    const data = yield call(request, requestURL,options);
     console.log('in saga ', data);
     yield put(getAvailabilitySuccess(data));
   } catch (err) {

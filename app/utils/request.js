@@ -55,10 +55,19 @@ function checkStatus(response) {
  *
  * @return {object}           The response data
  */
-export default function request(url, options, withoutResponse) {
+export default function request(url, options, withoutResponse,withoutJSON) {
   if (withoutResponse) {
     return fetch(url, options)
       .then(checkStatus);
+  }
+
+  if(withoutJSON)
+  {
+    return fetch(url, options)
+    .then(checkStatus)
+    .then((r)=>{
+      return r;
+    });
   }
 
   return fetch(url, options)

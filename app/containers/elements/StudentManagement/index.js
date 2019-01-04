@@ -21,20 +21,21 @@ import {
 import {
   getApplicationsSaga,
   getCvSaga,
-  selectStudentSaga, approveStudentSaga, 
-  rejectStudentSaga, getAvailabilitySaga} from '../../../sagas/studentManagementSagas'
+  selectStudentSaga,
+  approveStudentSaga,
+  rejectStudentSaga,
+  getAvailabilitySaga,
+} from '../../../sagas/studentManagementSagas';
 
 export class StudentManagement extends React.Component {
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
-    this.state=
-        {
-          status:'',
-          nrPlaces:2,
-          applications:[],
-          seePdf:false,
-          cv:null,
+    this.state = {
+      status: '',
+      nrPlaces: 2,
+      applications: [],
+      seePdf: false,
+      cv: null,
     };
   }
   componentWillMount() {
@@ -42,96 +43,126 @@ export class StudentManagement extends React.Component {
     this.props.getAvailability();
   }
 
-  renderButton(cell,row)
-  {
-    if (row.Status.toLowerCase()=="aplicat")
-    {
+  renderButton(cell, row) {
+    if (row.Status.toLowerCase() == 'aplicat') {
       return (
         <ButtonWrapper>
-          <Button text="Selecteaza" onClick={()=>{this.onSelectStudent(row)}}/>
+          <Button
+            text="Selecteaza"
+            onClick={() => {
+              this.onSelectStudent(row);
+            }}
+          />
         </ButtonWrapper>
       );
-    }
-    else if(row.Status.toLowerCase()=="examinare")
-    {
-      return(
+    } else if (row.Status.toLowerCase() == 'examinare') {
+      return (
         <ButtonWrapper>
-          <Button text="Aproba" onClick={()=>{this.onAcceptStudent(row)}}/> 
-          <Button text="Respinge" onClick={()=>{this.onRejectStudent(row)}}/> 
+          <Button
+            text="Aproba"
+            onClick={() => {
+              this.onAcceptStudent(row);
+            }}
+          />
+          <Button
+            text="Respinge"
+            onClick={() => {
+              this.onRejectStudent(row);
+            }}
+          />
         </ButtonWrapper>
       );
     }
   }
 
-  onSelectStudent(row)
-  {
-    this.props.selectStudent(row,this.props.getApplications);
+  onSelectStudent(row) {
+    this.props.selectStudent(row, this.props.getApplications);
   }
 
-  onAcceptStudent(row)
-  {
-    this.props.approveStudent(row,this.props.getApplications);        
+  onAcceptStudent(row) {
+    this.props.approveStudent(row, this.props.getApplications);
   }
 
-  onRejectStudent(row)
-  {
-    this.props.rejectStudent(row,this.props.getApplications);
+  onRejectStudent(row) {
+    this.props.rejectStudent(row, this.props.getApplications);
   }
 
-  renderLink(cell,row)
-  {
-    return <Button text="Vezi cv" onClick={()=>this.onClickCv(row.Id)}/>
+  renderLink(cell, row) {
+    return <Button text="Vezi cv" onClick={() => this.onClickCv(row.Id)} />;
   }
 
-  onClickCv(id)
-  {
-    this.props.getCv(id,this.showCv); 
+  onClickCv(id) {
+    this.props.getCv(id, this.props.applications.applications[id-1]);
   }
 
-  showCv(cv)
-  {
-    const file = new Blob(
-      [cv.Cv], 
-      {type: 'application/pdf'});
-    const fileURL = URL.createObjectURL(file);
-    window.open(fileURL);
+  showCv(cv) {
+    const file = new Blob([cv.Cv], { type: 'application/pdf' });
   }
 
   render() {
-    let applications = Object.values(this.props.applications.applications);
+    const applications = Object.values(this.props.applications.applications);
     console.log(this.props);
-    var availability= this.props.applications.availability;
-    if(applications==null || applications==undefined || applications.length==0)return(null);
+    const availability = this.props.applications.availability;
+    if (
+      applications == null ||
+      applications == undefined ||
+      applications.length == 0
+    )
+      return null;
     return (
       <TableContainer>
         Locuri ocupate: {availability.OccupiedPlaces} din{' '}
         {availability.TotalPlaces}
         <Helmet>
-          <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+          <link
+            rel="stylesheet"
+            href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+          />
         </Helmet>
         <BootstrapTable
-data={applications} 
+          data={applications}
           stripped
           hover
           search
           className="stock-table"
         >
-          <TableHeaderColumn width="100" dataField='Id' isKey>Id</TableHeaderColumn>
-          <TableHeaderColumn width="100" dataField='Fullname'>Student</TableHeaderColumn>
-          <TableHeaderColumn width="100" dataField="button" dataAlign="center" editable={false} dataFormat={this.renderLink.bind(this)}>CV</TableHeaderColumn>
-          <TableHeaderColumn width="100" dataField='Status'>Status</TableHeaderColumn>
-          <TableHeaderColumn width="100" dataField="button" dataAlign="center" editable={false} dataFormat={this.renderButton.bind(this)}>Actiune</TableHeaderColumn>
+          <TableHeaderColumn width="100" dataField="Id" isKey>
+            Id
+          </TableHeaderColumn>
+          <TableHeaderColumn width="100" dataField="Fullname">
+            Student
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            width="100"
+            dataField="button"
+            dataAlign="center"
+            editable={false}
+            dataFormat={this.renderLink.bind(this)}
+          >
+            CV
+          </TableHeaderColumn>
+          <TableHeaderColumn width="100" dataField="Status">
+            Status
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            width="100"
+            dataField="button"
+            dataAlign="center"
+            editable={false}
+            dataFormat={this.renderButton.bind(this)}
+          >
+            Actiune
+          </TableHeaderColumn>
         </BootstrapTable>
       </TableContainer>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return createStructuredSelector({
+const mapStateToProps = state =>
+  createStructuredSelector({
     applications: studentManagementSelector(state)(),
   });
-};
 const mapDispatchToProps = dispatch => ({
   getApplications: () => dispatch(getApplications()),
   getCv: (values, fun) => dispatch(getCv(values, fun)),
