@@ -2,6 +2,7 @@ import HomePage from 'containers/pages/HomePage';
 import Test from 'containers/pages/Test';
 import Company from 'containers/pages/Company';
 import Dashboard from '../../containers/pages/Dashboard';
+import StudentManagement from '../../containers/elements/StudentManagement';
 import InternshipPosts from '../../containers/elements/InternshipPosts';
 import StudentDashboard from '../pages/StudentDashboard';
 export const routes = [
@@ -16,6 +17,10 @@ export const routes = [
   {
     path: '/company',
     component: Company,
+  },
+  {
+    path: '/management',
+    component: StudentManagement
   },
   {
     path: '/posts',
