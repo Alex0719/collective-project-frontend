@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Label } from 'semantic-ui-react' 
+import { Label } from 'semantic-ui-react';
 import {
   AERO_BLUE,
   JAPANESE_INDIGO,
@@ -17,120 +17,149 @@ import StarRating from 'components/elements/StarRating';
 import Button from 'components/elements/Button';
 import UsefulLinks from '../elements/UsefulLinks';
 import Testimonials from '../elements/Testimonials';
-
+import InternshipPosts from '../../containers/elements/InternshipPosts';
 
 export default class InternshipDetailsComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state={
-      places:0,
-      topics:"",
-      description:"",
-      internshipDetails:this.props.internshipDetails,
-    }
+    this.state = {
+      places: 0,
+      topics: '',
+      description: '',
+      internshipDetails: this.props.internshipDetails,
+    };
   }
 
-  
-
-  onPlacesChanged(txt)
-  {
-    var newInternshipDetails = this.state.internshipDetails;
+  onPlacesChanged(txt) {
+    const newInternshipDetails = this.state.internshipDetails;
     newInternshipDetails.internship.places = txt.target.value;
-    this.setState({internshipDetails:newInternshipDetails});
+    this.setState({ internshipDetails: newInternshipDetails });
   }
 
-  onTopicsChanged(txt)
-  {
-    var newInternshipDetails = this.state.internshipDetails;
+  onTopicsChanged(txt) {
+    const newInternshipDetails = this.state.internshipDetails;
     newInternshipDetails.internship.topics = txt.target.value;
-    this.setState({internshipDetails:newInternshipDetails});
+    this.setState({ internshipDetails: newInternshipDetails });
   }
 
-  onDescriptionChanged(txt)
-  {
-    console.log("aici");
+  onDescriptionChanged(txt) {
+    console.log('aici');
     console.log(txt);
-    var newInternshipDetails = this.state.internshipDetails;
+    const newInternshipDetails = this.state.internshipDetails;
     newInternshipDetails.internship.description = txt.target.value;
-    this.setState({internshipDetails:newInternshipDetails});
+    this.setState({ internshipDetails: newInternshipDetails });
   }
 
   render() {
-    const buttonStyle={
-      "position": "absolute",
-      "right": "0",
-      "margin-right": "10px",
-      "margin-top": "10px",
-    }
+    const buttonStyle = {
+      position: 'absolute',
+      right: '0',
+      'margin-right': '10px',
+      'margin-top': '10px',
+    };
 
     const TextFieldStyle = {
       padding: '15px',
       marginRight: '10px',
       marginLeft: '10px',
       fontWeight: 'normal',
-      width: '100%'
+      width: '100%',
     };
 
-    const TextFieldSmallStyle={
+    const TextFieldSmallStyle = {
       padding: '15px',
       marginRight: '10px',
       marginLeft: '10px',
       fontWeight: 'normal',
-      width: '33%'
+      width: '33%',
     };
 
     const TextAreaStyle = {
       marginRight: '10px',
       marginLeft: '10px',
-      width: '100%'
+      width: '100%',
     };
 
     const LabelStyle = {
       fontWeight: 'bold',
-      width: '100%'
+      width: '100%',
     };
 
     const LabelSmallStyle = {
       fontWeight: 'bold',
-      width: '48%'
+      width: '48%',
     };
 
-    console.log("comp:");
-    console.log(this.state.internshipDetails)
+    console.log('comp:');
+    console.log(this.state.internshipDetails);
     return (
-      <SplitPane split="vertical" minSize={window.innerWidth * 34 / 100} defaultSize={"66%"} maxSize={window.innerWidth * 66 / 100}>
+      <SplitPane
+        split="vertical"
+        minSize={(window.innerWidth * 34) / 100}
+        defaultSize="66%"
+        maxSize={(window.innerWidth * 66) / 100}
+      >
         <LeftPart>
           <Row>
-              <TextField value={this.state.internshipDetails.internship.name} />
-            </Row>
+            <TextField value={this.state.internshipDetails.internship.name} />
+          </Row>
           <Row>
-          <Label style={LabelSmallStyle} horizontal>Data de incepere:
-              <TextField style={TextFieldSmallStyle} value={this.state.internshipDetails.internship.start} />           
+            <Label style={LabelSmallStyle} horizontal>
+              Data de incepere:
+              <TextField
+                style={TextFieldSmallStyle}
+                value={this.state.internshipDetails.internship.start}
+              />
             </Label>
-            <Label style={LabelSmallStyle} color='red' horizontal>Locuri disponibile:
-              <TextField style={TextFieldSmallStyle} value={this.state.internshipDetails.internship.places} onChange={event => this.onPlacesChanged(event)} />
+            <Label style={LabelSmallStyle} color="red" horizontal>
+              Locuri disponibile:
+              <TextField
+                style={TextFieldSmallStyle}
+                value={this.state.internshipDetails.internship.places}
+                onChange={event => this.onPlacesChanged(event)}
+              />
             </Label>
           </Row>
           <Row>
-            <Label style={LabelStyle} color='red' horizontal>Topicuri:
-              <TextField style={TextFieldStyle} value={this.state.internshipDetails.internship.topics} onChange={event => this.onTopicsChanged(event)} />
+            <Label style={LabelStyle} color="red" horizontal>
+              Topicuri:
+              <TextField
+                style={TextFieldStyle}
+                value={this.state.internshipDetails.internship.topics}
+                onChange={event => this.onTopicsChanged(event)}
+              />
             </Label>
           </Row>
           <Row>
-            <TextField style={TextAreaStyle} value={this.state.internshipDetails.internship.description} onChange={event => this.onDescriptionChanged(event)} multiLine={true} />
+            <TextField
+              style={TextAreaStyle}
+              value={this.state.internshipDetails.internship.description}
+              onChange={event => this.onDescriptionChanged(event)}
+              multiLine
+            />
           </Row>
           <RowButton>
             {/* TODO: put data when calling onSaveChanges() */}
-            <Button text={"Save changes"} onClick={()=>this.props.onSaveChanges(this.state.internshipDetails.internship)}/>
+            <Button
+              text="Save changes"
+              onClick={() =>
+                this.props.onSaveChanges(
+                  this.state.internshipDetails.internship,
+                )
+              }
+            />
           </RowButton>
+          <InternshipPosts />
         </LeftPart>
 
         <RightPart>
           <RowsWithRatings>
             <RowRating>
               <NameRating>Internship</NameRating>
-              <StarRating rating={this.props.internshipDetails.ratingInternship} />
+              <StarRating
+                rating={this.props.internshipDetails.ratingInternship}
+              />
             </RowRating>
             <RowRating>
               <NameRating>Mentors</NameRating>
@@ -141,7 +170,7 @@ export default class InternshipDetailsComponent extends React.Component {
               <StarRating rating={this.props.internshipDetails.ratingCompany} />
             </RowRating>
           </RowsWithRatings>
-          <TestimonialRow >
+          <TestimonialRow>
             <Testimonials testimonials={this.props.testimonials} />
           </TestimonialRow>
         </RightPart>
@@ -183,7 +212,7 @@ const RightPart = styled.div`
   width: 100%;
   display: block;
   padding: 20px;
-  margin-top:10px;
+  margin-top: 10px;
 `;
 
 const Row = styled.div`
@@ -209,10 +238,9 @@ const RowButton = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  justify-content:right;
+  justify-content: right;
   margin-top: 25px;
 `;
-
 
 const TitleWrapper = styled.div`
   text-align: center;
