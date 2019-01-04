@@ -66,6 +66,19 @@ module.exports = require('./webpack.base.babel')({
   performance: {
     hints: false,
   },
+  module: {
+    rules: [
+      {
+        test: /\.(s*)css$/,
+        use: ['style-loader', 'css-loader']
+      }
+    ]
+  },
+  options: {
+    importLoaders: 1,
+    modules: true,
+    localIdentName: "[name]__[local]___[hash:base64:5]"
+  },
 });
 
 /**

@@ -3,6 +3,7 @@ import Test from 'containers/pages/Test';
 import Company from 'containers/pages/Company';
 import Dashboard from '../../containers/pages/Dashboard';
 import InternshipPosts from '../../containers/elements/InternshipPosts';
+import StudentDashboard from '../pages/StudentDashboard';
 export const routes = [
   {
     path: '/',
@@ -20,4 +21,8 @@ export const routes = [
     path: '/posts',
     component: InternshipPosts,
   },
+  {
+    path: "/studentsdashboard",
+    component: StudentDashboard
+  }
 ];

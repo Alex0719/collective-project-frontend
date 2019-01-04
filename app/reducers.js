@@ -10,6 +10,7 @@ import loginReducer from 'reducers/loginReducer';
 import companyReducer from 'reducers/companyReducer';
 import dashboardReducer from './reducers/dashdoardReducer';
 import postsReducer from './reducers/postsReducers';
+import studentDashboardReducer from './reducers/studentDashboardReducer';
 /*
  * routeReducer
  *
@@ -48,7 +49,8 @@ export default function createReducer(injectedReducers) {
     loggedUser: loginReducer,
     company: companyReducer,
     dashboard: dashboardReducer,
-    postsReducer:postsReducer,
+    postsReducer: postsReducer,
+    studentDashboard: studentDashboardReducer,
     ...injectedReducers,
   });
 }
