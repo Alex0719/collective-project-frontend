@@ -8,6 +8,9 @@ import { getInternships } from 'actions/companyActions';
 import { getInternshipsSaga } from 'sagas/companySagas';
 import injectSaga from 'utils/injectSaga';
 import InternshipsComponent from 'components/pages/Internships';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 
 export class Internships extends React.Component {
   constructor(props) {
@@ -41,7 +44,10 @@ export class Internships extends React.Component {
   ];
 
     return (
+      <div>
       <InternshipsComponent internships={this.props.internships} />
+      <Alert stack={true} timeout={3000} />
+      </div>
     );
   }
 }

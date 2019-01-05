@@ -12,6 +12,8 @@ import {addPostForInternshipRequest} from 'actions/addPostActions';
 import Post from '../../../components/elements/Post'
 import AddPost from '../../../components/elements/AddPost'
 import { loadavg } from 'os';
+import Alert from 'react-s-alert';
+
 export class InternshipPosts extends React.Component {
   constructor(props) {
     super(props);
@@ -21,10 +23,29 @@ export class InternshipPosts extends React.Component {
     this.props.getPosts();
   }
 
+  showAlert(message, error)
+  {
+      if(error)
+      {
+        Alert.error(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+      else
+      {
+        Alert.success(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+  }
+
   saveFunction=(post)=>
   {
-    this.props.savePost(post);
+    this.props.savePost(post, this.showAlert);
   }
+
   render() {
     const {posts} = this.props;
     if(!posts) {
@@ -42,6 +63,7 @@ export class InternshipPosts extends React.Component {
         <div>
           {posts!=null && posts.length>0 && posts[0].last?null: <AddPost saveFunction={post=>this.saveFunction(post)}/>}
           {posts.map((post, key)=><Post key={key} post={post}/>)}
+          <Alert stack={true} timeout={3000} />
         </div>
     );
   }
@@ -55,7 +77,7 @@ const mapStateToProps = state =>
 
 const mapDispatchToProps = dispatch => ({
   getPosts: () => dispatch(getPostsForInternship()),
-  savePost: (post) =>dispatch(addPostForInternshipRequest(post))
+  savePost: (post,fun) =>dispatch(addPostForInternshipRequest(post, fun))
 });
 
   InternshipPosts.propTypes = {

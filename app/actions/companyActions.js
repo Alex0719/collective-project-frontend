@@ -38,9 +38,9 @@ export const getInternshipsFailure = message => ({
   message,
 });
 
-export const addInternship = values => ({
+export const addInternship = (values, fun) => ({
   type: ADD_INTERNSHIP,
-  values,
+  values, fun
 });
 
 export const addInternshipSuccess = response => ({
