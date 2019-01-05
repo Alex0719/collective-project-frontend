@@ -40,10 +40,8 @@ export function* getApplications() {
 
   try {
     const data = yield call(request, requestURL, options);
-    console.log('in saga ', data);
     yield put(getApplicationsSuccess(data));
   } catch (err) {
-    console.log('in saga error ', err);
     yield put(getApplicationsFailure(err.response));
   }
 }
@@ -70,7 +68,6 @@ export function* getCV(params) {
   try {
     const data = yield call(request, requestURL, options,false,true);
     data.arrayBuffer().then(rs => {console.log("blob:",rs);
-    console.log("in saga", );
     const file = new Blob([rs], { type: 'application/pdf' });
     var windowHandler = window.open("");
     
@@ -85,7 +82,6 @@ export function* getCV(params) {
    
     yield put(getCvSuccess(data));
   } catch (err) {
-    console.log('in saga error ', err);
     yield put(getCvFailure(err.response));
   }
 }
@@ -111,7 +107,6 @@ export function* selectStudent(params) {
     params.fun(data);
     yield put(selectStudentSuccess(data));
   } catch (err) {
-    console.log('in saga error ', err);
     yield put(selectStudentFailure(err.response));
   }
 }
@@ -138,7 +133,6 @@ export function* approveStudent(params) {
     params.fun();
     yield put(approveStudentSuccess(data));
   } catch (err) {
-    console.log('in saga error ', err);
     yield put(approveStudentFailure(err.response));
   }
 }
@@ -165,7 +159,6 @@ export function* rejectStudent(params) {
     params.fun();
     yield put(rejectStudentSuccess(data));
   } catch (err) {
-    console.log('in saga error ', err);
     yield put(rejectStudentFailure(err.response));
   }
 }
@@ -187,13 +180,10 @@ export function* getAvailability(params) {
     method: 'GET',
   };
 
-  console.log(requestURL);
   try {
     const data = yield call(request, requestURL,options);
-    console.log('in saga ', data);
     yield put(getAvailabilitySuccess(data));
   } catch (err) {
-    console.log('in saga error ', err);
     yield put(getAvailabilityFailure(err.response));
   }
 }

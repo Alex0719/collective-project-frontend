@@ -43,37 +43,28 @@ export class StudentManagement extends React.Component {
     this.props.getAvailability();
   }
 
-  renderButton(cell, row) {
-    if (row.Status.toLowerCase() == 'aplicat') {
-      return (
-        <ButtonWrapper>
-          <Button
-            text="Selecteaza"
-            onClick={() => {
-              this.onSelectStudent(row);
-            }}
-          />
-        </ButtonWrapper>
-      );
-    } else if (row.Status.toLowerCase() == 'examinare') {
-      return (
-        <ButtonWrapper>
-          <Button
-            text="Aproba"
-            onClick={() => {
-              this.onAcceptStudent(row);
-            }}
-          />
-          <Button
-            text="Respinge"
-            onClick={() => {
-              this.onRejectStudent(row);
-            }}
-          />
-        </ButtonWrapper>
-      );
+    renderButton(cell,row)
+    {
+        if (row.Status.toLowerCase()=="aplicat")
+        {
+            return (
+                <ButtonWrapper>
+                    <Button text={"Selecteaza"} onClick={()=>{this.onSelectStudent(row)}}/>
+                </ButtonWrapper>);
+
+        }
+        else if(row.Status.toLowerCase()=="examinare")
+        {
+            return(
+                <ButtonWrapper>
+                    <Button text={"Aproba"} onClick={()=>{this.onAcceptStudent(row)}}/>
+                    <Button text={"Respinge"} onClick={()=>{this.onRejectStudent(row)}}/>
+                </ButtonWrapper>
+            );
+
+        }
     }
-  }
+  
 
   onSelectStudent(row) {
     this.props.selectStudent(row, this.props.getApplications);

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { AERO_BLUE, PEWTER_BLUE } from 'constants/colors';
+import { AERO_BLUE, PEWTER_BLUE, JAPANESE_INDIGO } from 'constants/colors';
 
 export const Button = styled.div`
   color: #f2f2f2;
@@ -9,7 +9,7 @@ export const Button = styled.div`
   box-sizing: border-box;
   transition: all 500ms ease;
   cursor: pointer;
-  width: 125px;
+  width: fit-content;
   height: fit-content;
   text-align: center;
   margin: 10px 0px;
@@ -33,4 +33,11 @@ export const Button = styled.div`
     width: 100%;
     height: 100%;
   }
+`;
+
+export const ActiveButton = Button.extend`
+  background-color: ${PEWTER_BLUE};
+  border-radius: 5px;
+  opacity: 0.2;
+  color: ${JAPANESE_INDIGO};
 `;
