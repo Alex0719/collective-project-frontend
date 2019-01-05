@@ -24,8 +24,9 @@ export const getStudentsPerYearFailure = message => ({
   message,
 });
 
-export const getInternships = () => ({
+export const getInternships = (redirectFunction) => ({
   type: GET_INTERNSHIPS_REQUEST,
+  redirectFunction
 });
 
 export const getInternshipsSuccess = response => ({

@@ -1,4 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
+import { routerMiddleware, push } from 'react-router-redux'
 
 import {
   getStudentsPerYearSuccess,
@@ -31,7 +32,7 @@ export function* getStudentsPerYearSaga() {
   yield takeLatest(GET_STUDENTS_PER_YEAR_REQUEST, doGetStudentsPerYear);
 }
 
-export function* doGetInternships() {
+export function* doGetInternships({redirectFunction}) {
   const requestURL = 'https://localhost:44340/internships';
 
   let options = {
@@ -48,7 +49,12 @@ export function* doGetInternships() {
     const data = yield call(request, requestURL, options);
     yield put(getInternshipsSuccess(data));
   } catch (err) {
+    console.log(err.response)
     yield put(getStudentsPerYearFailure(err.response));
+    if(err.response.status=="401")
+    {
+      redirectFunction();
+    }
   }
 }
 

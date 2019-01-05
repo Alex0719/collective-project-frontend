@@ -32,7 +32,7 @@ export class StudentManagement extends React.Component
         }
     }
     componentWillMount() {
-        this.props.getApplications();
+        this.props.getApplications(this.redirectFunction);
         this.props.getAvailability();
     }
 
@@ -56,6 +56,11 @@ export class StudentManagement extends React.Component
             );
 
         }
+    }
+
+    redirectFunction=()=>
+    {
+        this.props.history.push("/unauthorized");
     }
 
     showAlert(message, error)
@@ -146,7 +151,7 @@ const mapStateToProps = state =>{
   });
 }
 const mapDispatchToProps = dispatch => ({
-  getApplications: () => dispatch(getApplications()),
+  getApplications: (redirectFunction) => dispatch(getApplications(redirectFunction)),
   getCv:(values, fun)=>dispatch(getCv(values, fun)),
   selectStudent:(values,fun, funAlert)=>dispatch(selectStudent(values,fun,funAlert)),
   approveStudent:(values,fun, funAlert)=>dispatch(approveStudent(values,fun,funAlert)),

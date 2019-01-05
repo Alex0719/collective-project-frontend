@@ -5,7 +5,7 @@ import Internships from 'containers/pages/Internships';
 import Dashboard from '../../containers/pages/Dashboard';
 import StudentManagement from '../../containers/elements/StudentManagement';
 import InternshipPosts from '../../containers/elements/InternshipPosts';
-
+import Unauthorized from '../../containers/pages/Unauthorized';
 export const routes = [
   {
     path: '/',
@@ -22,5 +22,9 @@ export const routes = [
   {
     path: '/posts',
     component: InternshipPosts,
+  },
+  {
+    path: '/unauthorized',
+    component: Unauthorized,
   }
 ];

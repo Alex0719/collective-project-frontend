@@ -19,8 +19,9 @@ import {
     GET_AVAILABILITY_REQUEST
   } from 'constants/studentManagement';
 
-  export const getApplications = () => ({
+  export const getApplications = (redirectFunction) => ({
     type: GET_APPLICATIONS_REQUEST,
+    redirectFunction
   });
   
   export const getApplicationsSuccess = response => ({

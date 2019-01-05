@@ -18,7 +18,12 @@ export class Internships extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getInternships();
+    this.props.getInternships(this.redirectFunction);
+  }
+
+  redirectFunction=()=>
+  {
+    this.props.history.push("/unauthorized");
   }
 
   render() {
@@ -57,7 +62,7 @@ const mapStateToProps = state =>
   });
 
 const mapDispatchToProps = dispatch => ({
-  getInternships: () => dispatch(getInternships()),
+  getInternships: (redirectFunction) => dispatch(getInternships(redirectFunction)),
 });
 
 const withConnect = connect(

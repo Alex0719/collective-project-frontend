@@ -25,7 +25,7 @@ import {
 import request from 'utils/request';
 import { GET_AVAILABILITY_REQUEST } from '../constants/studentManagement';
 
-export function* getApplications() {
+export function* getApplications({redirectFunction}) {
   const requestURL = 'https://localhost:44340/internships/1/management';
 
   const options = {
@@ -43,6 +43,10 @@ export function* getApplications() {
     yield put(getApplicationsSuccess(data));
   } catch (err) {
     yield put(getApplicationsFailure(err.response));
+    if(err.response.status=="401")
+    {
+      redirectFunction();
+    }
   }
 }
 
