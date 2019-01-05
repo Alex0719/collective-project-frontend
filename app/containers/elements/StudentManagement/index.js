@@ -14,6 +14,8 @@ import { getApplications, getCv, selectStudent, approveStudent,rejectStudent,get
 import {getApplicationsSaga, getCvSaga,
      selectStudentSaga, approveStudentSaga,
      rejectStudentSaga, getAvailabilitySaga} from '../../../sagas/studentManagementSagas'
+import Alert from 'react-s-alert';
+
 
 export class StudentManagement extends React.Component
 {
@@ -56,19 +58,38 @@ export class StudentManagement extends React.Component
         }
     }
 
+    showAlert(message, error)
+  {
+      if(error)
+      {
+        Alert.error(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+      else
+      {
+        Alert.success(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+  }
+
+    
     onSelectStudent(row)
     {
-       this.props.selectStudent(row,this.props.getApplications);
+       this.props.selectStudent(row,this.props.getApplications,this.showAlert);
     }
 
     onAcceptStudent(row)
     {
-        this.props.approveStudent(row,this.props.getApplications);
+        this.props.approveStudent(row,this.props.getApplications,this.showAlert);
     }
 
     onRejectStudent(row)
     {
-       this.props.rejectStudent(row,this.props.getApplications);
+       this.props.rejectStudent(row,this.props.getApplications,this.showAlert);
     }
 
     renderLink(cell,row)
@@ -127,9 +148,9 @@ const mapStateToProps = state =>{
 const mapDispatchToProps = dispatch => ({
   getApplications: () => dispatch(getApplications()),
   getCv:(values, fun)=>dispatch(getCv(values, fun)),
-  selectStudent:(values,fun)=>dispatch(selectStudent(values,fun)),
-  approveStudent:(values,fun)=>dispatch(approveStudent(values,fun)),
-  rejectStudent:(values,fun)=>dispatch(rejectStudent(values,fun)),
+  selectStudent:(values,fun, funAlert)=>dispatch(selectStudent(values,fun,funAlert)),
+  approveStudent:(values,fun, funAlert)=>dispatch(approveStudent(values,fun,funAlert)),
+  rejectStudent:(values,fun,funAlert)=>dispatch(rejectStudent(values,fun,funAlert)),
   getAvailability:(values)=>dispatch(getAvailability(values))
 });
 
