@@ -30,10 +30,8 @@ export function* getApplications() {
 
   try {
     const data = yield call(request, requestURL);
-    console.log("in saga ",data)
     yield put(getApplicationsSuccess(data));
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(getApplicationsFailure(err.response));
   }
 }
@@ -44,14 +42,11 @@ export function* getApplicationsSaga() {
 
 export function* getCV(params) {
   const requestURL = 'https://localhost:44340/students/'+params.values+'/cv';
-  console.log(requestURL)
   try {
     const data = yield call(request, requestURL);
-    console.log("in saga ",data)
     params.fun();
     yield put(getCvSuccess(data));
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(getCvFailure(err.response));
   }
 }
@@ -77,7 +72,6 @@ export function* selectStudent(params) {
     params.fun(data);
     yield put(selectStudentSuccess(data));
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(selectStudentFailure(err.response));
   }
 }
@@ -88,7 +82,7 @@ export function* selectStudentSaga() {
 
 export function* approveStudent(params) {
   const requestURL = 'https://localhost:44340/internships/1/students/aprove';
- 
+
   try {
     const options = {
       headers: {
@@ -104,7 +98,6 @@ export function* approveStudent(params) {
     params.fun();
     yield put(approveStudentSuccess(data));
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(approveStudentFailure(err.response));
   }
 }
@@ -115,7 +108,7 @@ export function* approveStudentSaga() {
 
 export function* rejectStudent(params) {
   const requestURL = 'https://localhost:44340/internships/1/students/reject';
- 
+
   try {
     const options = {
       headers: {
@@ -132,7 +125,6 @@ export function* rejectStudent(params) {
     yield put(rejectStudentSuccess(data));
 
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(rejectStudentFailure(err.response));
   }
 }
@@ -143,13 +135,10 @@ export function* rejectStudentSaga() {
 
 export function* getAvailability(params) {
   const requestURL = 'https://localhost:44340/internships/availability/1';
-  console.log(requestURL)
   try {
     const data = yield call(request, requestURL);
-    console.log("in saga ",data)
     yield put(getAvailabilitySuccess(data));
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(getAvailabilityFailure(err.response));
   }
 }
