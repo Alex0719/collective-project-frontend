@@ -46,7 +46,6 @@ export class Internships extends React.Component {
     return (
       <div>
       <InternshipsComponent internships={this.props.internships} />
-      <Alert stack={true} timeout={3000} />
       </div>
     );
   }

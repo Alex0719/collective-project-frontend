@@ -63,7 +63,6 @@ export class InternshipPosts extends React.Component {
         <div>
           {posts!=null && posts.length>0 && posts[0].last?null: <AddPost saveFunction={post=>this.saveFunction(post)}/>}
           {posts.map((post, key)=><Post key={key} post={post}/>)}
-          <Alert stack={true} timeout={3000} />
         </div>
     );
   }
