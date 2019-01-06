@@ -3,8 +3,17 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import {
   getStudentsPerYearSuccess,
   getStudentsPerYearFailure,
+  getInternshipsSuccess,
+  getInternshipsFailure,
+  addInternship,
+  addInternshipSuccess,
+  addInternshipFailure,
 } from 'actions/companyActions';
-import { GET_STUDENTS_PER_YEAR_REQUEST } from 'constants/company';
+import {
+  GET_STUDENTS_PER_YEAR_REQUEST,
+  GET_INTERNSHIPS_REQUEST,
+  ADD_INTERNSHIP,
+} from 'constants/company';
 import request from 'utils/request';
 
 export function* doGetStudentsPerYear() {
@@ -18,6 +27,56 @@ export function* doGetStudentsPerYear() {
   }
 }
 
-export default function* getStudentsPerYearSaga() {
+export function* getStudentsPerYearSaga() {
   yield takeLatest(GET_STUDENTS_PER_YEAR_REQUEST, doGetStudentsPerYear);
+}
+
+export function* doGetInternships() {
+  const requestURL = 'https://localhost:44340/internships';
+
+  let options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': true,
+    },
+    credentials: 'include',
+    method: 'GET',
+  };
+
+  try {
+    const data = yield call(request, requestURL, options);
+    yield put(getInternshipsSuccess(data));
+  } catch (err) {
+    yield put(getStudentsPerYearFailure(err.response));
+  }
+}
+
+export function* getInternshipsSaga() {
+  yield takeLatest(GET_INTERNSHIPS_REQUEST, doGetInternships);
+}
+
+export function* doAddInternship({ values }) {
+  const requestURL = 'https://localhost:44340/internships/add';
+  let options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': true,
+    },
+    credentials: 'include',
+    method: 'POST',
+    body: JSON.stringify(values),
+  };
+
+  try {
+    const internship = yield call(request, requestURL, options);
+    yield put(addInternshipSuccess(internship));
+  } catch (err) {
+    yield put(addInternshipFailure(err.response));
+  }
+}
+
+export function* addInternshipSaga() {
+  yield takeLatest(ADD_INTERNSHIP, doAddInternship);
 }

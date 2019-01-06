@@ -46,7 +46,7 @@ const render = () => {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <div>
-            <Root />
+            <Root {...{ history }} />
           </div>
         </ConnectedRouter>
       </Provider>

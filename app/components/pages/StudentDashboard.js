@@ -7,8 +7,9 @@ import {
   AccordionItemBody,
 } from 'react-accessible-accordion';
 import Collapsible from 'react-collapsible';
-import { QUEEN_BLUE, AERO_BLUE } from "../../constants/colors";
+import { QUEEN_BLUE, AERO_BLUE, DARK_RED } from "../../constants/colors";
 import styles from "styled-components";
+import moment from "moment";
 
 const Container = styles.div`
   padding: 26px;
@@ -30,9 +31,7 @@ const CompanyTitle = styles.div`
   }
 `;
 
-const InternshipsContainer = styles.div`
-  
-`;
+const InternshipsContainer = styles.div``;
 
 const Internship = styles.div`
   padding: 10px;
@@ -46,7 +45,7 @@ const InternshipTitle = styles.div`
 `;
 
 const SubscribeButton = styles.button`
-  background-color: #882010;
+  background-color: ${DARK_RED};
   padding: 10px;
   font-size: 15px;
   color: white;
@@ -114,8 +113,8 @@ class StudentDashboardList extends React.Component {
                       <Internship key={company.internships.indexOf(internship)}>
                         <InternshipTitle>{internship.description}</InternshipTitle>
                         <div>Tematica: {internship.topics}</div>
-                        <div>Incepe la: {new Date(internship.start + "Z").toLocaleDateString()}</div>
-                        <div>Se termina la: {new Date(internship.end + "Z").toLocaleDateString()}</div>
+                        <div>Incepe la: {moment(new Date(internship.start + "Z")).format("DD MMM YYYY")}</div>
+                        <div>Se termina la: {moment(new Date(internship.end + "Z")).format("DD MMM YYYY")}</div>
                         <Link href={"/internship/" + internship.id} >Vezi mai mult</Link>
                       </Internship>
                     );
@@ -125,7 +124,6 @@ class StudentDashboardList extends React.Component {
 
               <SubscribeContainer>
                 <SubscribeButton onClick={() => this.subscribe(company)}>Subscribe</SubscribeButton>
-
               </SubscribeContainer>
             </CollapsibleContainer>
           )
