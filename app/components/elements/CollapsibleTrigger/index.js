@@ -7,14 +7,14 @@ const CollapsibleTrigger = props => {
     if(moment(props.end) < moment()){
       return (
         <Trigger>
-          {`${props.description} | ${props.start} --- ${props.end}`}
+          {`${props.name} | ${props.start} --- ${props.end}`}
           <Status available={false}>INCHEIAT</Status>
         </Trigger>
       );
     } else {
       return (
       <Trigger >
-        {`${props.description} | ${props.start} --- ${props.end}`}
+        {`${props.name} | ${props.start} --- ${props.end}`}
         <Status available={true}>DISPONIBIL</Status>
       </Trigger>
     );

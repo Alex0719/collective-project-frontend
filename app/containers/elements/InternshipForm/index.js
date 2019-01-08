@@ -11,6 +11,7 @@ import { FormWrapper, CollapseWrapper } from './styles';
 import injectSaga from 'utils/injectSaga';
 import { addInternship } from 'actions/companyActions';
 import { addInternshipSaga } from 'sagas/companySagas';
+import Alert from 'react-s-alert';
 
 export class InternshipForm extends React.Component {
   constructor(props) {
@@ -53,7 +54,7 @@ export class InternshipForm extends React.Component {
       weeks: this.weeksBetween(start, end),
     };
     this.toggleDrawer();
-    addInternship(values);
+    addInternship(values,this.showAlert);
   }
 
   onChange(name, event) {
@@ -72,6 +73,24 @@ export class InternshipForm extends React.Component {
     this.setState({
       end: date,
     });
+  }
+
+  showAlert(message, error)
+  {
+      if(error)
+      {
+        Alert.error(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+      else
+      {
+        Alert.success(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
   }
 
   render() {
@@ -139,7 +158,7 @@ export class InternshipForm extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  addInternship: values => dispatch(addInternship(values)),
+  addInternship: (values,fun) => dispatch(addInternship(values,fun)),
 });
 
 const withConnect = connect(null, mapDispatchToProps);

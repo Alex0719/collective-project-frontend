@@ -1,4 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
+import { routerMiddleware, push } from 'react-router-redux'
 
 import {
   getStudentsPerYearSuccess,
@@ -31,7 +32,7 @@ export function* getStudentsPerYearSaga() {
   yield takeLatest(GET_STUDENTS_PER_YEAR_REQUEST, doGetStudentsPerYear);
 }
 
-export function* doGetInternships() {
+export function* doGetInternships({redirectFunction}) {
   const requestURL = 'https://localhost:44340/internships';
 
   let options = {
@@ -48,7 +49,12 @@ export function* doGetInternships() {
     const data = yield call(request, requestURL, options);
     yield put(getInternshipsSuccess(data));
   } catch (err) {
+    console.log(err.response)
     yield put(getStudentsPerYearFailure(err.response));
+    if(err.response.status=="401")
+    {
+      redirectFunction();
+    }
   }
 }
 
@@ -56,7 +62,7 @@ export function* getInternshipsSaga() {
   yield takeLatest(GET_INTERNSHIPS_REQUEST, doGetInternships);
 }
 
-export function* doAddInternship({ values }) {
+export function* doAddInternship( params ) {
   const requestURL = 'https://localhost:44340/internships/add';
   let options = {
     headers: {
@@ -66,14 +72,16 @@ export function* doAddInternship({ values }) {
     },
     credentials: 'include',
     method: 'POST',
-    body: JSON.stringify(values),
+    body: JSON.stringify(params.values),
   };
 
   try {
     const internship = yield call(request, requestURL, options);
     yield put(addInternshipSuccess(internship));
+    params.fun("Internship-ul a fost adaugat cu success!",false);
   } catch (err) {
     yield put(addInternshipFailure(err.response));
+    params.fun("Nu s-a putut adauga internship-ul",true);
   }
 }
 
