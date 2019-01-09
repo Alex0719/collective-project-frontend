@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import './stil.css';
-import {TableContainer,ButtonWrapper} from './styles'
+import {TableContainer ,ButtonWrapper} from './styles'
 import Button from '../../../components/elements/Button'
 import {studentManagementSelector} from '../../../selectors/studentManagementSelector'
 import { getApplications, getCv, selectStudent, approveStudent,rejectStudent,getAvailability } from 'actions/studentManagement';
