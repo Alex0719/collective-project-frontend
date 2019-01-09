@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Collapse } from '@material-ui/core';
+import { AERO_BLUE } from 'constants/colors';
 
 export const FormWrapper = styled.div`
   margin:0 auto;
@@ -7,6 +8,8 @@ export const FormWrapper = styled.div`
   height:auto;
   z-index: 0;
   text-align:center;
+  background: ${AERO_BLUE};
+  padding-top: 14px;
 `;
 
 export const CollapseWrapper = styled(Collapse)`
