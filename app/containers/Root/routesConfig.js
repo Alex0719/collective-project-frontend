@@ -4,9 +4,10 @@ import Company from 'containers/pages/Company';
 import Internships from 'containers/pages/Internships';
 import Dashboard from '../../containers/pages/Dashboard';
 import StudentManagement from '../../containers/elements/StudentManagement';
-import InternshipPosts from '../../containers/elements/InternshipPosts';
+import InternshipManagement from '../../containers/elements/InternshipManagement';
 import Student from '../elements/Student';
 import Unauthorized from '../../containers/pages/Unauthorized';
+
 export const routes = [
   {
     path: '/',
@@ -19,6 +20,10 @@ export const routes = [
   {
     path:'/management',
     component: StudentManagement,
+  },
+  {
+    path: '/internships/management',
+    component: InternshipManagement,
   },
   {
     path: '/student',
