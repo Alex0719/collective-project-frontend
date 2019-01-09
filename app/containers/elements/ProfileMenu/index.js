@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
 import { IconButton, IconMenu, Avatar, Divider, Checkbox } from 'material-ui';
 
@@ -35,6 +36,19 @@ export class ProfileMenu extends React.Component {
       password: '',
       rememberMe: false,
     };
+    this.onScroll = this.onScroll.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('wheel', this.onScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('wheel', this.onScroll);
+  }
+
+  onScroll() {
+    this.setState({ open: false });
   }
 
   buildIcon() {
@@ -103,17 +117,21 @@ export class ProfileMenu extends React.Component {
   }
 
   renderLogout() {
+    const postLogout = [() => this.props.changeRoute()]
+
     return (
       <IconMenuInnerWrapper>
-        <Button
-          type="DividerButton"
-          text="Profil"
-          onClick={() => console.log('click')}
-        />
+        {this.props.loggedUser.role==='Student'?
+          <Button
+            type="DividerButton"
+            text="Profil"
+            onClick={() => console.log('click')}
+          /> : null
+        }
         <Button
           type="DividerButton"
           text="Logout"
-          onClick={() => this.props.logout()}
+          onClick={() => this.props.logout(postLogout)}
         />
       </IconMenuInnerWrapper>
     );
@@ -184,7 +202,8 @@ ProfileMenu.propTypes = {
 const mapDispatchToProps = dispatch => ({
   login: (values,funAlert) => dispatch(loginUser(values,funAlert)),
   getLoggedUser: () => dispatch(getLoggedUser()),
-  logout: () => dispatch(logoutUser()),
+  logout: postLogout => dispatch(logoutUser(postLogout)),
+  changeRoute: () => dispatch(push('/')),
 });
 
 const withConnect = connect(
