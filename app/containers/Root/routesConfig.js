@@ -6,10 +6,7 @@ import Dashboard from '../../containers/pages/Dashboard';
 import StudentManagement from '../../containers/elements/StudentManagement';
 import InternshipPosts from '../../containers/elements/InternshipPosts';
 import Student from '../elements/Student';
-<<<<<<< HEAD
-=======
 import Unauthorized from '../../containers/pages/Unauthorized';
->>>>>>> 019d27fb49b632977ceae4a8b08ae8dd8f5dae45
 export const routes = [
   {
     path: '/',
@@ -31,10 +28,7 @@ export const routes = [
     path: '/student',
     component: Student,
   },
-<<<<<<< HEAD
-=======
     path: '/unauthorized',
     component: Unauthorized,
   }
->>>>>>> 019d27fb49b632977ceae4a8b08ae8dd8f5dae45
 ];
