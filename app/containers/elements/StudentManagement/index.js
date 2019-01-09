@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import { createStructuredSelector } from 'reselect';
-import {Helmet} from 'react-helmet'
+import { Helmet } from 'react-helmet';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import './stil.css';
 import {TableContainer ,ButtonWrapper} from './styles'
@@ -70,6 +70,15 @@ export class StudentManagement extends React.Component
         }
     }
 
+  
+  onClickCv(id) {
+    this.props.getCv(id, this.props.applications.applications[id-1]);
+  }
+
+  showCv(cv) {
+    const file = new Blob([cv.Cv], { type: 'application/pdf' });
+  }
+
     redirectFunction=()=>
     {
         this.props.history.push("/unauthorized");
@@ -117,24 +126,12 @@ export class StudentManagement extends React.Component
         );
     }
 
-    onClickCv(id)
-    {
-        this.props.getCv(id,this.showCv);
-    }
-
-    showCv(cv)
-    {
-        const file = new Blob(
-            [cv.Cv],
-            {type: 'application/pdf'});
-        const fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
-    }
+   
 
     render() {
         var applications = Object.values(this.props.applications.applications);
         var availability= this.props.applications.availability;
-        if(applications==null || applications==undefined || applications.length==0)return(null);
+        if(!(applications && applications.length))return(null);
         return (
             <TableContainer>
              Locuri ocupate: {availability.OccupiedPlaces} din {availability.TotalPlaces}
@@ -158,7 +155,7 @@ export class StudentManagement extends React.Component
         );
 
       }
-}
+    }
 
 const mapStateToProps = state =>{
   return createStructuredSelector({
@@ -193,26 +190,26 @@ const withApplicationSaga = injectSaga({
   saga: getApplicationsSaga,
 });
 const withCvSaga = injectSaga({
-    key: 'getCvSaga',
-    saga: getCvSaga,
-  });
+  key: 'getCvSaga',
+  saga: getCvSaga,
+});
 const withSelectStudentSaga = injectSaga({
-    key: 'selectStudentSaga',
-    saga: selectStudentSaga,
+  key: 'selectStudentSaga',
+  saga: selectStudentSaga,
 });
 const withApproveStudentSaga = injectSaga({
-    key: 'approveStudentSaga',
-    saga: approveStudentSaga,
-    });
+  key: 'approveStudentSaga',
+  saga: approveStudentSaga,
+});
 const withRejectStudentSaga = injectSaga({
-    key: 'rejectStudentSaga',
-    saga: rejectStudentSaga,
-    });
+  key: 'rejectStudentSaga',
+  saga: rejectStudentSaga,
+});
 
 const withAvailabilitySaga = injectSaga({
-    key: 'getAvailabilitySaga',
-    saga: getAvailabilitySaga,
-    });
+  key: 'getAvailabilitySaga',
+  saga: getAvailabilitySaga,
+});
 
 const withRoleSaga = injectSaga({
     key: 'roleSaga',

@@ -32,7 +32,7 @@ export const PostContainer = styled.div`
     padding-right:16px;
     padding-top:0.15px;
     background-color:${AERO_BLUE};
-    width:60%;
+    width:100%;
     padding:3%;
 `;
 
