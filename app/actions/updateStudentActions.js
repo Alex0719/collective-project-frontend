@@ -4,10 +4,10 @@ import {
   UPDATE_STUDENT_FAILURE
 } from 'constants/student';
 
-export const updateStudentRequest = values => {console.log("action",values);return ({
+export const updateStudentRequest = values => ({
   type: UPDATE_STUDENT_REQUEST,
   values,
-})};
+});
 
 export const updateStudentSuccess = response => ({
   type: UPDATE_STUDENT_SUCCESS,

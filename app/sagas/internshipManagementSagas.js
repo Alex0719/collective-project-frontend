@@ -33,10 +33,8 @@ export function* getInternshipsForStudent() {
       method: 'GET',
     };
     const data = yield call(request, requestURL, options);
-    console.log("in saga ",data)
     yield put(getInternshipsForStudentSuccess(data));
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(getInternshipsForStudentFailure(err.response));
   }
 }
@@ -66,7 +64,6 @@ export function* confirmExamAttendance(params) {
     params.fun(data);
     yield put(confirmExamAttendanceSuccess(data));
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(confirmExamAttendanceFailure(err.response));
   }
 }
@@ -93,7 +90,6 @@ export function* confirmInternshipParticipation(params) {
     params.fun();
     yield put(confirmInternshipParticipationSuccess(data));
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(confirmInternshipParticipationFailure(err.response));
   }
 }
@@ -124,7 +120,6 @@ export function* refuseInternship(params) {
     yield put(refuseInternshipSuccess(data));
 
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(refuseInternshipFailure(err.response));
   }
 }

@@ -12,14 +12,14 @@ import {
   rejectStudentFailure,
   rejectStudentSuccess,
   getAvailabilitySuccess,
-  getAvailabilityFailure
+  getAvailabilityFailure,
 } from 'actions/studentManagement';
 import {
   GET_APPLICATIONS_REQUEST,
   GET_CV_REQUEST,
   SELECT_STUDENT_REQUEST,
   APPROVE_STUDENT_REQUEST,
-  REJECT_STUDENT_REQUEST
+  REJECT_STUDENT_REQUEST,
 } from 'constants/studentManagement';
 
 import request from 'utils/request';
@@ -43,9 +43,9 @@ export function* getApplications({redirectFunction}) {
     yield put(getApplicationsSuccess(data));
   } catch (err) {
     yield put(getApplicationsFailure(err.response));
-    if(err.response.status=="401")
+    if(err.response.status===401)
     {
-      redirectFunction();
+      yield put(redirectFunction());
     }
   }
 }
@@ -55,19 +55,35 @@ export function* getApplicationsSaga() {
 }
 
 export function* getCV(params) {
-  const requestURL = 'https://localhost:44340/students/'+params.values+'/cv';
+  const requestURL = `https://localhost:44340/students/${params.values}/cv`;
+
   const options = {
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
       'Access-Control-Allow-Credentials': true,
+      'Accept':'application/octet-stream'
     },
+    responseType: 'blob',
     credentials: 'include',
     method: 'GET',
   };
+
+  console.log(params.fun);
   try {
-    const data = yield call(request, requestURL, options);
-    params.fun();
+    const data = yield call(request, requestURL, options,false,true);
+    data.arrayBuffer().then(rs => {console.log("blob:",rs);
+    const file = new Blob([rs], { type: 'application/pdf' });
+    var windowHandler = window.open("");
+    
+    const fileURL = windowHandler.URL.createObjectURL(file);
+
+    var link =windowHandler.document.createElement('a');
+  link.href = fileURL;
+  link.download=params.fun.Fullname+".pdf";
+  link.click();
+  windowHandler.close();
+})
+   
     yield put(getCvSuccess(data));
   } catch (err) {
     yield put(getCvFailure(err.response));
@@ -91,7 +107,7 @@ export function* selectStudent(params) {
       method: 'POST',
       body: JSON.stringify(params.values),
     };
-    const data=yield call(request, requestURL,options);
+    const data = yield call(request, requestURL, options);
     params.fun(data);
     yield put(selectStudentSuccess(data));
     params.funAlert("Studentul a fost selectat pentru internship. In scurt timp, ii vom trimite un email.", false);
@@ -119,7 +135,7 @@ export function* approveStudent(params) {
       method: 'POST',
       body: JSON.stringify(params.values),
     };
-    const data=yield call(request, requestURL,options);
+    const data = yield call(request, requestURL, options);
     params.fun();
     yield put(approveStudentSuccess(data));
     params.funAlert("Studentul a fost admis la internship. In scurt timp, ii vom trimite un email.", false);
@@ -147,7 +163,7 @@ export function* rejectStudent(params) {
       method: 'POST',
       body: JSON.stringify(params.values),
     };
-    const data=yield call(request, requestURL,options);
+    const data = yield call(request, requestURL, options);
     params.fun();
     yield put(rejectStudentSuccess(data));
     params.funAlert("Studentul a fost respins. In scurt timp, ii vom trimite un email.", false);

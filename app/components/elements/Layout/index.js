@@ -23,7 +23,7 @@ export class Layout extends React.Component {
       imgActive: false,
       btnActive: true,
     });
-    changeRoute('/company/internships')
+    changeRoute('/company/internships');
   }
 
   handleClickImgBtn() {
@@ -33,7 +33,14 @@ export class Layout extends React.Component {
       imgActive: true,
       btnActive: false,
     });
-    changeRoute('/')
+    changeRoute('/');
+  }
+
+  unfocusButtons() {
+    this.setState({
+      imgActive: false,
+      btnActive: false,
+    });
   }
 
   renderButtons() {
@@ -75,7 +82,7 @@ export class Layout extends React.Component {
         />
         {this.renderButtons()}
         <AvatarWrapper>
-          <ProfileMenu loggedUser={loggedUser}/>
+          <ProfileMenu loggedUser={loggedUser} unfocusButtons={() =>  this.unfocusButtons()}/>
         </AvatarWrapper>
       </OuterWrapper>
     );
