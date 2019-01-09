@@ -11,6 +11,7 @@ import InternshipsComponent from 'components/pages/Internships';
 import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
+import { push } from 'react-router-redux';
 
 export class Internships extends React.Component {
   constructor(props) {
@@ -50,7 +51,7 @@ export class Internships extends React.Component {
 
     return (
       <div>
-      <InternshipsComponent internships={this.props.internships} />
+      <InternshipsComponent internships={this.props.internships} changeRoute={this.props.changeRoute} />
       </div>
     );
   }
@@ -63,6 +64,7 @@ const mapStateToProps = state =>
 
 const mapDispatchToProps = dispatch => ({
   getInternships: (redirectFunction) => dispatch(getInternships(redirectFunction)),
+  changeRoute: path => dispatch(push(path)),
 });
 
 const withConnect = connect(
