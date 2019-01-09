@@ -56,8 +56,17 @@ export function* getApplicationsSaga() {
 
 export function* getCV(params) {
   const requestURL = 'https://localhost:44340/students/'+params.values+'/cv';
+  const options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': true,
+    },
+    credentials: 'include',
+    method: 'GET',
+  };
   try {
-    const data = yield call(request, requestURL);
+    const data = yield call(request, requestURL, options);
     params.fun();
     yield put(getCvSuccess(data));
   } catch (err) {

@@ -4,7 +4,8 @@ import { userLoggedOut, logoutUserFailed } from 'actions/logoutActions';
 import { LOGOUT_REQUEST } from 'constants/logout';
 import request from 'utils/request';
 
-export function* doLogout() {
+export function* doLogout(action) {
+  console.log('~~~action', action);
   const requestURL = 'https://localhost:44340/account/logout';
   const options = {
     headers: {
@@ -18,8 +19,15 @@ export function* doLogout() {
   };
 
   try {
+    const effects = [];
     yield call(request, requestURL, options, true);
+
     yield put(userLoggedOut());
+    const { postLogout } = action;
+    if(action.postLogout && Array.isArray(postLogout) && postLogout.length) {
+      postLogout.map(postAction => effects.push(put(postAction())));
+    }
+    yield all(effects);
   } catch (err) {
     yield put(logoutUserFailed(err.response));
   }

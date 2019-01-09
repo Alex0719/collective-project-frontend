@@ -20,10 +20,6 @@ export const routes = [
     component: StudentManagement
   },
   {
-    path: '/posts',
-    component: InternshipPosts,
-  },
-  {
     path: '/unauthorized',
     component: Unauthorized,
   }
