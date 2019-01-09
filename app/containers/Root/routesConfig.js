@@ -32,7 +32,7 @@ export const routes = [
     component: Student,
   },
   {
-    path: '/internship/{id}/details',
+    path: '/internship/id/details',
     component: InternshipDetails,
   },
   {
