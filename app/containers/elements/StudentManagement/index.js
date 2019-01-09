@@ -131,7 +131,7 @@ export class StudentManagement extends React.Component
     render() {
         var applications = Object.values(this.props.applications.applications);
         var availability= this.props.applications.availability;
-        if(applications==null || applications==undefined || applications.length==0)return(null);
+        if(!(applications && applications.length))return(null);
         return (
             <TableContainer>
              Locuri ocupate: {availability.OccupiedPlaces} din {availability.TotalPlaces}
