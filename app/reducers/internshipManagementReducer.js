@@ -6,7 +6,7 @@ import {
 } from 'constants/internshipManagement';
 
 export const initialState = fromJS({
-  internships: {},
+  internships: [],
 });
 
 const internshipManagementReducer = (state = initialState, action) => {

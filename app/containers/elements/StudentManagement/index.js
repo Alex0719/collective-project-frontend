@@ -54,7 +54,7 @@ export class StudentManagement extends React.Component
         {
             return (
                 <ButtonWrapper>
-                    <Button text={"Selecteaza"} onClick={()=>{this.onSelectStudent(row)}}/>
+                    <Button text={"Selectează"} onClick={()=>{this.onSelectStudent(row)}}/>
                 </ButtonWrapper>);
 
         }
@@ -62,7 +62,7 @@ export class StudentManagement extends React.Component
         {
             return(
                 <ButtonWrapper>
-                    <Button text={"Aproba"} onClick={()=>{this.onAcceptStudent(row)}}/>
+                    <Button text={"Aprobă"} onClick={()=>{this.onAcceptStudent(row)}}/>
                     <Button text={"Respinge"} onClick={()=>{this.onRejectStudent(row)}}/>
                 </ButtonWrapper>
             );
@@ -70,7 +70,7 @@ export class StudentManagement extends React.Component
         }
     }
 
-  
+
   onClickCv(id) {
     this.props.getCv(id, this.props.applications.applications[id-1]);
   }
@@ -126,12 +126,15 @@ export class StudentManagement extends React.Component
         );
     }
 
-   
+
 
     render() {
-        var applications = Object.values(this.props.applications.applications);
-        var availability= this.props.applications.availability;
-        if(!(applications && applications.length))return(null);
+        const applications = Object.values(this.props.applications.applications);
+        const availability= this.props.applications.availability;
+        const options = {
+          noDataText: 'Internship-ul nu are niciun aplicant',
+        };
+
         return (
             <TableContainer>
              Locuri ocupate: {availability.OccupiedPlaces} din {availability.TotalPlaces}
@@ -142,6 +145,8 @@ export class StudentManagement extends React.Component
                             stripped={true}
                             hover={true}
                             search={ true }
+                            options={options}
+                            trStyle={{textAlign: 'center'}}
                             className="stock-table"
                             >
             <TableHeaderColumn width={'10%'} thStyle={{textAlign: 'center'}} dataAlign={'center'} dataField='Id' isKey={true}>Id</TableHeaderColumn>
@@ -163,14 +168,14 @@ const mapStateToProps = state =>{
     loggedUser: selectLoggedUser(state)(),
   });
 }
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, {match: {params: { id }}}) => ({
   fetchRole: () => dispatch(requestRole()),
-  getApplications: (redirectFunction) => dispatch(getApplications(redirectFunction)),
+  getApplications: (redirectFunction) => dispatch(getApplications(redirectFunction, id)),
   getCv:(values, fun)=>dispatch(getCv(values, fun)),
-  selectStudent:(values,fun, funAlert)=>dispatch(selectStudent(values,fun,funAlert)),
-  approveStudent:(values,fun, funAlert)=>dispatch(approveStudent(values,fun,funAlert)),
-  rejectStudent:(values,fun,funAlert)=>dispatch(rejectStudent(values,fun,funAlert)),
-  getAvailability:(values)=>dispatch(getAvailability(values))
+  selectStudent:(values,fun, funAlert)=>dispatch(selectStudent(values,fun,funAlert, id)),
+  approveStudent:(values,fun, funAlert)=>dispatch(approveStudent(values,fun,funAlert,id)),
+  rejectStudent:(values,fun,funAlert)=>dispatch(rejectStudent(values,fun,funAlert,id)),
+  getAvailability:(values)=>dispatch(getAvailability(values,id))
 });
 
 StudentManagement.propTypes = {

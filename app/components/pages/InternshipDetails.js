@@ -51,8 +51,6 @@ export default class InternshipDetailsComponent extends React.Component {
   }
 
   onDescriptionChanged(txt) {
-    console.log('aici');
-    console.log(txt);
     const newInternshipDetails = this.state.internshipDetails;
     newInternshipDetails.internship.description = txt.target.value;
     this.setState({ internshipDetails: newInternshipDetails });
@@ -85,7 +83,7 @@ export default class InternshipDetailsComponent extends React.Component {
     const TextAreaStyle = {
       marginRight: '10px',
       marginLeft: '10px',
-      paddingLeft: '15px',      
+      paddingLeft: '15px',
       width: '100%',
       fontWeight: 'normal',
     };
@@ -107,8 +105,15 @@ export default class InternshipDetailsComponent extends React.Component {
       overflow:'auto',
     };
 
-    console.log('comp:');
-    console.log(this.state.internshipDetails);
+    const {
+      ratingInternship,
+      ratingMentors,
+      ratingCompany
+    } = this.props.internshipDetails;
+    const ratingI = ratingInternship === 'NaN' ? 0 : ratingInternship;
+    const ratingM = ratingMentors === 'NaN' ? 0 : ratingMentors;
+    const ratingC = ratingCompany === 'NaN' ? 0 : ratingCompany;
+
     return (
       <SplitPane
       style={splitPane}
@@ -163,7 +168,7 @@ export default class InternshipDetailsComponent extends React.Component {
           <RowButton>
             {/* TODO: put data when calling onSaveChanges() */}
             <Button
-              text="Save changes"
+              text="Salvează modificările"
               onClick={() =>
                 this.props.onSaveChanges(
                   this.state.internshipDetails.internship,
@@ -172,7 +177,7 @@ export default class InternshipDetailsComponent extends React.Component {
             />
           </RowButton>
           </Rows>
-          <InternshipPosts />
+          <InternshipPosts internshipId={this.props.internshipId}/>
         </LeftPart>
 
         <RightPart>
@@ -180,27 +185,34 @@ export default class InternshipDetailsComponent extends React.Component {
             <RowRating>
               <NameRating>Internship</NameRating>
               <StarRating
-                rating={this.props.internshipDetails.ratingInternship}
+                rating={ratingI}
               />
             </RowRating>
             <RowRating>
-              <NameRating>Mentors</NameRating>
-              <StarRating rating={this.props.internshipDetails.ratingMentors} />
+              <NameRating>Mentori</NameRating>
+              <StarRating rating={ratingM} />
             </RowRating>
             <RowRating>
-              <NameRating>Company</NameRating>
-              <StarRating rating={this.props.internshipDetails.ratingCompany} />
+              <NameRating>Companie</NameRating>
+              <StarRating rating={ratingC} />
             </RowRating>
           </RowsWithRatings>
           <LinkRows>
             <Label style={LabelStyle} color="red" horizontal>
-              Link-uri Utile:
-              <Link href="/management">Aplicanti</Link>
+              <ButtonWrapper>
+                <TextWrapper>Link-uri Utile:</TextWrapper>
+                <Button
+                  text={'Listă aplicanți'}
+                  onClick={
+                    () => this.props.changeRoute(`/management/${this.props.internshipId}`)}
+                />
+              </ButtonWrapper>
             </Label>
           </LinkRows>
-          <TestimonialRow>
-            <Testimonials testimonials={this.props.testimonials} />
-          </TestimonialRow>
+          {this.props.testimonials && this.props.testimonials.length !== 0 ?
+            <TestimonialRow>
+              <Testimonials testimonials={this.props.testimonials} />
+            </TestimonialRow> : null }
         </RightPart>
       </SplitPane>
     );
@@ -213,6 +225,13 @@ const NameRating = styled.div`
   flex: 1 0 30%;
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+`;
+
+const TextWrapper = styled.div`
+  padding-top: 19px;
+`;
 
 const RowsWithRatings = styled.div`
   display: flex;

@@ -25,8 +25,8 @@ import {
 import request from 'utils/request';
 import { GET_AVAILABILITY_REQUEST } from '../constants/studentManagement';
 
-export function* getApplications({redirectFunction}) {
-  const requestURL = 'https://localhost:44340/internships/1/management';
+export function* getApplications({redirectFunction, id}) {
+  const requestURL = `https://localhost:44340/internships/${id}/management`;
 
   const options = {
     headers: {
@@ -68,13 +68,12 @@ export function* getCV(params) {
     method: 'GET',
   };
 
-  console.log(params.fun);
   try {
     const data = yield call(request, requestURL, options,false,true);
     data.arrayBuffer().then(rs => {console.log("blob:",rs);
     const file = new Blob([rs], { type: 'application/pdf' });
     var windowHandler = window.open("");
-    
+
     const fileURL = windowHandler.URL.createObjectURL(file);
 
     var link =windowHandler.document.createElement('a');
@@ -83,7 +82,7 @@ export function* getCV(params) {
   link.click();
   windowHandler.close();
 })
-   
+
     yield put(getCvSuccess(data));
   } catch (err) {
     yield put(getCvFailure(err.response));
@@ -95,7 +94,7 @@ export function* getCvSaga() {
 }
 
 export function* selectStudent(params) {
-  const requestURL = 'https://localhost:44340/internships/1/students/select';
+  const requestURL = `https://localhost:44340/internships/${params.id}/students/select`;
   try {
     const options = {
       headers: {
@@ -122,7 +121,7 @@ export function* selectStudentSaga() {
 }
 
 export function* approveStudent(params) {
-  const requestURL = 'https://localhost:44340/internships/1/students/aprove';
+  const requestURL = `https://localhost:44340/internships/${params.id}/students/aprove`;
 
   try {
     const options = {
@@ -150,7 +149,7 @@ export function* approveStudentSaga() {
 }
 
 export function* rejectStudent(params) {
-  const requestURL = 'https://localhost:44340/internships/1/students/reject';
+  const requestURL = `https://localhost:44340/internships/${params.id}/students/reject`;
 
   try {
     const options = {
@@ -179,7 +178,7 @@ export function* rejectStudentSaga() {
 }
 
 export function* getAvailability(params) {
-  const requestURL = 'https://localhost:44340/internships/availability/1';
+  const requestURL = `https://localhost:44340/internships/availability/${params.id}`;
   const options = {
     headers: {
       'Access-Control-Allow-Origin': '*',

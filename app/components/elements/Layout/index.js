@@ -75,6 +75,7 @@ export class Layout extends React.Component {
             <img
               width={140}
               height={50}
+              style={{marginRight: '5px'}}
               src={Logo}
               alt="no image found"
             />

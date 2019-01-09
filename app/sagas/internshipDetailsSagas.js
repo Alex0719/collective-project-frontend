@@ -36,7 +36,6 @@ export function* getInternshipDetails({ id }) {
 
   try {
     const data = yield call(request, requestURL, options);
-    console.log(data);
     yield put(getInternshipDetailsSuccess(data));
   } catch (err) {
     yield put(getInternshipDetailsFailure(err.response));
@@ -44,8 +43,6 @@ export function* getInternshipDetails({ id }) {
 }
 
 export function* putInternshipDetails({ id,obj }) {
-  console.log(id);
-  console.log(obj);
   const requestURL = `https://localhost:44340/internships/${id}`;
 
   const options = {
@@ -61,7 +58,6 @@ export function* putInternshipDetails({ id,obj }) {
 
   try {
     const data = yield call(request, requestURL, options);
-    console.log(data);
     yield put(putInternshipDetailsSuccess(data));
   } catch (err) {
     yield put(putInternshipDetailsFailure(err.response));
@@ -101,4 +97,3 @@ export function* putInternshipDetailsSaga() {
 export function* getInternshipTestimonialsSaga() {
   yield takeLatest(GET_INTERNSHIP_TESTIMONIALS_REQUEST, getInternshipTestimonials);
 }
-

@@ -9,7 +9,7 @@ import {
 } from 'constants/colors';
 import ChartWithText from '../elements/ChartWithText/ChartWithText';
 
-import { CompanyLogo, AccesaLogo, AlgotechLogo, ArobsLogo, BoschLogo, FortechLogo, SiemensLogo, ToraLogo, 
+import { CompanyLogo, AccesaLogo, AlgotechLogo, ArobsLogo, BoschLogo, FortechLogo, SiemensLogo, ToraLogo,
   YardiLogo, YonderLogo } from '../../images/companies';
 
 const CirclesContainer = styled.div`
@@ -110,18 +110,18 @@ export default class DashboardComponent extends React.Component {
           </ChartWithText>
           <ChartWithText>
             <Count>{this.props.counts.studentCount}</Count>
-            <div>Studenti</div>
+            <div>Studenți</div>
           </ChartWithText>
           <ChartWithText>
             <Count>{this.props.counts.internshipCount}</Count>
-            <div>Internshipuri</div>
+            <div>Internship-uri</div>
           </ChartWithText>
         </CirclesContainer>
         <QuestionContainer>
           <Row>
             <Question>
               <h2>Cui se adresează?</h2>
-              <div> 
+              <div>
                 Această platformă se adresează companiilor și studenților, indiferent de specializare, din toată țara.
               </div>
             </Question>
@@ -129,7 +129,7 @@ export default class DashboardComponent extends React.Component {
             <Question>
               <h2>Ce este Internlink?</h2>
               <div>Internlink este o platformă online pentru gestionarea și promovarea internship-urilor,
-                creată pentru a facilita accesul la informații pentru studenții dornici de a găsi un internship și 
+                creată pentru a facilita accesul la informații pentru studenții dornici de a găsi un internship și
                 pentru companiile care doresc să publice mai ușor detalii despre posturile de internship disponibile.
               </div>
             </Question>
@@ -155,7 +155,7 @@ export default class DashboardComponent extends React.Component {
             <Question>
               <h2>Ce este un internship?</h2>
               <div>Internship-ul este un program pe o durată predefinită, de obicei mai lungă (de la câteva săptămâni până
-                la câteva luni), prin care firmele își recrutează viitori angajați. Pentru studenți reprezintă o 
+                la câteva luni), prin care firmele își recrutează viitori angajați. Pentru studenți reprezintă o
                 oportunitate de învățare și o modalitate prin care poți obține experiență practică în domeniul de interes.
               </div>
             </Question>
