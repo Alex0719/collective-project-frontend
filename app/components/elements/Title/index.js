@@ -15,6 +15,7 @@ const H2 = styled.h2`
 
 const Background = styled.div`
   padding-top: 20px;
+  padding-bottom: 20px;
   background: ${AERO_BLUE};
 `;
 

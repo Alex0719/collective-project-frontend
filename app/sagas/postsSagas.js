@@ -28,13 +28,10 @@ export function* getPostsForInternship({ values }) {
     let posts;
     if (Cookies.get('Identity')) {
       posts = yield call(request, requestURL, options);
-      console.log(posts);
     } else {
-      console.log("not authorized");
     }
     yield put(getPostsForInternshipSuccess(posts));
   } catch (err) {
-    console.log("err in get posts saga "+err)
     yield put(getPostsForInternshipFailure(err.response));
   }
 }
@@ -44,9 +41,8 @@ export default function* getPostsForInternshipSaga() {
 }
 
 
-export function* addPostForInternship({ values }) {
+export function* addPostForInternship(params) {
   const requestURL = 'https://localhost:44340/internships/1/posts';
-  console.log('saga', values);
   let options = {
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -55,23 +51,20 @@ export function* addPostForInternship({ values }) {
     },
     credentials: 'include',
     method: 'POST',
-    body: JSON.stringify(values)
+    body: JSON.stringify(params.values)
   };
 
 
   try {
     let addedPost;
     if (Cookies.get('Identity')) {
-      console.log("in add saga");
       addedPost = yield call(request, requestURL, options);
-      console.log(addedPost);
-    } else {
-      console.log("not authorized");
     }
     yield put(addPostForInternshipSuccess(addedPost));
+    params.fun("Postarea a fost adaugata cu success!",false)
   } catch (err) {
-    console.log("err in add post saga "+err)
     yield put(addPostForInternshipFailure(err.response));
+    params.fun("Postarea nu a putut fi adaugata",true)
   }
 }
 

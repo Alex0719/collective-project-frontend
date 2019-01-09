@@ -19,8 +19,9 @@ import {
     GET_AVAILABILITY_REQUEST
   } from 'constants/studentManagement';
 
-  export const getApplications = () => ({
+  export const getApplications = (redirectFunction) => ({
     type: GET_APPLICATIONS_REQUEST,
+    redirectFunction
   });
   
   export const getApplicationsSuccess = response => ({
@@ -48,9 +49,9 @@ import {
     message,
   });
   
-  export const selectStudent = (values,fun) =>  ({
+  export const selectStudent = (values,fun,funAlert) =>  ({
     type: SELECT_STUDENT_REQUEST,
-    values, fun
+    values, fun, funAlert
   });
   
   export const selectStudentSuccess = response => ({
@@ -63,9 +64,9 @@ import {
     message,
   });
   
-  export const approveStudent = (values, fun) =>  ({
+  export const approveStudent = (values, fun, funAlert) =>  ({
     type:APPROVE_STUDENT_REQUEST,
-    values, fun
+    values, fun, funAlert
   });
   
   export const approveStudentSuccess = response => ({
@@ -78,9 +79,9 @@ import {
     message,
   });
    
-  export const rejectStudent = (values, fun) =>  ({
+  export const rejectStudent = (values, fun, funAlert) =>  ({
     type:REJECT_STUDENT_REQUEST,
-    values, fun
+    values, fun, funAlert
   });
   
   export const rejectStudentSuccess = response => ({

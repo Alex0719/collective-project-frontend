@@ -13,6 +13,7 @@ import Button from 'components/elements/Button';
 import { loginUser, getLoggedUser } from 'actions/loginActions';
 import { logoutUser } from 'actions/logoutActions';
 import { AvatarStyle } from 'components/elements/Layout/styles';
+import Alert from 'react-s-alert';
 import {
   IconButtonStyle,
   TextFieldStyle,
@@ -70,6 +71,24 @@ export class ProfileMenu extends React.Component {
     });
   }
 
+  showAlert(message, error)
+  {
+      if(error)
+      {
+        Alert.error(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+      else
+      {
+        Alert.success(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+  }
+
   handleLogin() {
     const { email, password, rememberMe } = this.state;
     const { login } = this.props;
@@ -80,7 +99,7 @@ export class ProfileMenu extends React.Component {
     };
 
     this.setState({ open: false });
-    login(credentials);
+    login(credentials,this.showAlert);
   }
 
   renderLogout() {
@@ -163,7 +182,7 @@ ProfileMenu.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  login: values => dispatch(loginUser(values)),
+  login: (values,funAlert) => dispatch(loginUser(values,funAlert)),
   getLoggedUser: () => dispatch(getLoggedUser()),
   logout: () => dispatch(logoutUser()),
 });
