@@ -89,17 +89,36 @@ class StudentDashboardList extends React.Component {
   }
 
   subscribe = (company) => {
-    console.log("subscribe", company.id, this.props);
+    // console.log("subscribe", company.id);
+    this.props.subscribeHandler(company.id);
+  }
+
+  unsubscribe = (company) => {
+    // console.log("unsubscribe", company.id);
+    this.props.unsubscribeHandler(company.id);
   }
 
   render() {
     const { companies } = this.props;
 
+    const subscribeButton = (company) => (
+      <SubscribeButton onClick={() => this.subscribe(company)}>
+        Subscribe
+      </SubscribeButton>
+    );
+
+    const unsubscribeButton = (company) => (
+      <SubscribeButton onClick={() => this.unsubscribe(company)}>
+        Unubscribe
+      </SubscribeButton>
+    );
+
     return (
       <Container>
-        {companies.map(company => {
+        {companies.map(comp => {
+          const company = comp.comp;
           return (
-            <CollapsibleContainer key={companies.indexOf(company)}>
+            <CollapsibleContainer key={companies.indexOf(comp)}>
               <Collapsible
                 easing="ease-in"
                 trigger={(
@@ -123,7 +142,9 @@ class StudentDashboardList extends React.Component {
               </Collapsible>
 
               <SubscribeContainer>
-                <SubscribeButton onClick={() => this.subscribe(company)}>Subscribe</SubscribeButton>
+                {
+                  comp.subscribed ? unsubscribeButton(company) : subscribeButton(company)
+                }
               </SubscribeContainer>
             </CollapsibleContainer>
           )

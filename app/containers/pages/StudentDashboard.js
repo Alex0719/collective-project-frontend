@@ -5,14 +5,12 @@ import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import 'react-accessible-accordion/dist/minimal-example.css';
-import { getStudentDashboardCompaniesSaga } from "../../sagas/dashboardSagas";
+import { getStudentDashboardCompaniesSaga, subscribeStudentSaga, unsubscribeStudentSaga } from "../../sagas/dashboardSagas";
 import { studentDashboardSelector } from "../../selectors/dashboardSelectors";
-import { getStudentDashboardCompanies } from "../../actions/dashboardActions";
+import { getStudentDashboardCompanies, subscribeStudent, unsubscribeStudent } from "../../actions/dashboardActions";
 import { AERO_BLUE } from "../../constants/colors";
 import styled from "styled-components";
 import StudentDashboardList from "../../components/pages/StudentDashboard";
-import { selectLoggedUser } from "../../selectors/profileMenuSelector";
-import { getLoggedUser } from "../../actions/loginActions";
 
 class StudentDashboard extends React.Component {
   constructor(props) {
@@ -21,13 +19,27 @@ class StudentDashboard extends React.Component {
 
   componentWillMount() {
     this.props.getCompanies();
-    this.props.getLoggedUser();
+  }
+
+  subscribe = (companyId) => {
+    console.log("%csubscribe " + companyId, "color: green");
+    this.props.subscribe(companyId);
+  }
+
+  unsubscribe = (companyId) => {
+    console.log("%cunsubscribe " + companyId, "color: orange");
+    this.props.unsubscribe(companyId);
+
   }
 
   render() {
     const { companies } = this.props;
     return (
-      <StudentDashboardList user={this.props.loggedUser} companies={companies} />
+      <StudentDashboardList
+        subscribeHandler={(id) => this.subscribe(id)}
+        unsubscribeHandler={(id) => this.unsubscribe(id)}
+        companies={companies}
+      />
     );
   }
 
@@ -36,24 +48,34 @@ class StudentDashboard extends React.Component {
 const mapStateToProps = state =>
   createStructuredSelector({
     companies: studentDashboardSelector(state)(),
-    loggedUser: selectLoggedUser(state)()
   });
 
 const mapDispatchToProps = dispatch => ({
   getCompanies: () => dispatch(getStudentDashboardCompanies()),
-  getLoggedUser: () => dispatch(getLoggedUser())
+  subscribe: (companyId) => dispatch(subscribeStudent(companyId)),
+  unsubscribe: (companyId) => dispatch(unsubscribeStudent(companyId))
 });
 
 StudentDashboard.propTypes = {
   getCompanies: PropTypes.func,
   companies: PropTypes.any,
-  loggedUser: PropTypes.any,
-  getLoggedUser: PropTypes.func
+  subscribe: PropTypes.func,
+  unsubscribe: PropTypes.func
 };
 
 const withStudentDashboardSaga = injectSaga({
   key: 'getStudentDashboardCompaniesSaga',
   saga: getStudentDashboardCompaniesSaga,
+});
+
+const withSubscribeStudentSaga = injectSaga({
+  key: 'subscribeStudentSaga',
+  saga: subscribeStudentSaga,
+});
+
+const withUnsubscribeStudentSaga = injectSaga({
+  key: 'unsubscribeStudentSaga',
+  saga: unsubscribeStudentSaga,
 });
 
 const withConnect = connect(
@@ -63,5 +85,7 @@ const withConnect = connect(
 
 export default compose(
   withStudentDashboardSaga,
+  withSubscribeStudentSaga,
+  withUnsubscribeStudentSaga,
   withConnect
 )(StudentDashboard);
