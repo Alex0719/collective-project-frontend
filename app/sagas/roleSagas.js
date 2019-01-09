@@ -1,4 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 
 import { roleSuccess, roleFailed } from 'actions/roleActions';
 import { ROLE_REQUEST } from 'constants/role';

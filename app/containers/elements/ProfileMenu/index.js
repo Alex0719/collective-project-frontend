@@ -117,7 +117,7 @@ export class ProfileMenu extends React.Component {
   }
 
   renderLogout() {
-    const postLogout = [() => this.props.changeRoute()]
+    const postLogout = [() => this.props.changeRoute('/')]
 
     return (
       <IconMenuInnerWrapper>
@@ -125,7 +125,11 @@ export class ProfileMenu extends React.Component {
           <Button
             type="DividerButton"
             text="Profil"
-            onClick={() => console.log('click')}
+            onClick={() => {
+              this.props.changeRoute('/student');
+              this.setState({open: false});
+              this.props.unfocusButtons();
+            }}
           /> : null
         }
         <Button
@@ -151,7 +155,7 @@ export class ProfileMenu extends React.Component {
         />
         <TextField
           id="outlined-password"
-          label="Password"
+          label="Parolă"
           type="password"
           value={this.state.password}
           style={TextFieldStyle}
@@ -203,7 +207,7 @@ const mapDispatchToProps = dispatch => ({
   login: (values,funAlert) => dispatch(loginUser(values,funAlert)),
   getLoggedUser: () => dispatch(getLoggedUser()),
   logout: postLogout => dispatch(logoutUser(postLogout)),
-  changeRoute: () => dispatch(push('/')),
+  changeRoute: route => dispatch(push(route)),
 });
 
 const withConnect = connect(

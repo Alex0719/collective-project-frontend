@@ -43,9 +43,9 @@ export function* getApplications({redirectFunction}) {
     yield put(getApplicationsSuccess(data));
   } catch (err) {
     yield put(getApplicationsFailure(err.response));
-    if(err.response.status=="401")
+    if(err.response.status===401)
     {
-      redirectFunction();
+      yield put(redirectFunction());
     }
   }
 }

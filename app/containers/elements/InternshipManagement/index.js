@@ -61,17 +61,8 @@ class InternshipManagement extends React.Component {
   }
 
   render() {
-    console.log(this.props.internships);
-    // const internships = Object.values(this.props.internships);
     const { internships } = this.props;
-    console.log(this.props);
-    // if (
-    //   internships == null ||
-    //   internships == undefined ||
-    //   internships.length == 0
-    // )
-    //   return null;
-    // ii ok daca schimb putin? Normal
+  
     return (
       <div>
         {internships.length ? (

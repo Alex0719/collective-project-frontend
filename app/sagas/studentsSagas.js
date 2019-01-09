@@ -1,5 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 import Cookies from 'js-cookie';
+import Alert from 'react-s-alert';
 
 import { UPDATE_STUDENT_REQUEST, GET_STUDENT_REQUEST } from 'constants/student';
 import request from 'utils/request';
@@ -29,14 +31,16 @@ export function* getStudent() {
     let student;
     if (Cookies.get('Identity')) {
       student = yield call(request, requestURL, options);
-      console.log(student);
     } else {
-      console.log('not authorized');
+      yield put(push('/unauthorized'));
     }
     yield put(getStudentSuccess(student));
   } catch (err) {
-    console.log(`err in get student saga ${err}`);
     yield put(getStudentFailure(err.response));
+    if(err.response.status === 401) {
+      yield put(push('/unauthorized'));
+    }
+
   }
 }
 
@@ -46,7 +50,6 @@ export function* getStudentSaga() {
 
 export function* updateStudent({ values }) {
   const requestURL = 'https://localhost:44340/students';
-  console.log('saga', values);
   const options = {
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -61,16 +64,21 @@ export function* updateStudent({ values }) {
   try {
     let updatedStudent;
     if (Cookies.get('Identity')) {
-      console.log('in update saga');
       updatedStudent = yield call(request, requestURL, options, true);
-      console.log(updatedStudent);
       yield put(updateStudentSuccess(updatedStudent));
+      Alert.success("Profilul s-a modificat cu succes!", {
+            position: 'top-right',
+            effect: 'jelly'
+          });
     } else {
-      console.log('not authorized');
+      yield put(push('/unauthorized'));
     }
   } catch (err) {
-    console.log(`err in update put saga ${err}`);
     yield put(updateStudentFailure(err.response));
+    Alert.error("Eroare la modificarea profilului!", {
+          position: 'top-right',
+          effect: 'jelly'
+        });
   }
 }
 
