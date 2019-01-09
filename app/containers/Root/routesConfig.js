@@ -5,6 +5,7 @@ import Internships from 'containers/pages/Internships';
 import Dashboard from '../../containers/pages/Dashboard';
 import StudentManagement from '../../containers/elements/StudentManagement';
 import InternshipPosts from '../../containers/elements/InternshipPosts';
+import Student from '../elements/Student';
 import Unauthorized from '../../containers/pages/Unauthorized';
 export const routes = [
   {
@@ -17,7 +18,11 @@ export const routes = [
   },
   {
     path:'/management',
-    component: StudentManagement
+    component: StudentManagement,
+  },
+  {
+    path: '/student',
+    component: Student,
   },
   {
     path: '/unauthorized',
