@@ -28,6 +28,7 @@ export const routes = [
     path: '/student',
     component: Student,
   },
+  {
     path: '/unauthorized',
     component: Unauthorized,
   }
