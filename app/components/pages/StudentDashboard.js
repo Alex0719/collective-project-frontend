@@ -7,7 +7,7 @@ import {
   AccordionItemBody,
 } from 'react-accessible-accordion';
 import Collapsible from 'react-collapsible';
-import { QUEEN_BLUE, AERO_BLUE, DARK_RED } from "../../constants/colors";
+import { QUEEN_BLUE, AERO_BLUE, DARK_RED, BLUE_GRAY } from "../../constants/colors";
 import styles from "styled-components";
 import moment from "moment";
 
@@ -55,8 +55,19 @@ const SubscribeButton = styles.button`
     outline: none;
   }
   position: relative;
-  z-index: 10;
-  
+`;
+
+const UnsubscribeButton = styles.button`
+  background-color: ${BLUE_GRAY};
+  padding: 10px;
+  font-size: 15px;
+  color: white;
+  border-radius: 10px;
+  cursor:pointer;
+  &:focus {
+    outline: none;
+  }
+  position: relative;
 `;
 
 const Link = styles.a`
@@ -108,9 +119,9 @@ class StudentDashboardList extends React.Component {
     );
 
     const unsubscribeButton = (company) => (
-      <SubscribeButton onClick={() => this.unsubscribe(company)}>
-        Unubscribe
-      </SubscribeButton>
+      <UnsubscribeButton onClick={() => this.unsubscribe(company)}>
+        Unsubscribe
+      </UnsubscribeButton>
     );
 
     return (

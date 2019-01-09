@@ -7,6 +7,8 @@ import {
   getStudentDashboardCompaniesFailure,
   subscribeStudentSuccess,
   subscribeStudentFailure,
+  unsubscribeStudentSuccess,
+  unsubscribeStudentFailure,
 } from 'actions/dashboardActions';
 import {
   GET_DASHBOARD_STATISTICS_REQUEST,
@@ -45,7 +47,6 @@ export function* getStudentDashboardCompanies() {
   };
   try {
     const data = yield call(request, requestURL, options);
-    console.table(data);
     yield put(getStudentDashboardCompaniesSuccess(data));
   } catch (err) {
     console.log("err", err);
@@ -59,7 +60,6 @@ export function* getStudentDashboardCompaniesSaga() {
 
 export function* subscribeStudent(req) {
   const requestURL = 'https://localhost:44340/students/subscriptions';
-  console.log(req);
   let options = {
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -71,9 +71,9 @@ export function* subscribeStudent(req) {
     body: JSON.stringify({ CompanyId: req.companyId, StudentId: 1 })
   };
   try {
-    let data = yield call(request, requestURL, options);
-    console.log("subscribe", data);
+    const data = yield call(request, requestURL, options, true);
     yield put(subscribeStudentSuccess(data));
+    yield getStudentDashboardCompanies();
   } catch (err) {
     console.log("err", err);
     yield put(subscribeStudentFailure(err.response));
@@ -85,9 +85,7 @@ export function* subscribeStudentSaga() {
 }
 
 export function* unsubscribeStudent(req) {
-  console.log("unsub");
   const requestURL = 'https://localhost:44340/students/subscriptions';
-  console.log(req);
   let options = {
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -99,12 +97,12 @@ export function* unsubscribeStudent(req) {
     body: JSON.stringify({ CompanyId: req.companyId, StudentId: 1 })
   };
   try {
-    let data = yield call(request, requestURL, options);
-    console.log("unsubscribe", data);
-    yield put(subscribeStudentSuccess(data));
+    let data = yield call(request, requestURL, options, true);
+    yield put(unsubscribeStudentSuccess(data));
+    yield getStudentDashboardCompanies();
   } catch (err) {
     console.log("err", err);
-    yield put(subscribeStudentFailure(err.response));
+    yield put(unsubscribeStudentFailure(err.response));
   }
 }
 

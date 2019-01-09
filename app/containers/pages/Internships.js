@@ -8,6 +8,9 @@ import { getInternships } from 'actions/companyActions';
 import { getInternshipsSaga } from 'sagas/companySagas';
 import injectSaga from 'utils/injectSaga';
 import InternshipsComponent from 'components/pages/Internships';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 
 export class Internships extends React.Component {
   constructor(props) {
@@ -15,7 +18,12 @@ export class Internships extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getInternships();
+    this.props.getInternships(this.redirectFunction);
+  }
+
+  redirectFunction=()=>
+  {
+    this.props.history.push("/unauthorized");
   }
 
   render() {
@@ -41,7 +49,9 @@ export class Internships extends React.Component {
   ];
 
     return (
+      <div>
       <InternshipsComponent internships={this.props.internships} />
+      </div>
     );
   }
 }
@@ -52,7 +62,7 @@ const mapStateToProps = state =>
   });
 
 const mapDispatchToProps = dispatch => ({
-  getInternships: () => dispatch(getInternships()),
+  getInternships: (redirectFunction) => dispatch(getInternships(redirectFunction)),
 });
 
 const withConnect = connect(

@@ -12,6 +12,9 @@ import dashboardReducer from './reducers/dashdoardReducer';
 import studentManagementReducer from './reducers/studentManagementReducer';
 import postsReducer from './reducers/postsReducers';
 import studentDashboardReducer from './reducers/studentDashboardReducer';
+import internshipManagementReducer from './reducers/internshipManagementReducer';
+import studentsReducer from './reducers/studentsReducer';
+
 /*
  * routeReducer
  *
@@ -52,7 +55,9 @@ export default function createReducer(injectedReducers) {
     dashboard: dashboardReducer,
     studentDashboard: studentDashboardReducer,
     studentManagement: studentManagementReducer,
+    internshipManagement: internshipManagementReducer,
     postsReducer: postsReducer,
+    studentsReducer: studentsReducer,
     ...injectedReducers,
   });
 }

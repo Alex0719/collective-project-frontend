@@ -21,23 +21,12 @@ class StudentDashboard extends React.Component {
     this.props.getCompanies();
   }
 
-  subscribe = (companyId) => {
-    console.log("%csubscribe " + companyId, "color: green");
-    this.props.subscribe(companyId);
-  }
-
-  unsubscribe = (companyId) => {
-    console.log("%cunsubscribe " + companyId, "color: orange");
-    this.props.unsubscribe(companyId);
-
-  }
-
   render() {
     const { companies } = this.props;
     return (
       <StudentDashboardList
-        subscribeHandler={(id) => this.subscribe(id)}
-        unsubscribeHandler={(id) => this.unsubscribe(id)}
+        subscribeHandler={(id) => this.props.subscribe(id)}
+        unsubscribeHandler={(id) => this.props.unsubscribe(id)}
         companies={companies}
       />
     );
