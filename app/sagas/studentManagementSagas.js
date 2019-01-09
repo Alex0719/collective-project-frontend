@@ -25,7 +25,7 @@ import {
 import request from 'utils/request';
 import { GET_AVAILABILITY_REQUEST } from '../constants/studentManagement';
 
-export function* getApplications() {
+export function* getApplications({redirectFunction}) {
   const requestURL = 'https://localhost:44340/internships/1/management';
 
   const options = {
@@ -43,6 +43,10 @@ export function* getApplications() {
     yield put(getApplicationsSuccess(data));
   } catch (err) {
     yield put(getApplicationsFailure(err.response));
+    if(err.response.status=="401")
+    {
+      redirectFunction();
+    }
   }
 }
 
@@ -106,8 +110,10 @@ export function* selectStudent(params) {
     const data = yield call(request, requestURL, options);
     params.fun(data);
     yield put(selectStudentSuccess(data));
+    params.funAlert("Studentul a fost selectat pentru internship. In scurt timp, ii vom trimite un email.", false);
   } catch (err) {
     yield put(selectStudentFailure(err.response));
+    params.funAlert("Nu am putut modifica statusul studentului.", true);
   }
 }
 
@@ -132,8 +138,10 @@ export function* approveStudent(params) {
     const data = yield call(request, requestURL, options);
     params.fun();
     yield put(approveStudentSuccess(data));
+    params.funAlert("Studentul a fost admis la internship. In scurt timp, ii vom trimite un email.", false);
   } catch (err) {
     yield put(approveStudentFailure(err.response));
+    params.funAlert("Nu am putut modifica statusul studentului.", true);
   }
 }
 
@@ -158,8 +166,11 @@ export function* rejectStudent(params) {
     const data = yield call(request, requestURL, options);
     params.fun();
     yield put(rejectStudentSuccess(data));
+    params.funAlert("Studentul a fost respins. In scurt timp, ii vom trimite un email.", false);
+
   } catch (err) {
     yield put(rejectStudentFailure(err.response));
+    params.funAlert("Nu am putut modifica statusul studentului.", true);
   }
 }
 
@@ -169,7 +180,6 @@ export function* rejectStudentSaga() {
 
 export function* getAvailability(params) {
   const requestURL = 'https://localhost:44340/internships/availability/1';
-
   const options = {
     headers: {
       'Access-Control-Allow-Origin': '*',

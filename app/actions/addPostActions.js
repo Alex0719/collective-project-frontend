@@ -4,9 +4,9 @@ import {
     ADD_POST_FOR_INTERNSHIP_FAILURE
   } from 'constants/post';
 
-  export const addPostForInternshipRequest = values => ({
+  export const addPostForInternshipRequest = (values,fun) => ({
     type: ADD_POST_FOR_INTERNSHIP_REQUEST,
-    values,
+    values,fun
   });
 
   export const addPostForInternshipSuccess = response => ({

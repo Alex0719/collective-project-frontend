@@ -15,6 +15,9 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import 'sanitize.css/sanitize.css';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // Import root app
@@ -47,6 +50,7 @@ const render = () => {
         <ConnectedRouter history={history}>
           <div>
             <Root {...{ history }} />
+            <Alert stack={true} timeout={3000} />
           </div>
         </ConnectedRouter>
       </Provider>

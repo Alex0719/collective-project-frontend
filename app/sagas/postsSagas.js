@@ -41,7 +41,7 @@ export default function* getPostsForInternshipSaga() {
 }
 
 
-export function* addPostForInternship({ values }) {
+export function* addPostForInternship(params) {
   const requestURL = 'https://localhost:44340/internships/1/posts';
   let options = {
     headers: {
@@ -51,7 +51,7 @@ export function* addPostForInternship({ values }) {
     },
     credentials: 'include',
     method: 'POST',
-    body: JSON.stringify(values)
+    body: JSON.stringify(params.values)
   };
 
 
@@ -61,8 +61,10 @@ export function* addPostForInternship({ values }) {
       addedPost = yield call(request, requestURL, options);
     }
     yield put(addPostForInternshipSuccess(addedPost));
+    params.fun("Postarea a fost adaugata cu success!",false)
   } catch (err) {
     yield put(addPostForInternshipFailure(err.response));
+    params.fun("Postarea nu a putut fi adaugata",true)
   }
 }
 
