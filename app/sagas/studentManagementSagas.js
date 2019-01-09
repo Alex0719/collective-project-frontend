@@ -29,7 +29,16 @@ export function* getApplications() {
   const requestURL = 'https://localhost:44340/internships/1/management';
 
   try {
-    const data = yield call(request, requestURL);
+    const options = {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials': true,
+      },
+      credentials: 'include',
+      method: 'GET',
+    };
+    const data = yield call(request, requestURL, options);
     console.log("in saga ",data)
     yield put(getApplicationsSuccess(data));
   } catch (err) {
@@ -88,7 +97,7 @@ export function* selectStudentSaga() {
 
 export function* approveStudent(params) {
   const requestURL = 'https://localhost:44340/internships/1/students/aprove';
- 
+
   try {
     const options = {
       headers: {
@@ -115,7 +124,7 @@ export function* approveStudentSaga() {
 
 export function* rejectStudent(params) {
   const requestURL = 'https://localhost:44340/internships/1/students/reject';
- 
+
   try {
     const options = {
       headers: {

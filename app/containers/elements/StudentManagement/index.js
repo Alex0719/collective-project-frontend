@@ -7,12 +7,12 @@ import { createStructuredSelector } from 'reselect';
 import {Helmet} from 'react-helmet'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import './stil.css';
-import {TableContainer,ButtonWrapper} from './styles'
+import {TableContainer ,ButtonWrapper} from './styles'
 import Button from '../../../components/elements/Button'
 import {studentManagementSelector} from '../../../selectors/studentManagementSelector'
 import { getApplications, getCv, selectStudent, approveStudent,rejectStudent,getAvailability } from 'actions/studentManagement';
 import {getApplicationsSaga, getCvSaga,
-     selectStudentSaga, approveStudentSaga, 
+     selectStudentSaga, approveStudentSaga,
      rejectStudentSaga, getAvailabilitySaga} from '../../../sagas/studentManagementSagas'
 
 export class StudentManagement extends React.Component
@@ -42,18 +42,18 @@ export class StudentManagement extends React.Component
                 <ButtonWrapper>
                     <Button text={"Selecteaza"} onClick={()=>{this.onSelectStudent(row)}}/>
                 </ButtonWrapper>);
-        
+
         }
         else if(row.Status.toLowerCase()=="examinare")
         {
             return(
                 <ButtonWrapper>
-                    <Button text={"Aproba"} onClick={()=>{this.onAcceptStudent(row)}}/> 
-                    <Button text={"Respinge"} onClick={()=>{this.onRejectStudent(row)}}/> 
+                    <Button text={"Aproba"} onClick={()=>{this.onAcceptStudent(row)}}/>
+                    <Button text={"Respinge"} onClick={()=>{this.onRejectStudent(row)}}/>
                 </ButtonWrapper>
             );
-              
-        }  
+
+        }
     }
 
     onSelectStudent(row)
@@ -63,7 +63,7 @@ export class StudentManagement extends React.Component
 
     onAcceptStudent(row)
     {
-        this.props.approveStudent(row,this.props.getApplications);        
+        this.props.approveStudent(row,this.props.getApplications);
     }
 
     onRejectStudent(row)
@@ -78,13 +78,13 @@ export class StudentManagement extends React.Component
 
     onClickCv(id)
     {
-        this.props.getCv(id,this.showCv); 
+        this.props.getCv(id,this.showCv);
     }
 
     showCv(cv)
     {
         const file = new Blob(
-            [cv.Cv], 
+            [cv.Cv],
             {type: 'application/pdf'});
         const fileURL = URL.createObjectURL(file);
         window.open(fileURL);
@@ -101,7 +101,7 @@ export class StudentManagement extends React.Component
             <Helmet>
             <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
             </Helmet>
-            <BootstrapTable data={applications} 
+            <BootstrapTable data={applications}
                             stripped={true}
                             hover={true}
                             search={ true }
@@ -114,9 +114,9 @@ export class StudentManagement extends React.Component
             <TableHeaderColumn width={'100'} dataField="button" dataAlign={'center'} editable={false} dataFormat={this.renderButton.bind(this)}>Actiune</TableHeaderColumn>
             </BootstrapTable>
             </TableContainer>
-        
+
         );
-        
+
       }
 }
 
