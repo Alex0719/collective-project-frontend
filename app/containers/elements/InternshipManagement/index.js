@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
+import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { getInternshipsForStudent, confirmExamAttendance, confirmInternshipParticipation, refuseInternship } from 'actions/internshipManagement';
@@ -12,6 +13,9 @@ import Button from '../../../components/elements/Button';
 import { internshipManagementSelector } from '../../../selectors/internshipManagementSelector';
 import { getInternshipsForStudentSaga, confirmExamAttendanceSaga, confirmInternshipParticipationSaga, refuseInternshipSaga } from '../../../sagas/internshipManagementSagas';
 import { TableContainer, ButtonWrapper } from './styles';
+import { selectLoggedUser } from 'selectors/profileMenuSelector';
+import getRoleSaga from 'sagas/roleSagas';
+import { requestRole } from 'actions/roleActions';
 
 class InternshipManagement extends React.Component {
   constructor(props) {
@@ -21,6 +25,16 @@ class InternshipManagement extends React.Component {
 
   componentWillMount() {
     this.props.getInternships();
+    this.props.fetchRole();
+  }
+
+  componentWillUpdate(nextProps) {
+    if(
+      nextProps.loggedUser.role !== this.props.loggedUser.role &&
+      nextProps.loggedUser.role === 'Company'
+    ) {
+      this.props.redirect();
+    }
   }
 
   renderButton(cell,row)
@@ -62,10 +76,12 @@ class InternshipManagement extends React.Component {
 
   render() {
     const { internships } = this.props;
-  
+    const options = {
+      noDataText: 'Nu exista niciun internship',
+    };
+
     return (
       <div>
-        {internships.length ? (
           <TableContainer>
             <Helmet>
               <link
@@ -78,27 +94,26 @@ class InternshipManagement extends React.Component {
               stripped
               hover
               search
+              options={options}
+              trStyle={{textAlign: 'center'}}
               className="stock-table"
             >
-              <TableHeaderColumn width="100" dataField="Id" isKey>
+              <TableHeaderColumn width={'10%'} thStyle={{textAlign: 'center'}} dataAlign={'center'} dataField="Id" isKey>
                 Id
               </TableHeaderColumn>
-              <TableHeaderColumn width="100" dataField="Company">
+              <TableHeaderColumn width={'25%'} thStyle={{textAlign: 'center'}} dataAlign={'center'} dataField="Company">
                 Company
               </TableHeaderColumn>
-              <TableHeaderColumn width="100" dataField="Name">
+              <TableHeaderColumn width={'25%'} thStyle={{textAlign: 'center'}} dataAlign={'center'} dataField="Name">
                 Name
               </TableHeaderColumn>
-              <TableHeaderColumn width="100" dataField="Status">
+              <TableHeaderColumn width={'15%'} thStyle={{textAlign: 'center'}} dataAlign={'center'} dataField="Status">
                 Status
               </TableHeaderColumn>
-              <TableHeaderColumn width={'100'} dataField="button" dataAlign={'center'} editable={false} dataFormat={this.renderButton.bind(this)}>Actiune</TableHeaderColumn>
+              <TableHeaderColumn width={'30%'} thStyle={{textAlign: 'center'}} dataField="button" dataAlign={'center'} editable={false} dataFormat={this.renderButton.bind(this)}>Actiune</TableHeaderColumn>
               {/* <TableHeaderColumn width={'100'} dataField="button" dataAlign={'center'} editable={false} dataFormat={this.renderButton.bind(this)}>Actiune</TableHeaderColumn> */}
             </BootstrapTable>
           </TableContainer>
-        ) : (
-          <div />
-        )}
       </div>
     );
   }
@@ -110,18 +125,24 @@ InternshipManagement.propTypes = {
   confirmParticipation: PropTypes.func,
   confirmExam: PropTypes.func,
   refuse: PropTypes.func,
+  fetchRole: PropTypes.func,
+  loggedUser: PropTypes.object,
+  redirect: PropTypes.func,
 };
 
 const mapStateToProps = state =>
   createStructuredSelector({
     internships: internshipManagementSelector(state)(),
+    loggedUser: selectLoggedUser(state)(),
   });
 
 const mapDispatchToProps = dispatch => ({
+  fetchRole: () => dispatch(requestRole()),
   getInternships: () => dispatch(getInternshipsForStudent()),
   confirmExam: (values, fun) => dispatch(confirmExamAttendance(values, fun)),
   confirmParticipation: (values, fun) => dispatch(confirmInternshipParticipation(values,fun)),
   refuse: (values, fun) => dispatch(refuseInternship(values, fun)),
+  redirect: () => dispatch(push('/unauthorized')),
 });
 
 const withInternshipsForStudentSaga = injectSaga({
@@ -141,6 +162,10 @@ const withRefuseSaga = injectSaga({
   key: 'refuseInternshipSaga',
   saga: refuseInternshipSaga,
 });
+const withRoleSaga = injectSaga({
+  key: 'roleSaga',
+  saga: getRoleSaga,
+});
 
 const withConnect = connect(
   mapStateToProps,
@@ -150,7 +175,7 @@ const withConnect = connect(
 export default compose(
   withInternshipsForStudentSaga,
   withConfirmParticipationSaga,
-  withConfirmExamSaga,
+  withRoleSaga,
   withRefuseSaga,
   withConnect,
 )(InternshipManagement);

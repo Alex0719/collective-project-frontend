@@ -47,6 +47,7 @@ export class InternshipPosts extends React.Component {
   }
 
   render() {
+    console.log('---->', this.props);
     const {posts} = this.props;
     if(!posts) {
       return null;
@@ -74,9 +75,9 @@ const mapStateToProps = state =>
   });
 
 
-const mapDispatchToProps = dispatch => ({
-  getPosts: () => dispatch(getPostsForInternship()),
-  savePost: (post,fun) =>dispatch(addPostForInternshipRequest(post, fun))
+const mapDispatchToProps = (dispatch, {internshipId}) => ({
+  getPosts: () => dispatch(getPostsForInternship(internshipId)),
+  savePost: (post,fun) =>dispatch(addPostForInternshipRequest(post, fun, internshipId))
 });
 
   InternshipPosts.propTypes = {

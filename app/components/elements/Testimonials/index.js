@@ -9,8 +9,6 @@ class Testimonials extends React.Component {
 
   render(){
     const {testimonials } = this.props;
-    console.log("testimonials:")
-    console.log(testimonials);
 
     var settings = {
         slideIndex: 0,
@@ -26,13 +24,13 @@ class Testimonials extends React.Component {
         autoplayInterval: 3000,
         speed: 1000
       };
-  
+
 
     return (
         testimonials == null ? null:
         <div style={{ width: "100%", height:"400px", padding:15, marginLeft:10 }}>
-        
-        <Carousel 
+
+        <Carousel
             withoutControls={settings.withoutControls}
             transitionMode={settings.transitionMode}
             cellAlign={settings.cellAlign}

@@ -20,7 +20,7 @@ export const routes = [
     component: Internships,
   },
   {
-    path:'/management',
+    path:'/management/:id',
     component: StudentManagement,
   },
   {
