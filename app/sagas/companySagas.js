@@ -20,8 +20,18 @@ import request from 'utils/request';
 export function* doGetStudentsPerYear() {
   const requestURL = 'https://localhost:44340/statistics/evolution';
 
+  let options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': true,
+    },
+    credentials: 'include',
+    method: 'GET',
+  };
+
   try {
-    const data = yield call(request, requestURL);
+    const data = yield call(request, requestURL, options);
     yield put(getStudentsPerYearSuccess(data));
   } catch (err) {
     yield put(getStudentsPerYearFailure(err.response));

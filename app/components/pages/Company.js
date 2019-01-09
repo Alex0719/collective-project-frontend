@@ -38,7 +38,7 @@ const CompanyComponent = props => (
     </Rating>
     <StudentsPerYear>
       <Title text="Aplicanti in ultimii ani" />
-      <SimpleAreaChart />
+      <SimpleAreaChart data={props.studentsPerYear} />
     </StudentsPerYear>
   </Graphs>
 );
@@ -81,7 +81,7 @@ const Stars = styled.div`
 `;
 
 const Rating = styled.div`
-  flex: 1 0 50%;
+  flex: 1 0 45%;
 `;
 
 const StudentsPerYear = styled.div`
@@ -89,7 +89,7 @@ const StudentsPerYear = styled.div`
 `;
 
 const AplicantsVSAccepted = styled.div`
-  flex: 1 0 50%;
+  flex: 1 0 45%;
   align-self: center;
 `;
 

@@ -17,7 +17,8 @@ class Company extends React.Component {
   }
 
   render() {
-    return <CompanyComponent />;
+    console.log('in cont', this.props.studentsPerYear);
+    return <CompanyComponent studentsPerYear={this.props.studentsPerYear}/>;
   }
 }
 

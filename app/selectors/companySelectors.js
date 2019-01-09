@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 const selectStudentsPerYear = state =>
-  state.getIn(['company', 'studentsPerYear']);
+  state.getIn(['company', 'studentsPerYear']).toJS();
 
 const selectInternships = state =>
   state.getIn(['company', 'internships']).toJS();

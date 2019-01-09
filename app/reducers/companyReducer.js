@@ -15,7 +15,7 @@ export const initialState = fromJS({
 const testReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_STUDENTS_PER_YEAR_SUCCESS:
-      return state.set('studentsPerYear', action.response.results);
+      return state.set('studentsPerYear', fromJS(action.response));
     case GET_INTERNSHIPS_SUCCESS:
       return state.set('internships', fromJS(action.response));
     case ADD_INTERNSHIP_SUCCESS:
