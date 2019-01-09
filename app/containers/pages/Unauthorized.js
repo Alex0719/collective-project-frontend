@@ -21,7 +21,7 @@ export class UnauthorizedComponent extends React.Component {
             Acest URL este valid, dar nu aveți autorizație pentru a vedea acest conținut. <br/>
           </TextWrapper>
           <ButtonWrapper>
-            <Button text='Inapoi la site' onClick={() => this.props.redirect('/')} />
+            <Button text='Înapoi la site' onClick={() => this.props.redirect('/')} />
           </ButtonWrapper>
         </Container>
     );

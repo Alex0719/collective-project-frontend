@@ -43,7 +43,7 @@ class InternshipManagement extends React.Component {
     {
       return (
         <ButtonWrapper>
-          <Button text={"Participa la examen"} onClick={()=>{this.onParticipaStudent(row)}}/>
+          <Button text={"Participă la examen"} onClick={()=>{this.onParticipaStudent(row)}}/>
         </ButtonWrapper>);
 
     }
@@ -51,7 +51,7 @@ class InternshipManagement extends React.Component {
     {
       return(
         <ButtonWrapper>
-          <Button text={"Participa la internship"} onClick={()=>{this.onAcceptInternship(row)}}/>
+          <Button text={"Participă la internship"} onClick={()=>{this.onAcceptInternship(row)}}/>
           <Button text={"Respinge"} onClick={()=>{this.onRefuseInternship(row)}}/>
         </ButtonWrapper>
       );
@@ -77,7 +77,7 @@ class InternshipManagement extends React.Component {
   render() {
     const { internships } = this.props;
     const options = {
-      noDataText: 'Nu exista niciun internship',
+      noDataText: 'Nu există niciun internship',
     };
 
     return (

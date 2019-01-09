@@ -54,7 +54,7 @@ export class StudentManagement extends React.Component
         {
             return (
                 <ButtonWrapper>
-                    <Button text={"Selecteaza"} onClick={()=>{this.onSelectStudent(row)}}/>
+                    <Button text={"Selectează"} onClick={()=>{this.onSelectStudent(row)}}/>
                 </ButtonWrapper>);
 
         }
@@ -62,7 +62,7 @@ export class StudentManagement extends React.Component
         {
             return(
                 <ButtonWrapper>
-                    <Button text={"Aproba"} onClick={()=>{this.onAcceptStudent(row)}}/>
+                    <Button text={"Aprobă"} onClick={()=>{this.onAcceptStudent(row)}}/>
                     <Button text={"Respinge"} onClick={()=>{this.onRejectStudent(row)}}/>
                 </ButtonWrapper>
             );
