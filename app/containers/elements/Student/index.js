@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/elements/Button';
 import TextFieldComponent from '../../../components/elements/TextField/index';
 import { FieldsWrapper } from '../../../components/elements/Button/styles';
+import { DivComponent } from '../../../components/elements/Div/styles';
 import { updateStudentRequest } from '../../../actions/updateStudentActions';
 import { getStudentRequest } from '../../../actions/getStudentActions';
 
@@ -114,6 +115,7 @@ export class Student extends React.Component {
     console.log('location', this.props.location.search, this.state);
     // console.log("in component ",id,student);
     return (
+      <DivComponent>
       <FieldsWrapper>
         <br />
         <TextFieldComponent
@@ -123,31 +125,37 @@ export class Student extends React.Component {
           onChange={event => this.onChange('id', event)}
         />
         <TextFieldComponent
+          label="First Name"
           id="studentFirstName"
           value={firstname}
           onChange={event => this.onChange('firstname', event)}
         />
         <TextFieldComponent
+          label="Last Name"
           id="studentLastName"
           value={lastname}
           onChange={event => this.onChange('lastname', event)}
         />
         <TextFieldComponent
+          label="University"
           id="university"
           value={university}
           onChange={event => this.onChange('university', event)}
         />
         <TextFieldComponent
+          label="Specialization"
           id="specialization"
           value={specialization}
           onChange={event => this.onChange('specialization', event)}
         />
         <TextFieldComponent
+          label="College"
           id="college"
           value={college}
           onChange={event => this.onChange('college', event)}
         />
         <TextFieldComponent
+          label="Year"
           id="year"
           value={year}
           onChange={event => this.onChange('year', event)}
@@ -161,6 +169,7 @@ export class Student extends React.Component {
           }}
         />
       </FieldsWrapper>
+      </DivComponent>
     );
   }
 }

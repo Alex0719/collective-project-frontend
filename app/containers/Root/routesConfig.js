@@ -20,7 +20,7 @@ export const routes = [
   },
   {
     path:'/management',
-    component: StudentManagement
+    component: StudentManagement,
   },
   {
     path: '/posts',
