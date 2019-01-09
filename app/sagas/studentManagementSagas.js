@@ -25,16 +25,28 @@ import {
 import request from 'utils/request';
 import { GET_AVAILABILITY_REQUEST } from '../constants/studentManagement';
 
-export function* getApplications() {
+export function* getApplications({redirectFunction}) {
   const requestURL = 'https://localhost:44340/internships/1/management';
 
+  const options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': true,
+    },
+    credentials: 'include',
+    method: 'GET',
+  };
+
   try {
-    const data = yield call(request, requestURL);
-    console.log("in saga ",data)
+    const data = yield call(request, requestURL, options);
     yield put(getApplicationsSuccess(data));
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(getApplicationsFailure(err.response));
+    if(err.response.status=="401")
+    {
+      redirectFunction();
+    }
   }
 }
 
@@ -44,14 +56,11 @@ export function* getApplicationsSaga() {
 
 export function* getCV(params) {
   const requestURL = 'https://localhost:44340/students/'+params.values+'/cv';
-  console.log(requestURL)
   try {
     const data = yield call(request, requestURL);
-    console.log("in saga ",data)
     params.fun();
     yield put(getCvSuccess(data));
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(getCvFailure(err.response));
   }
 }
@@ -76,9 +85,10 @@ export function* selectStudent(params) {
     const data=yield call(request, requestURL,options);
     params.fun(data);
     yield put(selectStudentSuccess(data));
+    params.funAlert("Studentul a fost selectat pentru internship. In scurt timp, ii vom trimite un email.", false);
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(selectStudentFailure(err.response));
+    params.funAlert("Nu am putut modifica statusul studentului.", true);
   }
 }
 
@@ -88,7 +98,7 @@ export function* selectStudentSaga() {
 
 export function* approveStudent(params) {
   const requestURL = 'https://localhost:44340/internships/1/students/aprove';
- 
+
   try {
     const options = {
       headers: {
@@ -103,9 +113,10 @@ export function* approveStudent(params) {
     const data=yield call(request, requestURL,options);
     params.fun();
     yield put(approveStudentSuccess(data));
+    params.funAlert("Studentul a fost admis la internship. In scurt timp, ii vom trimite un email.", false);
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(approveStudentFailure(err.response));
+    params.funAlert("Nu am putut modifica statusul studentului.", true);
   }
 }
 
@@ -115,7 +126,7 @@ export function* approveStudentSaga() {
 
 export function* rejectStudent(params) {
   const requestURL = 'https://localhost:44340/internships/1/students/reject';
- 
+
   try {
     const options = {
       headers: {
@@ -130,10 +141,11 @@ export function* rejectStudent(params) {
     const data=yield call(request, requestURL,options);
     params.fun();
     yield put(rejectStudentSuccess(data));
+    params.funAlert("Studentul a fost respins. In scurt timp, ii vom trimite un email.", false);
 
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(rejectStudentFailure(err.response));
+    params.funAlert("Nu am putut modifica statusul studentului.", true);
   }
 }
 
@@ -143,13 +155,20 @@ export function* rejectStudentSaga() {
 
 export function* getAvailability(params) {
   const requestURL = 'https://localhost:44340/internships/availability/1';
-  console.log(requestURL)
+  const options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': true,
+    },
+    credentials: 'include',
+    method: 'GET',
+  };
+
   try {
-    const data = yield call(request, requestURL);
-    console.log("in saga ",data)
+    const data = yield call(request, requestURL,options);
     yield put(getAvailabilitySuccess(data));
   } catch (err) {
-    console.log("in saga error ",err)
     yield put(getAvailabilityFailure(err.response));
   }
 }

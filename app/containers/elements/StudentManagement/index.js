@@ -12,8 +12,10 @@ import Button from '../../../components/elements/Button'
 import {studentManagementSelector} from '../../../selectors/studentManagementSelector'
 import { getApplications, getCv, selectStudent, approveStudent,rejectStudent,getAvailability } from 'actions/studentManagement';
 import {getApplicationsSaga, getCvSaga,
-     selectStudentSaga, approveStudentSaga, 
+     selectStudentSaga, approveStudentSaga,
      rejectStudentSaga, getAvailabilitySaga} from '../../../sagas/studentManagementSagas'
+import Alert from 'react-s-alert';
+
 
 export class StudentManagement extends React.Component
 {
@@ -30,7 +32,7 @@ export class StudentManagement extends React.Component
         }
     }
     componentWillMount() {
-        this.props.getApplications();
+        this.props.getApplications(this.redirectFunction);
         this.props.getAvailability();
     }
 
@@ -42,33 +44,57 @@ export class StudentManagement extends React.Component
                 <ButtonWrapper>
                     <Button text={"Selecteaza"} onClick={()=>{this.onSelectStudent(row)}}/>
                 </ButtonWrapper>);
-        
+
         }
         else if(row.Status.toLowerCase()=="examinare")
         {
             return(
                 <ButtonWrapper>
-                    <Button text={"Aproba"} onClick={()=>{this.onAcceptStudent(row)}}/> 
-                    <Button text={"Respinge"} onClick={()=>{this.onRejectStudent(row)}}/> 
+                    <Button text={"Aproba"} onClick={()=>{this.onAcceptStudent(row)}}/>
+                    <Button text={"Respinge"} onClick={()=>{this.onRejectStudent(row)}}/>
                 </ButtonWrapper>
             );
-              
-        }  
+
+        }
     }
 
+    redirectFunction=()=>
+    {
+        this.props.history.push("/unauthorized");
+    }
+
+    showAlert(message, error)
+  {
+      if(error)
+      {
+        Alert.error(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+      else
+      {
+        Alert.success(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+  }
+
+    
     onSelectStudent(row)
     {
-       this.props.selectStudent(row,this.props.getApplications);
+       this.props.selectStudent(row,this.props.getApplications,this.showAlert);
     }
 
     onAcceptStudent(row)
     {
-        this.props.approveStudent(row,this.props.getApplications);        
+        this.props.approveStudent(row,this.props.getApplications,this.showAlert);
     }
 
     onRejectStudent(row)
     {
-       this.props.rejectStudent(row,this.props.getApplications);
+       this.props.rejectStudent(row,this.props.getApplications,this.showAlert);
     }
 
     renderLink(cell,row)
@@ -78,13 +104,13 @@ export class StudentManagement extends React.Component
 
     onClickCv(id)
     {
-        this.props.getCv(id,this.showCv); 
+        this.props.getCv(id,this.showCv);
     }
 
     showCv(cv)
     {
         const file = new Blob(
-            [cv.Cv], 
+            [cv.Cv],
             {type: 'application/pdf'});
         const fileURL = URL.createObjectURL(file);
         window.open(fileURL);
@@ -92,7 +118,6 @@ export class StudentManagement extends React.Component
 
     render() {
         var applications = Object.values(this.props.applications.applications);
-        console.log(this.props);
         var availability= this.props.applications.availability;
         if(applications==null || applications==undefined || applications.length==0)return(null);
         return (
@@ -101,7 +126,7 @@ export class StudentManagement extends React.Component
             <Helmet>
             <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
             </Helmet>
-            <BootstrapTable data={applications} 
+            <BootstrapTable data={applications}
                             stripped={true}
                             hover={true}
                             search={ true }
@@ -114,9 +139,9 @@ export class StudentManagement extends React.Component
             <TableHeaderColumn width={'100'} dataField="button" dataAlign={'center'} editable={false} dataFormat={this.renderButton.bind(this)}>Actiune</TableHeaderColumn>
             </BootstrapTable>
             </TableContainer>
-        
+
         );
-        
+
       }
 }
 
@@ -126,11 +151,11 @@ const mapStateToProps = state =>{
   });
 }
 const mapDispatchToProps = dispatch => ({
-  getApplications: () => dispatch(getApplications()),
+  getApplications: (redirectFunction) => dispatch(getApplications(redirectFunction)),
   getCv:(values, fun)=>dispatch(getCv(values, fun)),
-  selectStudent:(values,fun)=>dispatch(selectStudent(values,fun)),
-  approveStudent:(values,fun)=>dispatch(approveStudent(values,fun)),
-  rejectStudent:(values,fun)=>dispatch(rejectStudent(values,fun)),
+  selectStudent:(values,fun, funAlert)=>dispatch(selectStudent(values,fun,funAlert)),
+  approveStudent:(values,fun, funAlert)=>dispatch(approveStudent(values,fun,funAlert)),
+  rejectStudent:(values,fun,funAlert)=>dispatch(rejectStudent(values,fun,funAlert)),
   getAvailability:(values)=>dispatch(getAvailability(values))
 });
 

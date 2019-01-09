@@ -12,21 +12,40 @@ import {addPostForInternshipRequest} from 'actions/addPostActions';
 import Post from '../../../components/elements/Post'
 import AddPost from '../../../components/elements/AddPost'
 import { loadavg } from 'os';
+import Alert from 'react-s-alert';
+
 export class InternshipPosts extends React.Component {
   constructor(props) {
     super(props);
   }
 
   componentWillMount() {
-    console.log("in container willmount");
     this.props.getPosts();
+  }
+
+  showAlert(message, error)
+  {
+      if(error)
+      {
+        Alert.error(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+      else
+      {
+        Alert.success(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
   }
 
   saveFunction=(post)=>
   {
-    console.log("I will save this post ", post);
-    this.props.savePost(post);
+    this.props.savePost(post, this.showAlert);
   }
+
   render() {
     const {posts} = this.props;
     if(!posts) {
@@ -37,9 +56,8 @@ export class InternshipPosts extends React.Component {
       posts.sort(function(a,b){
       if (new Date(a.date) > new Date(b.date)) return -1;
       if (new Date(a.date) < new Date(b.date)) return 1;
-      return 0}); 
+      return 0});
     }
-    console.log('posts ',posts);
 
     return (
         <div>
@@ -58,7 +76,7 @@ const mapStateToProps = state =>
 
 const mapDispatchToProps = dispatch => ({
   getPosts: () => dispatch(getPostsForInternship()),
-  savePost: (post) =>dispatch(addPostForInternshipRequest(post))
+  savePost: (post,fun) =>dispatch(addPostForInternshipRequest(post, fun))
 });
 
   InternshipPosts.propTypes = {
@@ -66,7 +84,7 @@ const mapDispatchToProps = dispatch => ({
     posts: PropTypes.array,
     savePost:PropTypes.func,
   };
-  
+
   const withSaga = injectSaga({
     key: 'getPostsForInternshipSaga',
     saga: getPostsForInternshipSaga,

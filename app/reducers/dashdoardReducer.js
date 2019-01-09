@@ -13,7 +13,6 @@ const dashboardReducer = (state = initialState, action) => {
     case GET_DASHBOARD_STATISTICS_SUCCESS:
       return state.set('statistics', action.response);
     case GET_DASHBOARD_STATISTICS_FAILURE:
-      console.log(action.message);
       return state;
     default:
       return state;
