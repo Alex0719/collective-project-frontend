@@ -27,7 +27,6 @@ const InternshipsComponent = props => {
 
   const renderInternships = () => {
     const { internships, changeRoute } = props;
-    console.log('cr', changeRoute);
     return internships.map(internship => (
       <Collapsible key={internship.id} trigger={CollapsibleTrigger(internship)} triggerStyle={Trigger} >
         <InternshipContent key={internship.id}>
