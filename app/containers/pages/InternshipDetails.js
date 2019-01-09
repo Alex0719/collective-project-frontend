@@ -1,6 +1,7 @@
 import React from 'react';
 import InternshipDetailsComponent from '../../components/pages/InternshipDetails';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
@@ -24,13 +25,10 @@ class InternshipDetails extends React.Component {
 
   render() {
     const { details } = this.props;
-    console.log("Details:");
-    console.log(details);
     if(isEmpty(details.internship)) {
       return null;
     }
-    console.log('details from selector',details);
-    
+
     return (
       <div>
         <InternshipDetailsComponent onSaveChanges={this.props.putDetails}
@@ -40,7 +38,8 @@ class InternshipDetails extends React.Component {
             ratingInternship: details.ratingInternship,
             ratingMentors: details.ratingMentors,
           }}
-
+          changeRoute={this.props.changeRoute}
+          internshipId={this.props.match.params.id}
           testimonials = {details.testimonials}
         />
       </div>
@@ -61,10 +60,11 @@ const mapStateToProps = state =>
     details: internshipDetailsSelector(state)(),
   });
 
-const mapDispatchToProps = dispatch => ({
-  getDetails: () => dispatch(getInternshipDetails(1)),
-  getTestimonials: () => dispatch(getInternshipTestimonials(1)),
-  putDetails: (updatedObject) => dispatch(putInternshipDetails(1,updatedObject)),
+const mapDispatchToProps = (dispatch, {match: {params: {id}}}) => ({
+  getDetails: () => dispatch(getInternshipDetails(id)),
+  getTestimonials: () => dispatch(getInternshipTestimonials(id)),
+  putDetails: updatedObject => dispatch(putInternshipDetails(id,updatedObject)),
+  changeRoute: route => dispatch(push(route)),
 });
 
 InternshipDetails.propTypes = {

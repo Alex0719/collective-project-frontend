@@ -19,16 +19,17 @@ import {
     GET_AVAILABILITY_REQUEST
   } from 'constants/studentManagement';
 
-  export const getApplications = (redirectFunction) => ({
+  export const getApplications = (redirectFunction, id) => ({
     type: GET_APPLICATIONS_REQUEST,
-    redirectFunction
+    redirectFunction,
+    id,
   });
-  
+
   export const getApplicationsSuccess = response => ({
     type: GET_APPLICATIONS_SUCCESS,
     response,
   });
-  
+
   export const getApplicationsFailure = message => ({
     type: GET_APPLICATIONS_FAILURE,
     message,
@@ -38,71 +39,72 @@ import {
     type: GET_CV_REQUEST,
     values, fun
   });
-  
+
   export const getCvSuccess = response => ({
     type: GET_CV_SUCCESS,
     response,
   });
-  
+
   export const getCvFailure = message => ({
     type: GET_CV_FAILURE,
     message,
   });
-  
-  export const selectStudent = (values,fun,funAlert) =>  ({
+
+  export const selectStudent = (values,fun,funAlert,id) =>  ({
     type: SELECT_STUDENT_REQUEST,
-    values, fun, funAlert
+    values, fun, funAlert, id
   });
-  
+
   export const selectStudentSuccess = response => ({
     type: SELECT_STUDENT_SUCCESS,
     response
   });
-  
+
   export const selectStudentFailure = message => ({
     type: SELECT_STUDENT_FAILURE,
     message,
   });
-  
-  export const approveStudent = (values, fun, funAlert) =>  ({
+
+  export const approveStudent = (values, fun, funAlert, id) =>  ({
     type:APPROVE_STUDENT_REQUEST,
-    values, fun, funAlert
+    values, fun, funAlert, id
   });
-  
+
   export const approveStudentSuccess = response => ({
     type:APPROVE_STUDENT_SUCCESS,
     response
   });
-  
+
   export const approveStudentFailure = message => ({
     type: APPROVE_STUDENT_FAILURE,
     message,
   });
-   
-  export const rejectStudent = (values, fun, funAlert) =>  ({
+
+  export const rejectStudent = (values, fun, funAlert, id) =>  ({
     type:REJECT_STUDENT_REQUEST,
-    values, fun, funAlert
+    values, fun, funAlert, id
   });
-  
+
   export const rejectStudentSuccess = response => ({
     type:REJECT_STUDENT_SUCCESS,
     response,
   });
-  
+
   export const rejectStudentFailure = message => ({
     type: REJECT_STUDENT_FAILURE,
     message,
   });
-  export const  getAvailability = (values) =>  ({
+  export const  getAvailability = (values, id) =>  ({
     type: GET_AVAILABILITY_REQUEST,
-    values
+    values,
+    id,
   });
-  
+
   export const getAvailabilitySuccess = response => ({
     type: GET_AVAILABILITY_SUCCESS,
     response,
   });
-  
+
   export const getAvailabilityFailure = message => ({
     type:GET_AVAILABILITY_FAILURE,
     message,

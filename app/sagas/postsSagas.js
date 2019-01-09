@@ -10,8 +10,8 @@ import { ADD_POST_FOR_INTERNSHIP_REQUEST } from 'constants/post';
 import request from 'utils/request';
 import { loadavg } from 'os';
 
-export function* getPostsForInternship({ values }) {
-  const requestURL = 'https://localhost:44340/internships/1/posts';
+export function* getPostsForInternship({ id }) {
+  const requestURL = `https://localhost:44340/internships/${id}/posts`;
 
   let options = {
     headers: {
@@ -42,7 +42,7 @@ export default function* getPostsForInternshipSaga() {
 
 
 export function* addPostForInternship(params) {
-  const requestURL = 'https://localhost:44340/internships/1/posts';
+  const requestURL = `https://localhost:44340/internships/${params.id}/posts`;
   let options = {
     headers: {
       'Access-Control-Allow-Origin': '*',

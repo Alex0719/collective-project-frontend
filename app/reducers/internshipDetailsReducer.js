@@ -27,8 +27,6 @@ export const initialState = fromJS({
 const internshipDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_INTERNSHIP_DETAILS_SUCCESS:
-    console.log("reducer");    
-      console.log(action.response);
       return state.merge(fromJS({
         internship: action.response.internship,
         ratingCompany: action.response.ratingCompany,
@@ -36,21 +34,16 @@ const internshipDetailsReducer = (state = initialState, action) => {
         ratingMentors: action.response.ratingMentors,
       }));
     case GET_INTERNSHIP_TESTIMONIALS_SUCCESS:
-      console.log("reducer 2");    
-      console.log(action.response);
       return state.merge(fromJS({
         testimonials: action.response.testimonials,
       }))
     case PUT_INTERNSHIP_DETAILS_SUCCESS:
-    console.log("reducer 3");    
-    console.log(action.response);
     return state.merge({
       updatedSuccessfully: true,
     })
     case GET_INTERNSHIP_DETAILS_FAILURE:
     case GET_INTERNSHIP_TESTIMONIALS_FAILURE:
     case PUT_INTERNSHIP_DETAILS_FAILURE:
-      console.log(action.message);
       return state;
     default:
       return state;
