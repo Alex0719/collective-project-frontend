@@ -9,9 +9,9 @@ export const getLoggedUser = () => ({
   type: GET_LOGGED_USER,
 });
 
-export const loginUser = values => ({
+export const loginUser = (values,funAlert) => ({
   type: LOGIN_REQUEST,
-  values,
+  values,funAlert
 });
 
 export const userLogged = response => ({

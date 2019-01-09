@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
 import { IconButton, IconMenu, Avatar, Divider, Checkbox } from 'material-ui';
 
@@ -13,6 +14,7 @@ import Button from 'components/elements/Button';
 import { loginUser, getLoggedUser } from 'actions/loginActions';
 import { logoutUser } from 'actions/logoutActions';
 import { AvatarStyle } from 'components/elements/Layout/styles';
+import Alert from 'react-s-alert';
 import {
   IconButtonStyle,
   TextFieldStyle,
@@ -34,6 +36,19 @@ export class ProfileMenu extends React.Component {
       password: '',
       rememberMe: false,
     };
+    this.onScroll = this.onScroll.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('wheel', this.onScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('wheel', this.onScroll);
+  }
+
+  onScroll() {
+    this.setState({ open: false });
   }
 
   buildIcon() {
@@ -70,6 +85,24 @@ export class ProfileMenu extends React.Component {
     });
   }
 
+  showAlert(message, error)
+  {
+      if(error)
+      {
+        Alert.error(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+      else
+      {
+        Alert.success(message, {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
+  }
+
   handleLogin() {
     const { email, password, rememberMe } = this.state;
     const { login } = this.props;
@@ -80,21 +113,25 @@ export class ProfileMenu extends React.Component {
     };
 
     this.setState({ open: false });
-    login(credentials);
+    login(credentials,this.showAlert);
   }
 
   renderLogout() {
+    const postLogout = [() => this.props.changeRoute()]
+
     return (
       <IconMenuInnerWrapper>
-        <Button
-          type="DividerButton"
-          text="Profil"
-          onClick={() => console.log('click')}
-        />
+        {this.props.loggedUser.role==='Student'?
+          <Button
+            type="DividerButton"
+            text="Profil"
+            onClick={() => console.log('click')}
+          /> : null
+        }
         <Button
           type="DividerButton"
           text="Logout"
-          onClick={() => this.props.logout()}
+          onClick={() => this.props.logout(postLogout)}
         />
       </IconMenuInnerWrapper>
     );
@@ -163,9 +200,10 @@ ProfileMenu.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  login: values => dispatch(loginUser(values)),
+  login: (values,funAlert) => dispatch(loginUser(values,funAlert)),
   getLoggedUser: () => dispatch(getLoggedUser()),
-  logout: () => dispatch(logoutUser()),
+  logout: postLogout => dispatch(logoutUser(postLogout)),
+  changeRoute: () => dispatch(push('/')),
 });
 
 const withConnect = connect(

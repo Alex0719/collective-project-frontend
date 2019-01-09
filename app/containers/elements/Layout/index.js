@@ -32,6 +32,7 @@ export class Layout extends React.Component {
       <LayoutComponent
         loggedUser={loggedUser}
         changeRoute={route => changeRoute(route)}
+        location={this.props.history.location}
       />
     );
   }

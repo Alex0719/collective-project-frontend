@@ -12,6 +12,8 @@ import dashboardReducer from './reducers/dashdoardReducer';
 import studentManagementReducer from './reducers/studentManagementReducer';
 import postsReducer from './reducers/postsReducers';
 import internshipManagementReducer from './reducers/internshipManagementReducer';
+import studentsReducer from './reducers/studentsReducer';
+
 /*
  * routeReducer
  *
@@ -45,7 +47,7 @@ export function routeReducer(state = routeInitialState, action) {
  */
 export default function createReducer(injectedReducers) {
   return combineReducers({
-    // route: routeReducer,
+    route: routeReducer,
     // test: testReducer,
     loggedUser: loginReducer,
     company: companyReducer,
@@ -53,6 +55,7 @@ export default function createReducer(injectedReducers) {
     studentManagement: studentManagementReducer,
     internshipManagement: internshipManagementReducer,
     postsReducer: postsReducer,
+    studentsReducer: studentsReducer,
     ...injectedReducers,
   });
 }

@@ -4,8 +4,9 @@ import {
   LOGOUT_FAILURE,
 } from 'constants/logout';
 
-export const logoutUser = () => ({
+export const logoutUser = (postLogout) => ({
   type: LOGOUT_REQUEST,
+  postLogout,
 });
 
 export const userLoggedOut = () => ({

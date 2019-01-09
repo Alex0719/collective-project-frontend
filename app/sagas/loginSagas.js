@@ -5,7 +5,7 @@ import { userLogged, loginUserFailed } from 'actions/loginActions';
 import { LOGIN_REQUEST } from 'constants/login';
 import request from 'utils/request';
 
-export function* doLogin({ values }) {
+export function* doLogin(params) {
   const requestURL = 'https://localhost:44340/account/login';
   const requestRole = 'https://localhost:44340/account/role';
   let options = {
@@ -26,13 +26,15 @@ export function* doLogin({ values }) {
       options = {
         ...options,
         method: 'POST',
-        body: JSON.stringify(values),
+        body: JSON.stringify(params.values),
       };
       loggedUser = yield call(request, requestURL, options);
     }
     yield put(userLogged(loggedUser));
+    params.funAlert("Autentificarea s-a facut cu succes!",false);
   } catch (err) {
     yield put(loginUserFailed(err.response));
+    params.funAlert("Autentificarea a esuat. User-ul sau parola sunt incorecte.", true);
   }
 }
 
