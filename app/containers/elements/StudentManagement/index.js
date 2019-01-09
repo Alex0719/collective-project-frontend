@@ -91,6 +91,7 @@ export class StudentManagement extends React.Component {
   }
 
   render() {
+    console.log("aici ",this.state.id)
     const applications = Object.values(this.props.applications.applications);
     console.log(this.props);
     const availability = this.props.applications.availability;
