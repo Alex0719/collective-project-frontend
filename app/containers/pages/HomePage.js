@@ -13,6 +13,7 @@ import injectSaga from 'utils/injectSaga';
 import getRoleSaga from 'sagas/roleSagas';
 import Company from 'containers/pages/Company';
 import Dashboard from 'containers/pages/Dashboard';
+import StudentDashboard from 'containers/pages/StudentDashboard';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class HomePage extends React.Component {
@@ -33,6 +34,8 @@ export class HomePage extends React.Component {
     switch(loggedUser.role) {
       case 'Company':
         return <Company />;
+      case 'Student':
+        return <StudentDashboard />;
       default:
         return <Dashboard />;
     }

@@ -6,6 +6,7 @@ import Dashboard from '../../containers/pages/Dashboard';
 import InternshipDetails from '../pages/InternshipDetails';
 
 import StudentManagement from '../../containers/elements/StudentManagement';
+import InternshipPosts from '../../containers/elements/InternshipPosts';
 import InternshipManagement from '../../containers/elements/InternshipManagement';
 import Student from '../elements/Student';
 import Unauthorized from '../../containers/pages/Unauthorized';

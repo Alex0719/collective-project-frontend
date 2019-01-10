@@ -13,6 +13,7 @@ import internshipDetailsReducer from './reducers/internshipDetailsReducer';
 
 import studentManagementReducer from './reducers/studentManagementReducer';
 import postsReducer from './reducers/postsReducers';
+import studentDashboardReducer from './reducers/studentDashboardReducer';
 import internshipManagementReducer from './reducers/internshipManagementReducer';
 import studentsReducer from './reducers/studentsReducer';
 
@@ -54,6 +55,7 @@ export default function createReducer(injectedReducers) {
     loggedUser: loginReducer,
     company: companyReducer,
     dashboard: dashboardReducer,
+    studentDashboard: studentDashboardReducer,
     internshipDetails: internshipDetailsReducer,
     studentManagement: studentManagementReducer,
     internshipManagement: internshipManagementReducer,
