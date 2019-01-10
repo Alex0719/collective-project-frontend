@@ -19,26 +19,26 @@ const CompanyComponent = props => (
         <RowRating>
           <NameRating>Companie</NameRating>
           <Stars>
-            <StarRating rating={4.5} />
+            <StarRating rating={props.ratings.ratingCompany} />
           </Stars>
         </RowRating>
         <RowRating>
           <NameRating>Mentori</NameRating>
           <Stars>
-            <StarRating rating={3.2} />
+            <StarRating rating={props.ratings.ratingMentors} />
           </Stars>
         </RowRating>
         <RowRating>
           <NameRating>Internship</NameRating>
           <Stars>
-            <StarRating rating={4.8} />
+            <StarRating rating={props.ratings.ratingInternship} />
           </Stars>
         </RowRating>
       </RowsWithRatings>
     </Rating>
     <StudentsPerYear>
       <Title text="Aplicanti in ultimii ani" />
-      <SimpleAreaChart />
+      <SimpleAreaChart data={props.studentsPerYear} />
     </StudentsPerYear>
   </Graphs>
 );
@@ -81,7 +81,7 @@ const Stars = styled.div`
 `;
 
 const Rating = styled.div`
-  flex: 1 0 50%;
+  flex: 1 0 45%;
 `;
 
 const StudentsPerYear = styled.div`
@@ -89,7 +89,7 @@ const StudentsPerYear = styled.div`
 `;
 
 const AplicantsVSAccepted = styled.div`
-  flex: 1 0 50%;
+  flex: 1 0 45%;
   align-self: center;
 `;
 

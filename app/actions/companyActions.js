@@ -8,6 +8,9 @@ import {
   ADD_INTERNSHIP,
   ADD_INTERNSHIP_SUCCESS,
   ADD_INTERNSHIP_FAILURE,
+  GET_OUR_RATINGS_REQUEST,
+  GET_OUR_RATINGS_SUCCESS,
+  GET_OUR_RATINGS_FAILURE
 } from 'constants/company';
 
 export const getStudentsPerYear = () => ({
@@ -51,5 +54,20 @@ export const addInternshipSuccess = response => ({
 
 export const addInternshipFailure = message => ({
   type: ADD_INTERNSHIP_FAILURE,
+  message,
+});
+
+export const getOurRatings = (redirectFunction) => ({
+  type: GET_OUR_RATINGS_REQUEST,
+  redirectFunction,
+});
+
+export const getOurRatingsSuccess = response => ({
+  type: GET_OUR_RATINGS_SUCCESS,
+  response,
+});
+
+export const getOurRatingsFailure = message => ({
+  type: GET_OUR_RATINGS_FAILURE,
   message,
 });
