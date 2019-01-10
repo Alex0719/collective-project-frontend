@@ -135,6 +135,10 @@ export class StudentManagement extends React.Component
           noDataText: 'Internship-ul nu are niciun aplicant',
         };
 
+        if(this.props.loggedUser && this.props.loggedUser.role === "") {
+          return null;
+        }
+
         return (
             <TableContainer>
              Locuri ocupate: {availability.OccupiedPlaces} din {availability.TotalPlaces}

@@ -36,8 +36,12 @@ export class HomePage extends React.Component {
         return <Company />;
       case 'Student':
         return <StudentDashboard />;
-      default:
+      default: {
+        if (Cookies.get('Identity')) {
+          return null;
+        }
         return <Dashboard />;
+      }
     }
   }
 

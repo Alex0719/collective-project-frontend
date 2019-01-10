@@ -12,6 +12,7 @@ class StarRating extends React.Component {
         numberOfStars={5}
         starRatedColor="orange"
         name="rating"
+        changeRating={this.props.changeRating}
       />
     );
   }

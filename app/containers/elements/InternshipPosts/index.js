@@ -47,7 +47,6 @@ export class InternshipPosts extends React.Component {
   }
 
   render() {
-    console.log('---->', this.props);
     const {posts} = this.props;
     if(!posts) {
       return null;
@@ -59,10 +58,15 @@ export class InternshipPosts extends React.Component {
       if (new Date(a.date) < new Date(b.date)) return 1;
       return 0});
     }
+    const { showAdd = true } = this.props;
+    let condition = posts!=null && posts.length>0 && posts[0].last;
+    if(!showAdd) {
+      condition = true;
+    }
 
     return (
         <div>
-          {posts!=null && posts.length>0 && posts[0].last?null: <AddPost saveFunction={post=>this.saveFunction(post)}/>}
+          {condition  ? null: <AddPost saveFunction={post=>this.saveFunction(post)}/>}
           {posts.map((post, key)=><Post key={key} post={post}/>)}
         </div>
     );

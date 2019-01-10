@@ -132,6 +132,9 @@ export class Student extends React.Component {
       year,
     } = this.state;
 
+    if(this.props.loggedUser && this.props.loggedUser.role === "") {
+      return null;
+    }
 
     return (
       <Wrapper>

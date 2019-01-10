@@ -10,6 +10,7 @@ import InternshipPosts from '../../containers/elements/InternshipPosts';
 import InternshipManagement from '../../containers/elements/InternshipManagement';
 import Student from '../elements/Student';
 import Unauthorized from '../../containers/pages/Unauthorized';
+import InternshipStudentDetails from 'containers/pages/InternshipStudentDetails';
 
 export const routes = [
   {
@@ -31,6 +32,10 @@ export const routes = [
   {
     path: '/student',
     component: Student,
+  },
+  {
+    path: '/internship/:id',
+    component: InternshipStudentDetails,
   },
   {
     path: '/internship/:id/details',

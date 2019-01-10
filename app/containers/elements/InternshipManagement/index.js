@@ -79,6 +79,9 @@ class InternshipManagement extends React.Component {
     const options = {
       noDataText: 'Nu există niciun internship',
     };
+    if(this.props.loggedUser && this.props.loggedUser.role === "") {
+      return null;
+    }
 
     return (
       <div>
