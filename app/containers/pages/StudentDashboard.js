@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import 'react-accessible-accordion/dist/minimal-example.css';
@@ -28,6 +29,7 @@ class StudentDashboard extends React.Component {
         subscribeHandler={(id) => this.props.subscribe(id)}
         unsubscribeHandler={(id) => this.props.unsubscribe(id)}
         companies={companies}
+        redirect={this.props.redirect}
       />
     );
   }
@@ -42,14 +44,16 @@ const mapStateToProps = state =>
 const mapDispatchToProps = dispatch => ({
   getCompanies: () => dispatch(getStudentDashboardCompanies()),
   subscribe: (companyId) => dispatch(subscribeStudent(companyId)),
-  unsubscribe: (companyId) => dispatch(unsubscribeStudent(companyId))
+  unsubscribe: (companyId) => dispatch(unsubscribeStudent(companyId)),
+  redirect: id => dispatch(push(`/internship/${id}`)),
 });
 
 StudentDashboard.propTypes = {
   getCompanies: PropTypes.func,
   companies: PropTypes.any,
   subscribe: PropTypes.func,
-  unsubscribe: PropTypes.func
+  unsubscribe: PropTypes.func,
+  redirect: PropTypes.func.isRequired,
 };
 
 const withStudentDashboardSaga = injectSaga({

@@ -8,14 +8,15 @@ import {
 } from 'react-accessible-accordion';
 import Collapsible from 'react-collapsible';
 import { QUEEN_BLUE, AERO_BLUE, DARK_RED, BLUE_GRAY } from "../../constants/colors";
-import styles from "styled-components";
+import styled from "styled-components";
 import moment from "moment";
+import Button from 'components/elements/Button';
 
-const Container = styles.div`
+const Container = styled.div`
   padding: 26px;
 `;
 
-const CompanyTitle = styles.div`
+const CompanyTitle = styled.div`
   padding: 15px;
   font-size: 20px;
   background: ${AERO_BLUE};
@@ -31,20 +32,21 @@ const CompanyTitle = styles.div`
   }
 `;
 
-const InternshipsContainer = styles.div``;
+const InternshipsContainer = styled.div``;
 
-const Internship = styles.div`
+const Internship = styled.div`
   padding: 10px;
   color: #666;
-  border-bottom: 1px solid ${AERO_BLUE}
+  border-bottom: 1px solid ${AERO_BLUE};
+  display: flex;
 `;
 
-const InternshipTitle = styles.div`
+const InternshipTitle = styled.div`
   font-size: 22px;
   color: black;
 `;
 
-const SubscribeButton = styles.button`
+const SubscribeButton = styled.button`
   background-color: ${DARK_RED};
   padding: 10px;
   font-size: 15px;
@@ -57,7 +59,7 @@ const SubscribeButton = styles.button`
   position: relative;
 `;
 
-const UnsubscribeButton = styles.button`
+const UnsubscribeButton = styled.button`
   background-color: ${BLUE_GRAY};
   padding: 10px;
   font-size: 15px;
@@ -70,7 +72,7 @@ const UnsubscribeButton = styles.button`
   position: relative;
 `;
 
-const Link = styles.a`
+const Link = styled.a`
   text-decoration: none;
   color: ${QUEEN_BLUE};
   &:hover {
@@ -79,14 +81,24 @@ const Link = styles.a`
   }
 `;
 
-const SubscribeContainer = styles.div`
+const SubscribeContainer = styled.div`
   background-color: ${AERO_BLUE};
   margin: 0;
   padding: 5px;
   height: 50px;
 `;
 
-const CollapsibleContainer = styles.div`
+const ButtonWrapper = styled.div`
+  margin-top: 5.5%;
+  margin-left: 60%;
+`;
+
+const Content = styled.div`
+  white-space: nowrap;
+  width: 200px;
+`;
+
+const CollapsibleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   & > div:first-child {
@@ -141,11 +153,15 @@ class StudentDashboardList extends React.Component {
                   {company.internships.length ? company.internships.map(internship => {
                     return (
                       <Internship key={company.internships.indexOf(internship)}>
-                        <InternshipTitle>{internship.description}</InternshipTitle>
-                        <div>Tematica: {internship.topics}</div>
-                        <div>Incepe la: {moment(new Date(internship.start + "Z")).format("DD MMM YYYY")}</div>
-                        <div>Se termina la: {moment(new Date(internship.end + "Z")).format("DD MMM YYYY")}</div>
-                        <Link href={"/internship/" + internship.id} >Vezi mai mult</Link>
+                        <Content>
+                          <InternshipTitle>{internship.description}</InternshipTitle>
+                          <div>Tematica: {internship.topics}</div>
+                          <div>Incepe la: {moment(new Date(internship.start + "Z")).format("DD MMM YYYY")}</div>
+                          <div>Se termina la: {moment(new Date(internship.end + "Z")).format("DD MMM YYYY")}</div>
+                        </Content>
+                        <ButtonWrapper>
+                          <Button text={'Vezi mai mult'} onClick={() => this.props.redirect(internship.id)}/>
+                        </ButtonWrapper>
                       </Internship>
                     );
                   }) : <Internship>Nu exista internshipuri</Internship>}
