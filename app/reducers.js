@@ -9,6 +9,8 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import loginReducer from 'reducers/loginReducer';
 import companyReducer from 'reducers/companyReducer';
 import dashboardReducer from './reducers/dashdoardReducer';
+import internshipDetailsReducer from './reducers/internshipDetailsReducer';
+
 import studentManagementReducer from './reducers/studentManagementReducer';
 import postsReducer from './reducers/postsReducers';
 import studentDashboardReducer from './reducers/studentDashboardReducer';
@@ -54,6 +56,7 @@ export default function createReducer(injectedReducers) {
     company: companyReducer,
     dashboard: dashboardReducer,
     studentDashboard: studentDashboardReducer,
+    internshipDetails: internshipDetailsReducer,
     studentManagement: studentManagementReducer,
     internshipManagement: internshipManagementReducer,
     postsReducer: postsReducer,

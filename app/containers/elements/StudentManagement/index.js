@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import { createStructuredSelector } from 'reselect';
-import {Helmet} from 'react-helmet'
+import { Helmet } from 'react-helmet';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import './stil.css';
 import {TableContainer ,ButtonWrapper} from './styles'
@@ -54,7 +54,7 @@ export class StudentManagement extends React.Component
         {
             return (
                 <ButtonWrapper>
-                    <Button text={"Selecteaza"} onClick={()=>{this.onSelectStudent(row)}}/>
+                    <Button text={"Selectează"} onClick={()=>{this.onSelectStudent(row)}}/>
                 </ButtonWrapper>);
 
         }
@@ -62,13 +62,22 @@ export class StudentManagement extends React.Component
         {
             return(
                 <ButtonWrapper>
-                    <Button text={"Aproba"} onClick={()=>{this.onAcceptStudent(row)}}/>
+                    <Button text={"Aprobă"} onClick={()=>{this.onAcceptStudent(row)}}/>
                     <Button text={"Respinge"} onClick={()=>{this.onRejectStudent(row)}}/>
                 </ButtonWrapper>
             );
 
         }
     }
+
+
+  onClickCv(id) {
+    this.props.getCv(id, this.props.applications.applications[id-1]);
+  }
+
+  showCv(cv) {
+    const file = new Blob([cv.Cv], { type: 'application/pdf' });
+  }
 
     redirectFunction=()=>
     {
@@ -117,24 +126,15 @@ export class StudentManagement extends React.Component
         );
     }
 
-    onClickCv(id)
-    {
-        this.props.getCv(id,this.showCv);
-    }
 
-    showCv(cv)
-    {
-        const file = new Blob(
-            [cv.Cv],
-            {type: 'application/pdf'});
-        const fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
-    }
 
     render() {
-        var applications = Object.values(this.props.applications.applications);
-        var availability= this.props.applications.availability;
-        if(applications==null || applications==undefined || applications.length==0)return(null);
+        const applications = Object.values(this.props.applications.applications);
+        const availability= this.props.applications.availability;
+        const options = {
+          noDataText: 'Internship-ul nu are niciun aplicant',
+        };
+
         return (
             <TableContainer>
              Locuri ocupate: {availability.OccupiedPlaces} din {availability.TotalPlaces}
@@ -145,6 +145,8 @@ export class StudentManagement extends React.Component
                             stripped={true}
                             hover={true}
                             search={ true }
+                            options={options}
+                            trStyle={{textAlign: 'center'}}
                             className="stock-table"
                             >
             <TableHeaderColumn width={'10%'} thStyle={{textAlign: 'center'}} dataAlign={'center'} dataField='Id' isKey={true}>Id</TableHeaderColumn>
@@ -158,7 +160,7 @@ export class StudentManagement extends React.Component
         );
 
       }
-}
+    }
 
 const mapStateToProps = state =>{
   return createStructuredSelector({
@@ -166,14 +168,14 @@ const mapStateToProps = state =>{
     loggedUser: selectLoggedUser(state)(),
   });
 }
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, {match: {params: { id }}}) => ({
   fetchRole: () => dispatch(requestRole()),
-  getApplications: (redirectFunction) => dispatch(getApplications(redirectFunction)),
+  getApplications: (redirectFunction) => dispatch(getApplications(redirectFunction, id)),
   getCv:(values, fun)=>dispatch(getCv(values, fun)),
-  selectStudent:(values,fun, funAlert)=>dispatch(selectStudent(values,fun,funAlert)),
-  approveStudent:(values,fun, funAlert)=>dispatch(approveStudent(values,fun,funAlert)),
-  rejectStudent:(values,fun,funAlert)=>dispatch(rejectStudent(values,fun,funAlert)),
-  getAvailability:(values)=>dispatch(getAvailability(values))
+  selectStudent:(values,fun, funAlert)=>dispatch(selectStudent(values,fun,funAlert, id)),
+  approveStudent:(values,fun, funAlert)=>dispatch(approveStudent(values,fun,funAlert,id)),
+  rejectStudent:(values,fun,funAlert)=>dispatch(rejectStudent(values,fun,funAlert,id)),
+  getAvailability:(values)=>dispatch(getAvailability(values,id))
 });
 
 StudentManagement.propTypes = {
@@ -193,26 +195,26 @@ const withApplicationSaga = injectSaga({
   saga: getApplicationsSaga,
 });
 const withCvSaga = injectSaga({
-    key: 'getCvSaga',
-    saga: getCvSaga,
-  });
+  key: 'getCvSaga',
+  saga: getCvSaga,
+});
 const withSelectStudentSaga = injectSaga({
-    key: 'selectStudentSaga',
-    saga: selectStudentSaga,
+  key: 'selectStudentSaga',
+  saga: selectStudentSaga,
 });
 const withApproveStudentSaga = injectSaga({
-    key: 'approveStudentSaga',
-    saga: approveStudentSaga,
-    });
+  key: 'approveStudentSaga',
+  saga: approveStudentSaga,
+});
 const withRejectStudentSaga = injectSaga({
-    key: 'rejectStudentSaga',
-    saga: rejectStudentSaga,
-    });
+  key: 'rejectStudentSaga',
+  saga: rejectStudentSaga,
+});
 
 const withAvailabilitySaga = injectSaga({
-    key: 'getAvailabilitySaga',
-    saga: getAvailabilitySaga,
-    });
+  key: 'getAvailabilitySaga',
+  saga: getAvailabilitySaga,
+});
 
 const withRoleSaga = injectSaga({
     key: 'roleSaga',

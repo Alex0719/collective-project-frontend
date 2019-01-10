@@ -49,9 +49,8 @@ export function* doGetInternships({redirectFunction}) {
     const data = yield call(request, requestURL, options);
     yield put(getInternshipsSuccess(data));
   } catch (err) {
-    console.log(err.response)
     yield put(getStudentsPerYearFailure(err.response));
-    if(err.response.status=="401")
+    if(err.response.status===401)
     {
       redirectFunction();
     }

@@ -13,8 +13,8 @@ const IndigoButton = styled.div`
   background-color: ${JAPANESE_INDIGO};
   color: ${AERO_BLUE};
   text-align: center;
-  margin:5px;
-  cursor:pointer;
+  margin: 5px;
+  cursor: pointer;
 `;
 const DividerButton = styled.div`
   background-color: ${AERO_BLUE};
@@ -22,8 +22,8 @@ const DividerButton = styled.div`
   height: 100%;
   color: ${JAPANESE_INDIGO};
   text-align: center;
-  margin:5px;
-  cursor:pointer;
+  margin: 5px;
+  cursor: pointer;
 `;
 const ButtonWrapper = styled.div`
   width: 100%;

@@ -4,9 +4,8 @@ import {
   GET_STUDENT_FAILURE,
 } from 'constants/student';
 
-export const getStudentRequest = values => ({
+export const getStudentRequest = () => ({
   type: GET_STUDENT_REQUEST,
-  values,
 });
 
 export const getStudentSuccess = response => ({

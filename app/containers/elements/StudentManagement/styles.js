@@ -12,9 +12,9 @@ export const TextFieldStyle = {
 };
 
 export const TableContainer = styled.div`
-    width: 75%;  
-    margin: 0 auto;
-    margin-top:10px;
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 10px;
 `;
 
 export const TitleWrapper = styled.div`
@@ -27,16 +27,16 @@ export const DividerStyle = {
 };
 
 export const ButtonWrapper = styled.div`
-  display:inline-flex
+  display: inline-flex;
 `;
 
 export const Link = styled.a`
-  &:hover{
+  &:hover {
     text-decoration: underline;
     color: ${JAPANESE_INDIGO};
   }
   margin: auto;
   width: 50%;
-  white-space:nowrap;
+  white-space: nowrap;
   text-decoration: none;
 `;

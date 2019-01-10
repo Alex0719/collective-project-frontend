@@ -5,7 +5,6 @@ import { LOGOUT_REQUEST } from 'constants/logout';
 import request from 'utils/request';
 
 export function* doLogout(action) {
-  console.log('~~~action', action);
   const requestURL = 'https://localhost:44340/account/logout';
   const options = {
     headers: {
