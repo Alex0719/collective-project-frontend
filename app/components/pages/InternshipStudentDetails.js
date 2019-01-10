@@ -20,6 +20,7 @@ import Button from 'components/elements/Button';
 import UsefulLinks from '../elements/UsefulLinks';
 import Testimonials from '../elements/Testimonials';
 import InternshipPosts from '../../containers/elements/InternshipPosts';
+import AddTestimonial from 'components/elements/AddTestimonial';
 
 export default class InternshipStudentDetailsComponent extends React.Component {
   constructor(props) {
@@ -36,19 +37,6 @@ export default class InternshipStudentDetailsComponent extends React.Component {
       ratingCompany: 0,
       open: false,
     };
-    this.onScroll = this.onScroll.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener('wheel', this.onScroll);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('wheel', this.onScroll);
-  }
-
-  onScroll() {
-    this.setState({ open: false });
   }
 
   onOpen() {
@@ -58,11 +46,17 @@ export default class InternshipStudentDetailsComponent extends React.Component {
   onRequestChange(open, reason) {
     if (!open && reason === 'clickAway') {
       this.setState({ open: false });
+      const { ratingInternship, ratingMentors, ratingCompany } = this.state;
+      this.props.updateRating({ratingInternship, ratingCompany, ratingMentors});
+      this.setState({
+        ratingInternship: 0,
+        ratingMentors: 0,
+        ratingCompany: 0,
+      });
     }
   }
 
   changeInternshipRating(rating) {
-    console.log(rating);
     this.setState({
       ratingInternship: rating,
     });
@@ -168,11 +162,13 @@ export default class InternshipStudentDetailsComponent extends React.Component {
     const LabelStyle = {
       fontWeight: 'bold',
       width: '100%',
+      display: 'flex',
     };
 
     const LabelSmallStyle = {
       fontWeight: 'bold',
       width: '48%',
+      display: 'flex',
     };
 
     const splitPane={
@@ -202,57 +198,38 @@ export default class InternshipStudentDetailsComponent extends React.Component {
         <LeftPart>
           <Rows>
           <Row>
-            <TextField value={this.state.internshipDetails.internship.name} />
+            {this.state.internshipDetails.internship.name}
           </Row>
           <Row>
             <Label style={LabelSmallStyle} horizontal>
               Data de incepere:
-              <TextField
-                style={TextFieldSmallStyle}
-                value={this.state.internshipDetails.internship.start}
-              />
+              <Parent>
+                {this.state.internshipDetails.internship.start}
+              </Parent>
             </Label>
             <Label style={LabelSmallStyle} color="red" horizontal>
               Locuri disponibile:
-              <TextField
-                style={TextFieldSmallStyle}
-                value={this.state.internshipDetails.internship.places}
-                onChange={event => this.onPlacesChanged(event)}
-              />
+              <Parent>
+                {this.state.internshipDetails.internship.places}
+              </Parent>
             </Label>
           </Row>
           <Row>
             <Label style={LabelStyle} color="red" horizontal>
               Topicuri:
-              <TextField
-                style={TextFieldStyle}
-                value={this.state.internshipDetails.internship.topics}
-                onChange={event => this.onTopicsChanged(event)}
-              />
+              <Parent>
+                {this.state.internshipDetails.internship.topics}
+              </Parent>
             </Label>
           </Row>
           <Row>
           <Label style={LabelStyle} color="red" horizontal>
               Descriere:
-            <TextField
-              style={TextAreaStyle}
-              value={this.state.internshipDetails.internship.description}
-              onChange={event => this.onDescriptionChanged(event)}
-              multiLine
-            />
+              <Parent>
+                {this.state.internshipDetails.internship.description}
+              </Parent>
             </Label>
           </Row>
-          <RowButton>
-            {/* TODO: put data when calling onSaveChanges() */}
-            <Button
-              text="Salvează modificările"
-              onClick={() =>
-                this.props.onSaveChanges(
-                  this.state.internshipDetails.internship,
-                )
-              }
-            />
-          </RowButton>
           </Rows>
           <InternshipPosts showAdd={false} internshipId={this.props.internshipId}/>
         </LeftPart>
@@ -276,7 +253,7 @@ export default class InternshipStudentDetailsComponent extends React.Component {
             </RowRating>
           </RowsWithRatings>
           <ButtonWrapper>
-            <IconMenu
+            {this.props.wasParticipant ? <IconMenu
               iconButtonElement={<Button text={'Dati rating'} onClick={()=>{}} />}
               open={this.state.open}
               onClick={() => this.onOpen()}
@@ -285,8 +262,9 @@ export default class InternshipStudentDetailsComponent extends React.Component {
               targetOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
               {this.renderRatings()}
-            </IconMenu>
+            </IconMenu> : null }
           </ButtonWrapper>
+          {this.props.wasParticipant ? <AddTestimonial addTestimonial={testimonial => this.props.addTestimonial(testimonial)}/> : null }
           {this.props.testimonials && this.props.testimonials.length !== 0 ?
             <TestimonialRow>
               <Testimonials testimonials={this.props.testimonials} />
@@ -330,6 +308,10 @@ const Rows = styled.div`
   flex-wrap: wrap;
   align-items: center;
   margin-left: 11px;
+`;
+
+const Parent = styled.div`
+  font-weight: normal;
 `;
 
 const LinkRows = styled.div`

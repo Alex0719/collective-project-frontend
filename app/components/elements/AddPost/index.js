@@ -97,12 +97,12 @@ export class AddPost extends React.Component {
       return (
         <PostContainer>
         <StyledTextarea
-        placeholder='Post title here...'
+        placeholder='Adaugă titlu aici...'
         onChange={this.onChangeTitle}
         value={this.state.title}/>
 
         <StyledTextarea
-        placeholder='Write your post here...'
+        placeholder='Scrie postarea ta aici...'
         onChange={this.onChangeText}
         value={this.state.text}/>
 
@@ -118,11 +118,11 @@ export class AddPost extends React.Component {
             borderRadius: 5}}
             onDrop={this.onImageDrop}
             value={this.image}>
-            <DateSpan id="textAreaMessage">Drop an image or click to select a file to upload.</DateSpan>
+            <DateSpan id="textAreaMessage">Pune o imagine sau dă click pentru a selecta un fișier.</DateSpan>
         </Dropzone>
         <input type="checkbox" id="checkbox" onChange={this.handleCheck} defaultChecked={this.state.isLast}/>
-        <label for="checkbox"> Last post </label>
-        <Button text="Save post" onClick={this.onSavePost}/>
+        <label for="checkbox"> Ultima postare </label>
+        <Button text="Salvează postare" onClick={this.onSavePost}/>
         </PostContainer>
       );
     }

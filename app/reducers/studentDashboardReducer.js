@@ -13,7 +13,6 @@ const studentDashboardReducer = (state = initialState, action) => {
     case GET_STUDENT_DASHBOARD_COMPANIES_SUCCESS:
       return state.set('companies', action.response);
     case GET_STUDENT_DASHBOARD_COMPANIES_FAILURE:
-      console.log(action.message);
       return state;
     default:
       return state;

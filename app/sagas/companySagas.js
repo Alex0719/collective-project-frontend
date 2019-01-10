@@ -72,7 +72,6 @@ export function* doGetOurRatings() {
     const data = yield call(request, requestURL, options);
     yield put(getOurRatingsSuccess(data));
   } catch (err) {
-    console.log(err.response);
     yield put(getOurRatingsFailure(err.response));
     if(err.response.status == "401"){
       yield put(push('/unauthorized'));

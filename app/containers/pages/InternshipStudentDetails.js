@@ -12,6 +12,16 @@ import { getInternshipDetails, getInternshipTestimonials, putInternshipDetails }
 import { selectLoggedUser } from 'selectors/profileMenuSelector';
 import getRoleSaga from 'sagas/roleSagas';
 import { requestRole } from 'actions/roleActions';
+import {
+  wasParticipantSaga,
+  updateRatingSaga,
+  addTestimonialSaga,
+} from 'sagas/internshipStudentDetailsSagas';
+import {
+  wasParticipant,
+  updateRating,
+  addTestimonial,
+} from 'actions/internshipStudentDetailsActions';
 
 export class InternshipStudentDetails extends React.Component {
   constructor(props) {
@@ -21,6 +31,7 @@ export class InternshipStudentDetails extends React.Component {
   componentWillMount() {
     this.props.getTestimonials();
     this.props.getDetails();
+    this.props.isParticipantValid();
     this.props.fetchRole();
   }
 
@@ -46,7 +57,6 @@ export class InternshipStudentDetails extends React.Component {
       return null;
     }
     const {ratingCompany, ratingInternship, ratingMentors} = details;
-
     return (
       <div>
         <InternshipStudentDetailsComponent onSaveChanges={this.props.putDetails}
@@ -56,9 +66,12 @@ export class InternshipStudentDetails extends React.Component {
             ratingInternship: details.ratingInternship,
             ratingMentors: details.ratingMentors,
           }}
+          addTestimonial={testimonial => this.props.addTestimonialInternship(testimonial)}
           changeRoute={this.props.changeRoute}
           internshipId={this.props.match.params.id}
           testimonials = {details.testimonials}
+          wasParticipant = {details.wasParticipant}
+          updateRating={ratings => this.props.updateRatingInternship(ratings)}
         />
       </div>
     );
@@ -86,6 +99,9 @@ const mapDispatchToProps = (dispatch, {match: {params: {id}}}) => ({
   changeRoute: route => dispatch(push(route)),
   fetchRole: () => dispatch(requestRole()),
   redirect: () => dispatch(push('/unauthorized')),
+  isParticipantValid: () => dispatch(wasParticipant(id)),
+  updateRatingInternship: ratings => dispatch(updateRating(ratings, id)),
+  addTestimonialInternship: testimonial => dispatch(addTestimonial(testimonial, id)),
 });
 
 InternshipStudentDetails.propTypes = {
@@ -96,6 +112,9 @@ InternshipStudentDetails.propTypes = {
   loggedUser: PropTypes.object,
   fetchRole: PropTypes.func,
   redirect: PropTypes.func.isRequired,
+  wasParticipant: PropTypes.func,
+  updateRatingInternship: PropTypes.func,
+  addTestimonialInternship: PropTypes.func,
 };
 
 const withDetailsSaga = injectSaga({
@@ -118,6 +137,21 @@ const withRoleSaga = injectSaga({
   saga: getRoleSaga,
 });
 
+const withParticipantSaga = injectSaga({
+  key: 'participantSaga',
+  saga: wasParticipantSaga,
+});
+
+const withUpdateRatingSaga = injectSaga({
+  key: 'updateRatingSaga',
+  saga: updateRatingSaga,
+});
+
+const withAddTestimonialSaga = injectSaga({
+  key: 'addTestimonialSaga',
+  saga: addTestimonialSaga,
+});
+
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
@@ -127,6 +161,9 @@ export default compose(
   withDetailsSaga,
   withTestimonialsSaga,
   withUpdateDetailsSaga,
+  withAddTestimonialSaga,
+  withUpdateRatingSaga,
+  withParticipantSaga,
   withRoleSaga,
   withConnect,
 )(InternshipStudentDetails);

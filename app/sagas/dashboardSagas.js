@@ -49,7 +49,6 @@ export function* getStudentDashboardCompanies() {
     const data = yield call(request, requestURL, options);
     yield put(getStudentDashboardCompaniesSuccess(data));
   } catch (err) {
-    console.log("err", err);
     yield put(getStudentDashboardCompaniesFailure(err.response));
   }
 }
@@ -75,7 +74,6 @@ export function* subscribeStudent(req) {
     yield put(subscribeStudentSuccess(data));
     yield getStudentDashboardCompanies();
   } catch (err) {
-    console.log("err", err);
     yield put(subscribeStudentFailure(err.response));
   }
 }
@@ -101,7 +99,6 @@ export function* unsubscribeStudent(req) {
     yield put(unsubscribeStudentSuccess(data));
     yield getStudentDashboardCompanies();
   } catch (err) {
-    console.log("err", err);
     yield put(unsubscribeStudentFailure(err.response));
   }
 }
@@ -109,5 +106,3 @@ export function* unsubscribeStudent(req) {
 export function* unsubscribeStudentSaga() {
   yield takeLatest(UNSUBSCRIBE_STUDENT_REQUEST, unsubscribeStudent);
 }
-
-
