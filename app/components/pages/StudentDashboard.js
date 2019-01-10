@@ -1,17 +1,22 @@
 import React from "react";
-
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemTitle,
-  AccordionItemBody,
-} from 'react-accessible-accordion';
 import Collapsible from 'react-collapsible';
-import { QUEEN_BLUE, AERO_BLUE, DARK_RED, BLUE_GRAY } from "../../constants/colors";
+import { QUEEN_BLUE, AERO_BLUE, DARK_RED, BLUE_GRAY, DARKER_RED } from "../../constants/colors";
 import styled from "styled-components";
 import moment from "moment";
 import Button from 'components/elements/Button';
 
+import {
+  CompanyLogo,
+  AccesaLogo,
+  AlgotechLogo,
+  ArobsLogo,
+  BoschLogo,
+  FortechLogo,
+  SiemensLogo,
+  ToraLogo,
+  YardiLogo,
+  YonderLogo
+} from '../../images/companies';
 const Container = styled.div`
   padding: 26px;
 `;
@@ -21,7 +26,6 @@ const CompanyTitle = styled.div`
   font-size: 20px;
   background: ${AERO_BLUE};
   display: flex;
-  justify-content: space-between;
   align-items: center;
   cursor: default;
   height: 50px;
@@ -29,6 +33,21 @@ const CompanyTitle = styled.div`
     outline: none;
     color: white;
     background: ${QUEEN_BLUE};
+  }
+  div {
+    margin-right: 10px;
+  }
+`;
+
+const CompanyLogoTitle = styled.div`
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  img {
+    width: 100%;
+    height: auto;
+
   }
 `;
 
@@ -56,6 +75,9 @@ const SubscribeButton = styled.button`
   &:focus {
     outline: none;
   }
+  &:hover {
+    background-color: ${DARKER_RED}
+  }
   position: relative;
 `;
 
@@ -68,6 +90,9 @@ const UnsubscribeButton = styled.button`
   cursor:pointer;
   &:focus {
     outline: none;
+  }
+  &:hover {
+    background-color: grey;
   }
   position: relative;
 `;
@@ -104,6 +129,7 @@ const CollapsibleContainer = styled.div`
   & > div:first-child {
     flex: 1;
   }
+
 `;
 
 class StudentDashboardList extends React.Component {
@@ -123,31 +149,34 @@ class StudentDashboardList extends React.Component {
 
   render() {
     const { companies } = this.props;
-
+    console.table(companies);
     const subscribeButton = (company) => (
       <SubscribeButton onClick={() => this.subscribe(company)}>
-        Subscribe
+        Abonează-te
       </SubscribeButton>
     );
 
     const unsubscribeButton = (company) => (
       <UnsubscribeButton onClick={() => this.unsubscribe(company)}>
-        Unsubscribe
+        Abonat
       </UnsubscribeButton>
     );
 
+    const companyLogo = (companyName) => this.getCompanyLogo(companyName);
+
     return (
       <Container>
-        {companies.map(comp => {
-          const company = comp.comp;
+        {companies.map(company => {
           return (
-            <CollapsibleContainer key={companies.indexOf(comp)}>
+            <CollapsibleContainer key={companies.indexOf(company)}>
               <Collapsible
                 easing="ease-in"
                 trigger={(
                   <CompanyTitle>
+                    <CompanyLogoTitle>
+                      <img src={companyLogo(company.name)} />
+                    </CompanyLogoTitle>
                     {company.name}
-
                   </CompanyTitle>)} >
                 <InternshipsContainer>
                   {company.internships.length ? company.internships.map(internship => {
@@ -164,13 +193,13 @@ class StudentDashboardList extends React.Component {
                         </ButtonWrapper>
                       </Internship>
                     );
-                  }) : <Internship>Nu exista internshipuri</Internship>}
+                  }) : <Internship>Nu există internshipuri</Internship>}
                 </InternshipsContainer>
               </Collapsible>
 
               <SubscribeContainer>
                 {
-                  comp.subscribed ? unsubscribeButton(company) : subscribeButton(company)
+                  company.subscribed ? unsubscribeButton(company) : subscribeButton(company)
                 }
               </SubscribeContainer>
             </CollapsibleContainer>
@@ -179,6 +208,32 @@ class StudentDashboardList extends React.Component {
       </Container>
     );
   }
+
+  getCompanyLogo = (name) => {
+    switch (name) {
+      case "Accesa":
+        return AccesaLogo;
+      case "Algotech":
+        return AlgotechLogo;
+      case "Arobs":
+        return ArobsLogo;
+      case "Bosch":
+        return BoschLogo;
+      case "Fortech":
+        return FortechLogo;
+      case "Siemens":
+        return SiemensLogo;
+      case "Tora":
+        return ToraLogo;
+      case "Yardi":
+        return YardiLogo;
+      case "Yonder":
+        return YonderLogo
+      default:
+        return CompanyLogo;
+    }
+  }
+
 }
 
 export default StudentDashboardList;
