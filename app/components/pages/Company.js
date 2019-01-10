@@ -19,19 +19,19 @@ const CompanyComponent = props => (
         <RowRating>
           <NameRating>Companie</NameRating>
           <Stars>
-            <StarRating rating={4.5} />
+            <StarRating rating={props.ratings.ratingCompany} />
           </Stars>
         </RowRating>
         <RowRating>
           <NameRating>Mentori</NameRating>
           <Stars>
-            <StarRating rating={3.2} />
+            <StarRating rating={props.ratings.ratingMentors} />
           </Stars>
         </RowRating>
         <RowRating>
           <NameRating>Internship</NameRating>
           <Stars>
-            <StarRating rating={4.8} />
+            <StarRating rating={props.ratings.ratingInternship} />
           </Stars>
         </RowRating>
       </RowsWithRatings>

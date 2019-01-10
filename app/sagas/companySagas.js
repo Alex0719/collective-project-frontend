@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { routerMiddleware, push } from 'react-router-redux'
+import { routerMiddleware, push } from 'react-router-redux';
 
 import {
   getStudentsPerYearSuccess,
@@ -9,26 +9,30 @@ import {
   addInternship,
   addInternshipSuccess,
   addInternshipFailure,
+  getOurRatings,
+  getOurRatingsSuccess,
+  getOurRatingsFailure
 } from 'actions/companyActions';
 import {
   GET_STUDENTS_PER_YEAR_REQUEST,
   GET_INTERNSHIPS_REQUEST,
   ADD_INTERNSHIP,
+  GET_OUR_RATINGS_REQUEST,
 } from 'constants/company';
 import request from 'utils/request';
 
+let options = {
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Credentials': true,
+  },
+  credentials: 'include',
+  method: 'GET',
+};
+
 export function* doGetStudentsPerYear() {
   const requestURL = 'https://localhost:44340/statistics/evolution';
-
-  let options = {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Credentials': true,
-    },
-    credentials: 'include',
-    method: 'GET',
-  };
 
   try {
     const data = yield call(request, requestURL, options);
@@ -45,16 +49,6 @@ export function* getStudentsPerYearSaga() {
 export function* doGetInternships({redirectFunction}) {
   const requestURL = 'https://localhost:44340/internships';
 
-  let options = {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Credentials': true,
-    },
-    credentials: 'include',
-    method: 'GET',
-  };
-
   try {
     const data = yield call(request, requestURL, options);
     yield put(getInternshipsSuccess(data));
@@ -70,6 +64,25 @@ export function* doGetInternships({redirectFunction}) {
 
 export function* getInternshipsSaga() {
   yield takeLatest(GET_INTERNSHIPS_REQUEST, doGetInternships);
+}
+
+export function* doGetOurRatings() {
+  const requestURL = 'https://localhost:44340/statistics/ratings';
+
+  try{
+    const data = yield call(request, requestURL, options);
+    yield put(getOurRatingsSuccess(data));
+  } catch (err) {
+    console.log(err.response);
+    yield put(getOurRatingsFailure(err.response));
+    if(err.response.status == "401"){
+      yield put(push('/unauthorized'));
+    }
+  }
+}
+
+export function* getOurRatingsSaga() {
+  yield takeLatest(GET_OUR_RATINGS_REQUEST, doGetOurRatings);
 }
 
 export function* doAddInternship( params ) {

@@ -6,10 +6,21 @@ const selectStudentsPerYear = state =>
 const selectInternships = state =>
   state.getIn(['company', 'internships']).toJS();
 
+const selectOurRatings = state =>
+  state.getIn(['company', 'ratings']).toJS();
+
 const studentsPerYearSelector = () =>
   createSelector(() => selectStudentsPerYear);
 
 const internshipsSelector = () =>
   createSelector(() => selectInternships);
 
-export { selectStudentsPerYear, studentsPerYearSelector, internshipsSelector };
+const ourRatingsSelector = () =>
+  createSelector(() => selectOurRatings);
+
+export {
+  selectStudentsPerYear,
+  studentsPerYearSelector,
+  internshipsSelector,
+  ourRatingsSelector
+};
