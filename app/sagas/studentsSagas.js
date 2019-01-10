@@ -3,7 +3,7 @@ import { push } from 'react-router-redux';
 import Cookies from 'js-cookie';
 import Alert from 'react-s-alert';
 
-import { UPDATE_STUDENT_REQUEST, GET_STUDENT_REQUEST } from 'constants/student';
+import { UPDATE_STUDENT_REQUEST, GET_STUDENT_REQUEST, GET_STUDENT_CV_REQUEST } from 'constants/student';
 import request from 'utils/request';
 import {
   updateStudentSuccess,
@@ -12,6 +12,8 @@ import {
 import {
   getStudentSuccess,
   getStudentFailure,
+  getStudentCvSuccess,
+  getStudentCvFailure,
 } from '../actions/getStudentActions';
 
 export function* getStudent() {
@@ -84,4 +86,44 @@ export function* updateStudent({ values }) {
 
 export function* updateStudentSaga() {
   yield takeLatest(UPDATE_STUDENT_REQUEST, updateStudent);
+}
+
+export function* getStudentCv(params) {
+  const requestURL = `https://localhost:44340/student/cv`;
+
+  const options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+      'Accept':'application/octet-stream'
+    },
+    responseType: 'blob',
+    credentials: 'include',
+    method: 'GET',
+  };
+
+  try {
+    const data = yield call(request, requestURL, options, false, true);
+    data.arrayBuffer().then(rs => {
+    const file = new Blob([rs], { type: 'application/pdf' });
+    var windowHandler = window.open("");
+    const fileURL = windowHandler.URL.createObjectURL(file);
+    var link =windowHandler.document.createElement('a');
+    link.href = fileURL;
+    link.download=params.student+".pdf";
+    link.click();
+    windowHandler.close();
+})
+    yield put(getStudentCvSuccess(data));
+  } catch (err) {
+    yield put(getStudentCvFailure(err.response));
+    Alert.error("CV-ul tau nu a putut fi incarcat", {
+      position: 'top-right',
+      effect: 'jelly'
+    });
+  }
+}
+
+export function* getStudentCvSaga() {
+  yield takeLatest(GET_STUDENT_CV_REQUEST, getStudentCv);
 }

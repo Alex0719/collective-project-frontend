@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-
+import Alert from 'react-s-alert';
 import {
   getInternshipDetailsSuccess,
   getInternshipDetailsFailure,
@@ -57,10 +57,18 @@ export function* putInternshipDetails({ id,obj }) {
   };
 
   try {
-    const data = yield call(request, requestURL, options);
+    const data = yield call(request, requestURL, options,false,true);
     yield put(putInternshipDetailsSuccess(data));
+    Alert.success("Modificarile au fost salvate cu succes", {
+      position: 'top-right',
+      effect: 'jelly'
+    });
   } catch (err) {
     yield put(putInternshipDetailsFailure(err.response));
+    Alert.error("Modificarile nu au putut fi salvate", {
+      position: 'top-right',
+      effect: 'jelly'
+    });
   }
 }
 

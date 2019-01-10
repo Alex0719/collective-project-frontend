@@ -12,10 +12,11 @@ import TextFieldComponent from '../../../components/elements/TextField/index';
 import { FieldsWrapper } from '../../../components/elements/Button/styles';
 import { DivComponent, Wrapper } from '../../../components/elements/Div/styles';
 import { updateStudentRequest } from '../../../actions/updateStudentActions';
-import { getStudentRequest } from '../../../actions/getStudentActions';
+import { getStudentRequest, getStudentCvRequest } from '../../../actions/getStudentActions';
 import {
   getStudentSaga,
   updateStudentSaga,
+  getStudentCvSaga,
 } from '../../../sagas/studentsSagas';
 import { selectLoggedUser } from 'selectors/profileMenuSelector';
 import getRoleSaga from 'sagas/roleSagas';
@@ -43,6 +44,11 @@ export class Student extends React.Component {
 
   componentWillMount() {
     this.props.fetchRole();
+  }
+  
+  onClickCv() {
+      var fullname=this.state.firstname+" "+this.state.lastname;
+      this.props.getStudentCv(fullname);
   }
 
   componentWillUpdate(nextProps) {
@@ -173,6 +179,14 @@ export class Student extends React.Component {
             style={style}
             onChange={event => this.onChange('year', event)}
           />
+           <Button
+            type="IndigoButton"
+            id="btnCv"
+            text="Vezi CV"
+            onClick={() => {
+              this.onClickCv();
+            }}
+          />
           <Button
             type="IndigoButton"
             id="btnUpdate"
@@ -181,6 +195,7 @@ export class Student extends React.Component {
               this.updateStudent();
             }}
           />
+         
         </FieldsWrapper>
       </DivComponent>
       </Wrapper>
@@ -197,6 +212,7 @@ Student.propTypes = {
   loggedUser: PropTypes.object,
   fetchRole: PropTypes.func,
   redirect: PropTypes.func.isRequired,
+  getStudentCv: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state =>
@@ -210,6 +226,7 @@ const mapDispatchToProps = dispatch => ({
   getStudent: () => dispatch(getStudentRequest()),
   fetchRole: () => dispatch(requestRole()),
   redirect: () => dispatch(push('/unauthorized')),
+  getStudentCv: (params) => dispatch(getStudentCvRequest(params)),
 });
 
 const withConnect = connect(
@@ -233,9 +250,14 @@ const withGetStudentSaga = injectSaga({
   saga: getStudentSaga,
 });
 
+const withGetStudentCvSaga = injectSaga({
+  key: 'getStudentCvSaga',
+  saga: getStudentCvSaga,
+});
 export default compose(
   withSaga,
   withGetStudentSaga,
+  withGetStudentCvSaga,
   withRoleSaga,
   withConnect,
 )(Student);

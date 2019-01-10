@@ -70,7 +70,7 @@ export function* getCV(params) {
 
   try {
     const data = yield call(request, requestURL, options,false,true);
-    data.arrayBuffer().then(rs => {console.log("blob:",rs);
+    data.arrayBuffer().then(rs => {
     const file = new Blob([rs], { type: 'application/pdf' });
     var windowHandler = window.open("");
 
