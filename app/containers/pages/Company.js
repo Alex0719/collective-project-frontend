@@ -25,7 +25,6 @@ class Company extends React.Component {
   }
 
   render() {
-    console.log('ratingz', this.props.ratings);
     let realOrMock;
     if(Object.keys(this.props.ratings).length === 0){
       realOrMock =  {
