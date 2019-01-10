@@ -16,11 +16,27 @@ const data = [
   { year: '2018', numberOfStudents: 2 },
 ];
 class SimpleAreaChart extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  compareData(firstEl, secondEl){
+    if (firstEl.year < secondEl.year){
+      return -1;
+    }
+    if(firstEl.year > secondEl.year){
+      return 1;
+    }
+    return 0;
+  }
+
   render() {
+    const sortedByYear = this.props.data.sort((a, b) => this.compareData(a, b));
+
     return (
       <ResponsiveContainer width="100%" height={300}>
         <AreaChart
-          data={data}
+          data={sortedByYear}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
