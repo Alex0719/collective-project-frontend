@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { push } from 'react-router-redux';
 import Dropzone from 'react-dropzone';
-
+import { JAPANESE_INDIGO } from 'constants/colors';
 
 import Button from 'components/elements/Button';
 import TextFieldComponent from '../../../components/elements/TextField/index';
@@ -189,6 +189,26 @@ export class Student extends React.Component {
             style={style}
             onChange={event => this.onChange('year', event)}
           />
+            <Dropzone
+                multiple={false}
+                accept=".pdf"
+                style={{width:"100%",
+                height: 100,
+                fontWeight: 'bold',
+                whiteSpace: 'nowrap',
+                fontSize: '20px',
+                color: JAPANESE_INDIGO,
+                width: 'fit-content',
+                borderWidth: 2,
+                borderColor: 'gray',
+                borderStyle: 'dashed',
+                display: 'flex',
+                alignItems: 'center',
+                borderRadius: 5}}
+                onDrop={event => this.onFileDrop(event)}
+                value={this.image}>
+                Pune un CV sau dă click pentru a selecta un fișier. (.pdf)
+            </Dropzone>
            <Button
             type="IndigoButton"
             id="btnCv"
@@ -207,24 +227,6 @@ export class Student extends React.Component {
           />
 
         </FieldsWrapper>
-      </DivComponent>
-
-      <DivComponent color>
-        <Dropzone
-            multiple={false}
-            accept=".pdf"
-            style={{width:"100%",
-            height: 100,
-            width: 250,
-            borderWidth: 2,
-            borderColor: 'gray',
-            borderStyle: 'dashed',
-            marginBottom:20,
-            borderRadius: 5}}
-            onDrop={event => this.onFileDrop(event)}
-            value={this.image}>
-            Pune un CV sau dă click pentru a selecta un fișier. (.pdf)
-        </Dropzone>
       </DivComponent>
       </Wrapper>
     );
