@@ -3,7 +3,12 @@ import { push } from 'react-router-redux';
 import Cookies from 'js-cookie';
 import Alert from 'react-s-alert';
 
-import { UPDATE_STUDENT_REQUEST, GET_STUDENT_REQUEST, GET_STUDENT_CV_REQUEST } from 'constants/student';
+import {
+  UPDATE_STUDENT_REQUEST,
+  GET_STUDENT_REQUEST,
+  GET_STUDENT_CV_REQUEST,
+  UPLOAD_CV_REQUEST,
+} from 'constants/student';
 import request from 'utils/request';
 import {
   updateStudentSuccess,
@@ -14,6 +19,8 @@ import {
   getStudentFailure,
   getStudentCvSuccess,
   getStudentCvFailure,
+  uploadCVFailure,
+  uploadCVSuccess,
 } from '../actions/getStudentActions';
 
 export function* getStudent() {
@@ -126,4 +133,36 @@ export function* getStudentCv(params) {
 
 export function* getStudentCvSaga() {
   yield takeLatest(GET_STUDENT_CV_REQUEST, getStudentCv);
+}
+
+export function* uploadCV({ file }) {
+  const requestURL = 'https://localhost:44340/students/cv';
+  const options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
+    credentials: 'include',
+    method: 'POST',
+    body: file,
+  };
+
+  try {
+    const response = yield call(request, requestURL, options, true);
+    yield put(uploadCVSuccess(response));
+    Alert.success("CV încărcat cu succes!", {
+            position: 'top-right',
+            effect: 'jelly'
+          });
+  } catch (err) {
+    yield put(uploadCVFailure(err.response));
+    Alert.error("Eroare la încărcarea CV-ului!", {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+  }
+}
+
+export function* uploadCVSaga() {
+  yield takeLatest(UPLOAD_CV_REQUEST, uploadCV)
 }

@@ -23,31 +23,30 @@ const Container = styled.div`
 
 const CompanyTitle = styled.div`
   padding: 15px;
-  font-size: 20px;
+  font-size: 24px;
   background: ${AERO_BLUE};
   display: flex;
   align-items: center;
   cursor: default;
-  height: 50px;
+  height: 150px;
   &:focus {
     outline: none;
     color: white;
     background: ${QUEEN_BLUE};
   }
   div {
-    margin-right: 10px;
+    margin-right: 10%;
   }
 `;
 
 const CompanyLogoTitle = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 150px;
+  height: 150px;
   display: flex;
   align-items: center;
   img {
     width: 100%;
     height: auto;
-
   }
 `;
 
@@ -108,9 +107,11 @@ const Link = styled.a`
 
 const SubscribeContainer = styled.div`
   background-color: ${AERO_BLUE};
+  display: flex;
+  align-items: center;
   margin: 0;
   padding: 5px;
-  height: 50px;
+  height: 150px;
 `;
 
 const ButtonWrapper = styled.div`
@@ -130,6 +131,11 @@ const CollapsibleContainer = styled.div`
     flex: 1;
   }
 
+`;
+
+const Img = styled.img`
+  width: 100px;
+  height: 100px;
 `;
 
 class StudentDashboardList extends React.Component {
@@ -174,7 +180,7 @@ class StudentDashboardList extends React.Component {
                 trigger={(
                   <CompanyTitle>
                     <CompanyLogoTitle>
-                      <img src={companyLogo(company.name)} />
+                      <Img  src={companyLogo(company.name)} />
                     </CompanyLogoTitle>
                     {company.name}
                   </CompanyTitle>)} >

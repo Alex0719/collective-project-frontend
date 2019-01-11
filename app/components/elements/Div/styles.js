@@ -7,13 +7,15 @@ export const Wrapper = styled.div`
  -moz-background-size: cover;
  -o-background-size: cover;
  background-size: cover;
+ display: flex;
 `;
 export const DivComponent = styled.div`
   display: inline-grid;
   height: 100%;
   margin: auto;
   text-align: center;
-  margin-left: 10%;
+  margin-left: ${props => props.margin ? '10%' : '0'};
+  color: ${props => props.color ? 'white' : 'black'};
   margin-bottom: 8%;
   margin-top: 3%;
   overflow: hidden:
