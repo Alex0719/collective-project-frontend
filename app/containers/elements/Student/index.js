@@ -6,25 +6,25 @@ import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { push } from 'react-router-redux';
+import Dropzone from 'react-dropzone';
+import { JAPANESE_INDIGO } from 'constants/colors';
 
 import Button from 'components/elements/Button';
 import TextFieldComponent from '../../../components/elements/TextField/index';
 import { FieldsWrapper } from '../../../components/elements/Button/styles';
 import { DivComponent, Wrapper } from '../../../components/elements/Div/styles';
 import { updateStudentRequest } from '../../../actions/updateStudentActions';
-import { getStudentRequest, getStudentCvRequest } from '../../../actions/getStudentActions';
+import { getStudentRequest, getStudentCvRequest, uploadCV } from '../../../actions/getStudentActions';
 import {
   getStudentSaga,
   updateStudentSaga,
   getStudentCvSaga,
+  uploadCVSaga,
 } from '../../../sagas/studentsSagas';
 import { selectLoggedUser } from 'selectors/profileMenuSelector';
 import getRoleSaga from 'sagas/roleSagas';
 import { requestRole } from 'actions/roleActions';
 import { selectUpdateStudent } from '../../../selectors/studentSelector';
-// const renderPdf=(cv, id)=>{
-//     return(<ReactPDF id="pdfStudent" file={"data: application/pdf;base64," + cv}/>);
-// }
 
 export class Student extends React.Component {
   constructor(props) {
@@ -45,7 +45,7 @@ export class Student extends React.Component {
   componentWillMount() {
     this.props.fetchRole();
   }
-  
+
   onClickCv() {
       var fullname=this.state.firstname+" "+this.state.lastname;
       this.props.getStudentCv(fullname);
@@ -114,6 +114,13 @@ export class Student extends React.Component {
       this.props.student.year !== nextProps.student.year;
   }
 
+  onFileDrop(event) {
+    const file = event[0];
+    const formData = new FormData();
+    formData.append("Cv", file);
+    this.props.uploadStudentCV(formData);
+  }
+
   onChange(field, event) {
     this.setState({
       [field]: event.target.value,
@@ -138,7 +145,7 @@ export class Student extends React.Component {
 
     return (
       <Wrapper>
-      <DivComponent>
+      <DivComponent margin>
         <FieldsWrapper>
           <TextFieldComponent
             label="Prenume"
@@ -182,6 +189,26 @@ export class Student extends React.Component {
             style={style}
             onChange={event => this.onChange('year', event)}
           />
+            <Dropzone
+                multiple={false}
+                accept=".pdf"
+                style={{width:"100%",
+                height: 100,
+                fontWeight: 'bold',
+                whiteSpace: 'nowrap',
+                fontSize: '20px',
+                color: JAPANESE_INDIGO,
+                width: 'fit-content',
+                borderWidth: 2,
+                borderColor: 'gray',
+                borderStyle: 'dashed',
+                display: 'flex',
+                alignItems: 'center',
+                borderRadius: 5}}
+                onDrop={event => this.onFileDrop(event)}
+                value={this.image}>
+                Pune un CV sau dă click pentru a selecta un fișier. (.pdf)
+            </Dropzone>
            <Button
             type="IndigoButton"
             id="btnCv"
@@ -198,7 +225,7 @@ export class Student extends React.Component {
               this.updateStudent();
             }}
           />
-         
+
         </FieldsWrapper>
       </DivComponent>
       </Wrapper>
@@ -230,6 +257,7 @@ const mapDispatchToProps = dispatch => ({
   fetchRole: () => dispatch(requestRole()),
   redirect: () => dispatch(push('/unauthorized')),
   getStudentCv: (params) => dispatch(getStudentCvRequest(params)),
+  uploadStudentCV: file => dispatch(uploadCV(file)),
 });
 
 const withConnect = connect(
@@ -257,10 +285,17 @@ const withGetStudentCvSaga = injectSaga({
   key: 'getStudentCvSaga',
   saga: getStudentCvSaga,
 });
+
+const withUploadCVSaga = injectSaga({
+  key: 'uploadCVSaga',
+  saga: uploadCVSaga,
+});
+
 export default compose(
   withSaga,
   withGetStudentSaga,
   withGetStudentCvSaga,
+  withUploadCVSaga,
   withRoleSaga,
   withConnect,
 )(Student);

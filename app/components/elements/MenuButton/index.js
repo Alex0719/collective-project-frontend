@@ -6,13 +6,15 @@ import { Button, ActiveButton } from './styles';
 export class MenuButton extends React.Component {
   render() {
     const MyButton = this.props.active ? ActiveButton : Button;
-    const { text, onClick, style } = this.props;
+    const { text, onClick, style, isImg = false, color = 'white' } = this.props;
 
     return (
       <MyButton
         active={this.props.active}
         style={style}
         onClick={() => onClick()}
+        isImg={isImg}
+        color={color}
       >
         {text}
       </MyButton>

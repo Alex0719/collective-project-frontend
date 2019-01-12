@@ -9,7 +9,8 @@ import {
   PEWTER_BLUE,
 } from 'constants/colors';
 import { IconMenu } from 'material-ui';
-import 'components/pages/internshipDetails.css'
+import 'components/pages/internshipDetails.css';
+import Alert from 'react-s-alert';
 
 import TextField from '../elements/TextField';
 import TextArea from '../elements/TextArea';
@@ -47,12 +48,19 @@ export default class InternshipStudentDetailsComponent extends React.Component {
     if (!open && reason === 'clickAway') {
       this.setState({ open: false });
       const { ratingInternship, ratingMentors, ratingCompany } = this.state;
-      this.props.updateRating({ratingInternship, ratingCompany, ratingMentors});
-      this.setState({
-        ratingInternship: 0,
-        ratingMentors: 0,
-        ratingCompany: 0,
-      });
+      if(ratingInternship !== 0 && ratingMentors !== 0 && ratingCompany !== 0) {
+        this.props.updateRating({ratingInternship, ratingCompany, ratingMentors});
+        this.setState({
+          ratingInternship: 0,
+          ratingMentors: 0,
+          ratingCompany: 0,
+        });
+      } else {
+        Alert.error("Toate rating-urile trebuie să fie minim 1!", {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+      }
     }
   }
 

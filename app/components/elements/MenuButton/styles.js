@@ -36,8 +36,10 @@ export const Button = styled.div`
 `;
 
 export const ActiveButton = Button.extend`
-  background-color: ${PEWTER_BLUE};
-  border-radius: 5px;
-  opacity: 0.2;
+  background-color: ${props => props.color};
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  opacity: 1;
+  height: ${props => props.isImg ? '50px' : '40px'};
   color: ${JAPANESE_INDIGO};
 `;
