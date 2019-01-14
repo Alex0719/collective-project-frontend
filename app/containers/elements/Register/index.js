@@ -36,6 +36,7 @@ export class Register extends React.Component {
         confirmPassword:"",
         cv:null,
         formData: new FormData(),
+        dropZoneMessage: "* Pune un CV sau dă click pentru a selecta un fișier. (.pdf)"
       };
   }
 
@@ -64,19 +65,20 @@ export class Register extends React.Component {
     this.setState({cv:file})
     form.append("Cv", file);
     this.setState({formData:form});
+    this.setState({dropZoneMessage:"Poti oricand incarca un alt cv"});
   }
 
   onChange(field, event) {
     var form=this.state.formData;
-    if(form.get([field]))
+    
+    if(form.get(field) || form.get(field) == "")
     {
-        form.set([field], event.target.value);
+        form.set(field, event.target.value);
     }
     else 
     { 
-       form.append([field], event.target.value);
+       form.append(field, event.target.value);
     }
-
     this.setState({
       [field]: event.target.value,
       formData:form
@@ -214,7 +216,7 @@ export class Register extends React.Component {
                 borderRadius: 5}}
                 onDrop={event => this.onFileDrop(event)}
                 value={this.image}>
-                * Pune un CV sau dă click pentru a selecta un fișier. (.pdf)
+                {this.state.dropZoneMessage}
             </Dropzone>
 
           <Button

@@ -176,8 +176,10 @@ export function* uploadCVSaga() {
 }
 
 export function* registerStudent({ values }) {
-  console.log(values.getAll("Cv"))
-  console.log(values.values())
+//   for (var pair of values.entries()) {
+//     console.log(pair[0]+ ', ' + pair[1]); 
+// }
+
   const requestURL = 'https://localhost:44340/students/register';
   const options = {
     headers: {
