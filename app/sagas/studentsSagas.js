@@ -8,6 +8,7 @@ import {
   GET_STUDENT_REQUEST,
   GET_STUDENT_CV_REQUEST,
   UPLOAD_CV_REQUEST,
+  REGISTER_REQUEST
 } from 'constants/student';
 import request from 'utils/request';
 import {
@@ -22,6 +23,13 @@ import {
   uploadCVFailure,
   uploadCVSuccess,
 } from '../actions/getStudentActions';
+
+import
+{
+  registerRequest,
+  registerSuccess,
+  registerFailure
+} from '../actions/registerActions' 
 
 export function* getStudent() {
   const requestURL = 'https://localhost:44340/student';
@@ -165,4 +173,40 @@ export function* uploadCV({ file }) {
 
 export function* uploadCVSaga() {
   yield takeLatest(UPLOAD_CV_REQUEST, uploadCV)
+}
+
+export function* registerStudent({ values }) {
+  console.log(values.getAll("Cv"))
+  console.log(values.values())
+  const requestURL = 'https://localhost:44340/students/register';
+  const options = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
+    credentials: 'include',
+    method: 'POST',
+    body: values,
+  };
+
+  try {
+    let registerStudent;
+    registerStudent = yield call(request, requestURL, options, true, false);
+    yield put(registerSuccess(registerStudent));
+    Alert.success("Intregistrarea s-a facut cu succes! Acum te poti loga cu contul creat. ", {
+          position: 'top-right',
+          effect: 'jelly'
+          });
+    yield put(push("/"));
+  } catch (err) {
+    yield put(registerFailure(err.response));
+    Alert.error("Eroare la adaugarea contului!", {
+          position: 'top-right',
+          effect: 'jelly'
+        });
+  }
+}
+
+export function* registerStudentSaga() {
+  yield takeLatest(REGISTER_REQUEST, registerStudent);
 }
