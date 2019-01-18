@@ -178,6 +178,7 @@ const withConnect = connect(
 export default compose(
   withInternshipsForStudentSaga,
   withConfirmParticipationSaga,
+  withConfirmExamSaga,
   withRoleSaga,
   withRefuseSaga,
   withConnect,
