@@ -238,6 +238,9 @@ export default class InternshipStudentDetailsComponent extends React.Component {
               </Parent>
             </Label>
           </Row>
+          <Row>
+            <Button text={"Aplică"} onClick={()=>this.props.apply()} />
+          </Row>
           </Rows>
           <InternshipPosts showAdd={false} internshipId={this.props.internshipId}/>
         </LeftPart>
