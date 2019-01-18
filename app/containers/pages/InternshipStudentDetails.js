@@ -16,11 +16,13 @@ import {
   wasParticipantSaga,
   updateRatingSaga,
   addTestimonialSaga,
+  applySaga,
 } from 'sagas/internshipStudentDetailsSagas';
 import {
   wasParticipant,
   updateRating,
   addTestimonial,
+  applyRequest,
 } from 'actions/internshipStudentDetailsActions';
 
 export class InternshipStudentDetails extends React.Component {
@@ -72,6 +74,7 @@ export class InternshipStudentDetails extends React.Component {
           testimonials = {details.testimonials}
           wasParticipant = {details.wasParticipant}
           updateRating={ratings => this.props.updateRatingInternship(ratings)}
+          apply={() => this.props.apply()}
         />
       </div>
     );
@@ -102,6 +105,7 @@ const mapDispatchToProps = (dispatch, {match: {params: {id}}}) => ({
   isParticipantValid: () => dispatch(wasParticipant(id)),
   updateRatingInternship: ratings => dispatch(updateRating(ratings, id)),
   addTestimonialInternship: testimonial => dispatch(addTestimonial(testimonial, id)),
+  apply: () => dispatch(applyRequest(id)),
 });
 
 InternshipStudentDetails.propTypes = {
@@ -115,6 +119,7 @@ InternshipStudentDetails.propTypes = {
   wasParticipant: PropTypes.func,
   updateRatingInternship: PropTypes.func,
   addTestimonialInternship: PropTypes.func,
+  apply: PropTypes.func,
 };
 
 const withDetailsSaga = injectSaga({
@@ -152,6 +157,11 @@ const withAddTestimonialSaga = injectSaga({
   saga: addTestimonialSaga,
 });
 
+const withApplySaga = injectSaga({
+  key: 'applySaga',
+  saga: applySaga,
+});
+
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
@@ -165,5 +175,6 @@ export default compose(
   withUpdateRatingSaga,
   withParticipantSaga,
   withRoleSaga,
+  withApplySaga,
   withConnect,
 )(InternshipStudentDetails);

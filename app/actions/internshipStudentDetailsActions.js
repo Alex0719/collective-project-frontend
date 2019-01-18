@@ -8,6 +8,9 @@ import {
   ADD_TESTIMONIAL_REQUEST,
   ADD_TESTIMONIAL_FAILURE,
   ADD_TESTIMONIAL_SUCCESS,
+  APPLY_REQUEST,
+  APPLY_SUCCESS,
+  APPLY_FAILURE,
 } from 'constants/internshipStudentDetails';
 
 export const wasParticipant = id => ({
@@ -54,5 +57,20 @@ export const addTestimonialSuccess = response => ({
 
 export const addTestimonialFailure = message => ({
   type: ADD_TESTIMONIAL_FAILURE,
+  message,
+});
+
+export const applyRequest = internshipId => ({
+  type: APPLY_REQUEST,
+  internshipId,
+});
+
+export const applySuccess = response => ({
+  type: APPLY_SUCCESS,
+  response,
+});
+
+export const applyFailure = message => ({
+  type: APPLY_FAILURE,
   message,
 });
