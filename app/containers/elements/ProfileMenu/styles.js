@@ -46,6 +46,7 @@ export const Link = styled.a`
     color: ${JAPANESE_INDIGO};
   }
   margin: auto;
+  cursor:pointer;
   width: 50%;
   white-space:nowrap;
   text-decoration: none;

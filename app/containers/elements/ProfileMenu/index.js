@@ -170,7 +170,7 @@ export class ProfileMenu extends React.Component {
         <ButtonWrapper>
           <Button text="Login" onClick={() => this.handleLogin()} />
         </ButtonWrapper>
-        <Link>Creează cont student</Link>
+        <Link onClick={()=>{this.props.changeRoute("/register");this.setState({open: false})}}>Creează cont student</Link>
       </IconMenuInnerWrapper>
     );
   }

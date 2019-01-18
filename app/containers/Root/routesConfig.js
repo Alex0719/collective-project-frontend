@@ -11,6 +11,7 @@ import InternshipManagement from '../../containers/elements/InternshipManagement
 import Student from '../elements/Student';
 import Unauthorized from '../../containers/pages/Unauthorized';
 import InternshipStudentDetails from 'containers/pages/InternshipStudentDetails';
+import Register from '../../containers/elements/Register'
 
 export const routes = [
   {
@@ -44,5 +45,9 @@ export const routes = [
   {
     path: '/unauthorized',
     component: Unauthorized,
+  },
+  {
+    path: '/register',
+    component: Register,
   }
 ];
