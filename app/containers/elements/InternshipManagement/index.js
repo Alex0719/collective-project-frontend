@@ -43,7 +43,7 @@ class InternshipManagement extends React.Component {
     {
       return (
         <ButtonWrapper>
-          <Button text={"Participă la examen"} onClick={()=>{this.onParticipaStudent(row)}}/>
+          <Button text={"Participă la examen"} onClick={()=>this.onParticipaStudent(row)}/>
         </ButtonWrapper>);
 
     }
@@ -61,6 +61,7 @@ class InternshipManagement extends React.Component {
 
   onParticipaStudent(row)
   {
+    console.log(row);
     this.props.confirmExam(row, this.props.getInternships);
   }
 
@@ -178,6 +179,7 @@ const withConnect = connect(
 export default compose(
   withInternshipsForStudentSaga,
   withConfirmParticipationSaga,
+  withConfirmExamSaga,
   withRoleSaga,
   withRefuseSaga,
   withConnect,
